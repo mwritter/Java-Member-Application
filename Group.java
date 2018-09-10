@@ -40,4 +40,30 @@ public class Group {
         }
         return new Member("Dummy", "NoEmail");
     }
+
+    public List<Member> getMembers() {
+        List<Member> members = new ArrayList<Member>();
+        for (Membership m : memberships) {
+            members.add(m.getMember());
+        }
+        return members;
+    }
+
+    // Returns all questions that have been asked in this group in the order
+    // that they were asked
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    // Returns all answers to all questions that have been asked in this group in
+    // the order
+    // that they were answered
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    // Provides useful information about this group, neatly formatted
+    public String toString() {
+        return "Group: " + this.title;
+    }
 }
