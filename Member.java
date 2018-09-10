@@ -66,7 +66,7 @@ public class Member {
 
 	}
 
-	public Date getDateJoined(Group groupName {
+	public Date getDateJoined(Group groupName) {
 		return ___;
 	}
 
