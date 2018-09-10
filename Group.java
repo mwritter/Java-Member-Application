@@ -23,5 +23,21 @@ public class Group {
 
     // Returns this groups description
     public String getDescription() {
-		return description;
-	}
+        return description;
+    }
+
+    public int getNumberOfMembers() {
+        return -1;
+    }
+
+    // Returns the Member of this group that corresponds to the emailAddress
+    public Member getMember(String emailAddress) {
+
+        for (Membership m : memberships) {
+            if (m.getMember().name.equals(emailAddress)) {
+                return m.getMember();
+            }
+        }
+        return new Member("Dummy", "NoEmail");
+    }
+}
