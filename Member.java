@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Date;
 import java.util.ArrayList;
 
+
 public class Member {
 
 	// instance variables
@@ -12,11 +13,9 @@ public class Member {
 	private String lastName;
 	private String screenName; // emailAddress & screenName must be unique
 	private String emailAddress;
-
 	private List<Membership> memberships;
 	
-	
-	
+		
 	// Constructor method	
 	public Member(String firstName, String lastName, String screenName, String emailAddress, Date dateCreated) {
 		this.firstName = firstName;
@@ -26,27 +25,31 @@ public class Member {
 		this.dateCreated = dateCreated;
 	}
 
-	//start of getter methods
+	
 	//returns email address
 	public String getEmailAddress() {
 		return this.emailAddress;
 	}
 
+	
 	//returns the date member was created
 	public Date getDateCreated() {
 		return this.dateCreated;
 	}
 
+	
 	//returns the member's first name
 	public String getFirstName() {
 		return this.firstName;
 	}
 
+	
 	//returns the member's last name
 	public String getLastName() {
 		return this.lastName;
 	}
 
+	
 	//returns screen name
 	public String getScreenName() {
 		return this.screenName;
@@ -86,29 +89,20 @@ public class Member {
 			groupList.add(M.group);
 		}
 		return groupList;
-	}
-
-
-	/////!!!!!!!!!!!I am still working on Everything below here. Everything above should be complete!!!!!!!!!!!!!!///////// 
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	
-	
-	
+	}	
 	
 	
 	//Adds the question to the group by this member and records
 	//the date the question was asked
 	public void addQuestion(Group groupName, Question question, Date date) {
-		
 		for (Membership M: memberships) {
 			if (M.group.equals(groupName)) {
-				question.setMembership(M);
+				question.setMembership(M);//assuming Post class should have private membership variable
+				question.date = new Date();//assuming date variable in Post class is the date the 
+				                           //question was asked
+				M.questions.add(question);
 			}
-		}
-				
-				
-			
-		//groupName.getQuestions().add(question);////////////////correct this method//////////////////
+		}	
 	}
 
 	
@@ -117,23 +111,26 @@ public class Member {
 		Date temp =null;
 		for (Membership M: memberships) {
 			if (M.group.equals(groupName)) {
-				temp=M.group.dateCreated;
+				temp=M.dateJoined;
 			}
 		}
 		
-		return temp;
+		return temp;//This method does not work yet
 	}
 
 	
 	//Adds this member's answer to this question which is in this group and 
 	//records the date answered
 	public void addAnswer(Group groupName, Question question, Answer answer, Date date) {
-		question.addAnswer(answer);//////
-		
-		//for (Question Q: groupName.getQuestions()) {
-		//	Q.setAnswer(answer);
-		//}
-		
+		question.addAnswer(answer);
+		for (Membership M: memberships) {
+			if (M.group.equals(groupName)) {
+				answer.setMembership(M);
+				answer.date = new Date();/*assuming date variable in Post class is the date the 
+				                           answer was "posted"*/
+				M.answers.add(answer);
+			}
+		}			
 	}
 
 	
