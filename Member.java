@@ -111,7 +111,6 @@ public class Member {
 		//groupName.getQuestions().add(question);////////////////correct this method//////////////////
 	}
 
-<<<<<<< HEAD
 	
 	//Returns the date this member joined this group
 	public Date getDateJoined(Group groupName) {
@@ -123,10 +122,6 @@ public class Member {
 		}
 		
 		return temp;
-=======
-	public Date getDateJoined(Group groupName) {
-		return ___;
->>>>>>> c531e191dd437a2de1c09ff291373fdc141dd09c
 	}
 
 	
