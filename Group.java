@@ -34,11 +34,12 @@ public class Group {
     public Member getMember(String emailAddress) {
 
         for (Membership m : memberships) {
-            if (m.getMember().name.equals(emailAddress)) {
-                return m.getMember();
+            if (m.member.getEmailAddress().equals(emailAddress)) {
+                return m.member;
             }
         }
-        return new Member("Dummy", "NoEmail");
+        Date date = new Date();
+        return new Member("Dummy", "Dummy", "NoScreenName", "NoEmail", date);
     }
 
     public List<Member> getMembers() {
