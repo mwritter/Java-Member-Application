@@ -31,6 +31,7 @@ public class Group {
     }
 
     // Returns the Member of this group that corresponds to the emailAddress
+    // Returns the Member of this group that corresponds to the emailAddress
     public Member getMember(String emailAddress) {
 
         for (Membership m : memberships) {
@@ -43,9 +44,9 @@ public class Group {
     }
 
     public List<Member> getMembers() {
-        List<Member> members = new ArrayList<Member>();
+        List<Member> members = new ArrayList<>();
         for (Membership m : memberships) {
-            members.add(m.getMember());
+            members.add(m.member);
         }
         return members;
     }
