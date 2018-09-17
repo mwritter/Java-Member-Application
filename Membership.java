@@ -2,6 +2,7 @@ package PackageName;
 
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
 
 class Membership {//this class should have package level visibility
 	//instance variables
@@ -10,8 +11,8 @@ class Membership {//this class should have package level visibility
 	
     Member member;
 	Group group;
-	List<Question> questions;
-	List<Answer> answers;
+	List<Question> questions = new ArrayList<>();
+	List<Answer> answers = new ArrayList<>();
 	
 	
 	
@@ -21,6 +22,12 @@ class Membership {//this class should have package level visibility
 		this.member = mem;
 		this.group = grp;
 		//this.points = points;
+	}
+	
+	
+	//returns the date the member joined the goup
+	public Date getDateJoined() {
+		return this.dateJoined;
 	}
 	
 	
