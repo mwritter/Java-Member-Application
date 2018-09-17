@@ -57,10 +57,10 @@ public class Member {
 	// end of getter methods
 
 	
-    //Joins this member to group and records the dateJoined
+                   //Joins this member to group and records the dateJoined
 	public void joinGroup(Group groupName, Date LocalDateTime) {
 		Membership mem = new Membership(LocalDateTime, this, groupName);
-	    this.memberships.add(mem);
+	    	this.memberships.add(mem);
 	}
 
 	
@@ -138,7 +138,9 @@ public class Member {
 	public List<Question> getQuestions(Group groupName) {
 		ArrayList<Question> memQuestions = new ArrayList<Question>();
 		for (Membership M: memberships) {
-			memQuestions.addAll( M.questions);
+			if (M.group.equals(groupName) ) {
+				memQuestions.addAll( M.questions);
+			}
 		}
 		return memQuestions;
 	}
@@ -148,7 +150,9 @@ public class Member {
 	public List<Answer> getAnswers(Group groupName) {
 		ArrayList<Answer> memAnswers = new ArrayList<Answer>();
 		for (Membership M: memberships) {
-			memAnswers.addAll( M.answers);
+			if (M.group.equals(groupName)) {
+				memAnswers.addAll( M.answers);
+			}
 		}
 		return memAnswers;
 	}
