@@ -57,10 +57,10 @@ public class Member {
 	// end of getter methods
 
 	
-                   //Joins this member to group and records the dateJoined
-	public void joinGroup(Group groupName, Date LocalDateTime) {
-		Membership mem = new Membership(LocalDateTime, this, groupName);
-	    	this.memberships.add(mem);
+    	//Joins this member to group and records the dateJoined
+	public void joinGroup(Group groupName, Date localDateTime) {
+		Membership membership = new Membership(localDateTime, this, groupName);
+	    	this.memberships.add(membership);
 	}
 
 	
@@ -73,9 +73,9 @@ public class Member {
 	//Returns the Group that corresponds to the groupID
 	public Group getGroup(String groupID) {
 		Group temp = null;
-		for (Membership M: this.memberships) {
-			if ( M.group.title.equals(groupID) ) {//should group class have group ID variable?
-				temp = M.group;
+		for (Membership membership: this.memberships) {
+			if ( membership.group.title.equals(groupID) ) {//should group class have group ID variable?
+				temp = membership.group;
 			}
 		}
 		return temp;
@@ -85,8 +85,8 @@ public class Member {
 	//Returns a list of Groups the member is a member of
 	public List<Group> getGroups() {
 		ArrayList<Group> groupList = new ArrayList<Group>();
-		for (Membership M: this.memberships) {
-			groupList.add(M.group);
+		for (Membership membership: this.memberships) {
+			groupList.add(membership.group);
 		}
 		return groupList;
 	}	
@@ -95,12 +95,12 @@ public class Member {
 	//Adds the question to the group by this member and records
 	//the date the question was asked
 	public void addQuestion(Group groupName, Question question, Date date) {
-		for (Membership M: memberships) {
-			if (M.group.equals(groupName)) {
-				question.setMembership(M);//assuming Post class should have private membership variable
+		for (Membership membership: memberships) {
+			if (membership.group.equals(groupName)) {
+				question.setMembership(membership);//assuming Post class should have private membership variable
 				question.date = new Date();//assuming date variable in Post class is the date the 
 				                           //question was asked
-				M.questions.add(question);
+				membership.questions.add(question);
 			}
 		}	
 	}
@@ -109,9 +109,9 @@ public class Member {
 	//Returns the date this member joined this group
 	public Date getDateJoined(Group groupName) {
 		Date temp =null;
-		for (Membership M: memberships) {
-			if (M.group.equals(groupName)) {
-				temp=M.dateJoined;
+		for (Membership membership: memberships) {
+			if (membership.group.equals(groupName)) {
+				temp=membership.dateJoined;
 			}
 		}
 		
@@ -123,12 +123,12 @@ public class Member {
 	//records the date answered
 	public void addAnswer(Group groupName, Question question, Answer answer, Date date) {
 		question.addAnswer(answer);
-		for (Membership M: memberships) {
-			if (M.group.equals(groupName)) {
-				answer.setMembership(M);
+		for (Membership membership: memberships) {
+			if (membership.group.equals(groupName)) {
+				answer.setMembership(membership);
 				answer.date = new Date();/*assuming date variable in Post class is the date the 
 				                           answer was "posted"*/
-				M.answers.add(answer);
+				membership.answers.add(answer);
 			}
 		}			
 	}
@@ -136,25 +136,25 @@ public class Member {
 	
 	//Returns all questions asked by this member in this group
 	public List<Question> getQuestions(Group groupName) {
-		ArrayList<Question> memQuestions = new ArrayList<Question>();
-		for (Membership M: memberships) {
-			if (M.group.equals(groupName) ) {
-				memQuestions.addAll( M.questions);
+		ArrayList<Question> questionsList = new ArrayList<Question>();
+		for (Membership membership: memberships) {
+			if (membership.group.equals(groupName) ) {
+				questionsList.addAll( membership.questions);
 			}
 		}
-		return memQuestions;
+		return questionsList;
 	}
 
 	
 	//Returns all answers asked by this member in this group
 	public List<Answer> getAnswers(Group groupName) {
-		ArrayList<Answer> memAnswers = new ArrayList<Answer>();
-		for (Membership M: memberships) {
-			if (M.group.equals(groupName)) {
-				memAnswers.addAll( M.answers);
+		ArrayList<Answer> answersList = new ArrayList<Answer>();
+		for (Membership membership: memberships) {
+			if (membership.group.equals(groupName)) {
+				answersList.addAll( membership.answers);
 			}
 		}
-		return memAnswers;
+		return answersList;
 	}
 
 	
