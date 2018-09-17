@@ -13,7 +13,7 @@ public class Member {
 	private String lastName;
 	private String screenName; // emailAddress & screenName must be unique
 	private String emailAddress;
-	private List<Membership> memberships;
+	private List<Membership> memberships = new ArrayList<>();
 	
 		
 	// Constructor method	
@@ -57,10 +57,10 @@ public class Member {
 	// end of getter methods
 
 	
-    	//Joins this member to group and records the dateJoined
+    //Joins this member to group and records the dateJoined
 	public void joinGroup(Group groupName, Date localDateTime) {
 		Membership membership = new Membership(localDateTime, this, groupName);
-	    	this.memberships.add(membership);
+	    this.memberships.add(membership);
 	}
 
 	
@@ -111,7 +111,7 @@ public class Member {
 		Date temp =null;
 		for (Membership membership: memberships) {
 			if (membership.group.equals(groupName)) {
-				temp=membership.dateJoined;
+				temp=membership.getDateJoined();
 			}
 		}
 		
