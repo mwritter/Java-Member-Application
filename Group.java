@@ -1,22 +1,23 @@
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 public class Group {
-    Date dateCreated;
+	Date dateCreated;
     String title;
     String description;
     private List<Answer> answers;
     private List<Membership> memberships;
     private List<Question> questions;
-
+    
     public Group(String title, String description, Date date) {
         this.title = title;
         this.description = description;
         this.dateCreated = date;
     }
-
     public Date getDateCreated() {
         return dateCreated;
     }
-
-    // Returns this groups title
     public String getTitle() {
         return title;
     }
@@ -31,12 +32,11 @@ public class Group {
     }
 
     // Returns the Member of this group that corresponds to the emailAddress
-    // Returns the Member of this group that corresponds to the emailAddress
     public Member getMember(String emailAddress) {
 
-        for (Membership m : memberships) {
-            if (m.member.getEmailAddress().equals(emailAddress)) {
-                return m.member;
+        for (Membership membership : memberships) {
+            if (membership.member.getEmailAddress().equals(emailAddress)) {
+                return membership.member;
             }
         }
         Date date = new Date();
@@ -45,8 +45,8 @@ public class Group {
 
     public List<Member> getMembers() {
         List<Member> members = new ArrayList<>();
-        for (Membership m : memberships) {
-            members.add(m.member);
+        for (Membership membership : memberships) {
+            members.add(membership.member);
         }
         return members;
     }
@@ -69,3 +69,4 @@ public class Group {
         return "Group: " + this.title;
     }
 }
+
