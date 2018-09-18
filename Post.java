@@ -1,16 +1,18 @@
 import java.util.Date;
 
-class Post {
+abstract class Post {
 
 	//initialize variables
 	protected String text;
 	protected Date date;
+   
+   protected Membership membership;
 	
 	//constructor to set initial values
 	public Post(String txt, Date date) {
 		
 		text = txt;
-		date = new Date();
+		this.date = date;
 		
 	}
 	
@@ -29,37 +31,37 @@ class Post {
 	}
 	
 	//sets/resets value in text
-	public void setText (String txt) {
+	public void setText (String text) {
 		
-		text = txt;
+		this.text = text;
 		
 	}
 	
 	//returns author name
 	public Member getAuthor() {
 		
-		return member;
+		return membership.member;
 		
 	}
 	
 	//returns group name
 	public Group getGroup() {
 		
-		return group;
+		return membership.group;
 		
 	}
 	
 	//sets membership status
 	protected void setMembership(Membership originalMembership) {
 		
-		Membership newMembership = originalMembership;
+		this.membership = originalMembership;
 				
 	}
 	
 	//returns membership status
 	protected Membership getMembership() {
 		
-		return member;
+		return membership;
 		
 	}
 
