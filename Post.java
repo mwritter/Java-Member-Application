@@ -50,18 +50,16 @@ class Post {
 	}
 	
 	//sets membership status
-	protected void setMembership(Membership m) {
+	protected void setMembership(Membership originalMembership) {
 		
-		Membership mem = m;
-		
-		return mem;
-		
+		Membership newMembership = originalMembership;
+				
 	}
 	
 	//returns membership status
 	protected Membership getMembership() {
 		
-		return membership;
+		return member;
 		
 	}
 
