@@ -5,7 +5,6 @@ import java.util.List;
      class Question extends Post {
 
 		private String title;
-		private Answer answer;
 		private List <Answer> answers = new ArrayList<>();
 		
         
@@ -34,7 +33,7 @@ import java.util.List;
         
 
        
-        public List<Answer> getAnswer() {
+        public List<Answer> getAnswers() {
 			return answers;
         }
 

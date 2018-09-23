@@ -3,20 +3,22 @@ import java.util.Date;
 import java.util.List;
 
 
-class Answer extends Post {
-	private Question question;
-
-		public Answer (Question question, String text, Date dateCreated) { 
-			super(text,dateCreated);
-			this.question = question;
-			this.dateCreated = dateCreated;
+    public class Answer {
+    	
+    	private String title;
+		private Object question;
+		private Date dateCreated;
+		public Answer (String title, String text, Date dateCreated) { 
+    		this.title = title;
+    		this.question = question;
+    		this.dateCreated = dateCreated;
     	}
         public Question getQuestion() {
-			return question;
+			return (Question) question;
         }
         public String toString() {
-        	String result = "Answer: " + text + " for question " + question.getTitle();
-        	return result;
+			return null;
+        
        }
 
     }
