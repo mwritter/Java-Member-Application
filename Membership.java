@@ -26,7 +26,7 @@ class Membership {//this class should have package level visibility
 	
 	
 	//returns the date the member joined the goup
-	public Date getDateJoined() {
+	 Date getDateJoined() {
 		return this.dateJoined;
 	}
 	
