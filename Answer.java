@@ -16,7 +16,7 @@ import java.util.List;
 			return question;
         }
         public String toString() {
-			String result = "Answer: " + text + " for question " + question.getTittle();
+			String result = "Answer: " + text + " for question " + question.getTitle();
 			return result;
         
        }
