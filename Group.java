@@ -3,21 +3,23 @@ import java.util.Date;
 import java.util.List;
 
 public class Group {
-	Date dateCreated;
+    Date dateCreated;
     String title;
     String description;
     private List<Answer> answers;
     private List<Membership> memberships;
     private List<Question> questions;
-    
+
     public Group(String title, String description, Date date) {
         this.title = title;
         this.description = description;
         this.dateCreated = date;
     }
+
     public Date getDateCreated() {
         return dateCreated;
     }
+
     public String getTitle() {
         return title;
     }
@@ -57,8 +59,7 @@ public class Group {
         return questions;
     }
 
-    // Returns all answers to all questions that have been asked in this group 
-in
+    // Returns all answers to all questions that have been asked in this group in
     // the order
     // that they were answered
     public List<Answer> getAnswers() {
@@ -70,4 +71,3 @@ in
         return "Group: " + this.title;
     }
 }
-
