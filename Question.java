@@ -6,7 +6,7 @@ import java.util.List;
 
 		private String title;
 		private List <Answer> answers = new ArrayList<>();
-		
+			
         
         public Question(String title, String text, Date dateCreated) {
         	super(text, dateCreated);
