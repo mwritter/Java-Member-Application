@@ -40,14 +40,14 @@ abstract class Post {
     // returns author name
     public Member getAuthor() {
 
-        return membership.member;
+        return membership.getMember();
 
     }
 
     // returns group name
     public Group getGroup() {
 
-        return membership.group;
+        return membership.getGroup();
 
     }
 
