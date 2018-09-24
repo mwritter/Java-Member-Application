@@ -39,8 +39,8 @@ import java.util.List;
 
         
         public String toString() {
-        String result = "Question Title: " + title + "\n" + "Body:";
-        return result; 
-        }
+            String result = "Question Title: " + title + "\n" + "Body:" + text + "\n";
+            return result; 
+            }
 
     }
