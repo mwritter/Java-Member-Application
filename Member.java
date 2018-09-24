@@ -11,9 +11,11 @@ public class Member {
 	private String lastName;
 	private String screenName; // emailAddress & screenName must be unique
 	private String emailAddress;
-    List<Membership> memberships = new ArrayList<>();
+    
+	private List<Membership> memberships = new ArrayList<>();
 	
-		
+
+
 	// Constructor method	
 	public Member(String firstName, String lastName, String screenName, String emailAddress, Date dateCreated) {
 		this.firstName = firstName;
@@ -52,8 +54,14 @@ public class Member {
 	public String getScreenName() {
 		return this.screenName;
 	}
+	
+	
+	//returns list of memberships this member is a part of////////////////////////////////
+	public List<Membership> getMemberships() {
+		return memberships;
+	}
 	// end of getter methods
-
+	
 	
     //Joins this member to group and records the dateJoined
 	public void joinGroup(Group groupName, Date localDateTime) {
@@ -73,8 +81,8 @@ public class Member {
 	public Group getGroup(String groupID) {
 		Group temp = null;
 		for (Membership membership: this.memberships) {
-			if ( membership.group.title.equals(groupID) ) {//should group class have group ID variable?
-				temp = membership.group;
+			if ( membership.getGroup().getTitle().equals(groupID) ) {//should group class have group ID variable?
+				temp = membership.getGroup();
 			}
 		}
 		return temp;
@@ -85,7 +93,7 @@ public class Member {
 	public List<Group> getGroups() {
 		ArrayList<Group> groupList = new ArrayList<Group>();
 		for (Membership membership: this.memberships) {
-			groupList.add(membership.group);
+			groupList.add(membership.getGroup());
 		}
 		return groupList;
 	}	
@@ -95,9 +103,10 @@ public class Member {
 	//the date the question was asked
 	public void addQuestion(Group groupName, Question question, Date date) {
 		for (Membership membership: memberships) {
-			if (membership.group.equals(groupName)) {
+			if (membership.getGroup().equals(groupName)) {
 				question.setMembership(membership);
-				membership.questions.add(question);
+				membership.getQuestions().add(question);
+				//membership.addQuestion(question);
 			}
 		}	
 	}
@@ -107,7 +116,7 @@ public class Member {
 	public Date getDateJoined(Group groupName) {
 		Date temp =null;
 		for (Membership membership: memberships) {
-			if (membership.group.equals(groupName)) {
+			if (membership.getGroup().equals(groupName)) {
 				temp=membership.getDateJoined();
 			}
 		}
@@ -121,9 +130,10 @@ public class Member {
 	public void addAnswer(Group groupName, Question question, Answer answer, Date date) {
 		question.addAnswer(answer);
 		for (Membership membership: memberships) {
-			if (membership.group.equals(groupName)) {
+			if (membership.getGroup().equals(groupName)) {
 				answer.setMembership(membership);
-				membership.answers.add(answer);
+				membership.getAnswers().add(answer);
+				//membership.addAnswer(answer);
 			}
 		}			
 	}
@@ -133,8 +143,8 @@ public class Member {
 	public List<Question> getQuestions(Group group) {
 		ArrayList<Question> questionsList = new ArrayList<Question>();
 		for (Membership membership: memberships) {
-			if (membership.group.equals(group) ) {
-				questionsList.addAll( membership.questions);
+			if (membership.getGroup().equals(group) ) {
+				questionsList.addAll( membership.getQuestions());
 			}
 		}
 		return questionsList;
@@ -145,8 +155,8 @@ public class Member {
 	public List<Answer> getAnswers(Group groupName) {
 		ArrayList<Answer> answersList = new ArrayList<Answer>();
 		for (Membership membership: memberships) {
-			if (membership.group.equals(groupName)) {
-				answersList.addAll( membership.answers);
+			if (membership.getGroup().equals(groupName)) {
+				answersList.addAll( membership.getAnswers());
 			}
 		}
 		return answersList;
