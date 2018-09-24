@@ -11,7 +11,7 @@ public class Member {
 	private String lastName;
 	private String screenName; // emailAddress & screenName must be unique
 	private String emailAddress;
-	private List<Membership> memberships = new ArrayList<>();
+    List<Membership> memberships = new ArrayList<>();
 	
 		
 	// Constructor method	
@@ -95,9 +95,7 @@ public class Member {
 	public void addQuestion(Group groupName, Question question, Date date) {
 		for (Membership membership: memberships) {
 			if (membership.group.equals(groupName)) {
-				question.setMembership(membership);//assuming Post class should have private membership variable
-				question.date = new Date();//assuming date variable in Post class is the date the 
-				                           //question was asked
+				question.setMembership(membership);
 				membership.questions.add(question);
 			}
 		}	
@@ -124,8 +122,6 @@ public class Member {
 		for (Membership membership: memberships) {
 			if (membership.group.equals(groupName)) {
 				answer.setMembership(membership);
-				answer.date = new Date();/*assuming date variable in Post class is the date the 
-				                           answer was "posted"*/
 				membership.answers.add(answer);
 			}
 		}			
@@ -133,10 +129,10 @@ public class Member {
 
 	
 	//Returns all questions asked by this member in this group
-	public List<Question> getQuestions(Group groupName) {
+	public List<Question> getQuestions(Group group) {
 		ArrayList<Question> questionsList = new ArrayList<Question>();
 		for (Membership membership: memberships) {
-			if (membership.group.equals(groupName) ) {
+			if (membership.group.equals(group) ) {
 				questionsList.addAll( membership.questions);
 			}
 		}
@@ -159,8 +155,8 @@ public class Member {
 	//Provides useful information about this member, neatly formatted
 	@Override
 	public String toString() {
-		return "Member Information\n" + 
-			   "First Name: " +this.firstName +
+		return "\nMember Information" + //added "\n before "Member" and before "First" 
+			   "\nFirst Name: " +this.firstName +
 			   "\nLast Name: " + this.lastName + 
 			   "\nScreen Name: " + this.screenName + 
 			   "\nEmail address: " + this.emailAddress + 
