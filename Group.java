@@ -3,38 +3,38 @@ import java.util.Date;
 import java.util.List;
 
 public class Group {
-    Date dateCreated;
-    String title;
-    String description;
+    private Date dateCreated;
+    private String title;
+    private String description;
     private List<Answer> answers;
     private List<Membership> memberships = new ArrayList<>();
     private List<Question> questions;
 
-    public Group(String title, String description, Date date) {
+    Group(String title, String description, Date date) {
         this.title = title;
         this.description = description;
         this.dateCreated = date;
     }
 
-    public Date getDateCreated() {
+    Date getDateCreated() {
         return dateCreated;
     }
 
-    public String getTitle() {
+    String getTitle() {
         return title;
     }
 
     // Returns this groups description
-    public String getDescription() {
+    String getDescription() {
         return description;
     }
 
-    public int getNumberOfMembers() {
+    int getNumberOfMembers() {
         return memberships.size();
     }
 
     // Returns the Member of this group that corresponds to the emailAddress
-    public Member getMember(String emailAddress) {
+    Member getMember(String emailAddress) {
 
         for (Membership membership : memberships) {
             if (membership.getMember().getEmailAddress().equals(emailAddress)) {
@@ -45,7 +45,11 @@ public class Group {
         return new Member("Dummy", "Dummy", "NoScreenName", "NoEmail", date);
     }
 
-    public List<Member> getMembers() {
+    void addMembership(Membership membership) {
+        memberships.add(membership);
+    }
+
+    List<Member> getMembers() {
         List<Member> members = new ArrayList<>();
         for (Membership membership : memberships) {
             members.add(membership.getMember());
@@ -55,14 +59,14 @@ public class Group {
 
     // Returns all questions that have been asked in this group in the order
     // that they were asked
-    public List<Question> getQuestions() {
+    List<Question> getQuestions() {
         return questions;
     }
 
     // Returns all answers to all questions that have been asked in this group in
     // the order
     // that they were answered
-    public List<Answer> getAnswers() {
+    List<Answer> getAnswers() {
         return answers;
     }
 

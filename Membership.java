@@ -1,17 +1,30 @@
+package PackageName;
+
+
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
-class Membership {
-	
+class Membership {//this class should have package level visibility
+	//instance variables
 	private Date dateJoined;
 	private int points =0;
-                  Member member;
-	Group group;
-	List<Question> questions = new ArrayList<>();
-	List<Answer> answers = new ArrayList<>();
 	
 	
+    private Member member;
+	private Group group;
+	private List<Question> questions = new ArrayList<>();
+	private List<Answer> answers = new ArrayList<>();
+	
+	
+	
+	void addQuestion(Question question) {
+		this.questions.add(question);
+	}
+	void addAnswer(Answer answer) {
+		this.answers.add(answer);
+	}
+
 	//constructor method
 	public Membership(Date dateJoined, Member member, Group group) {
 		this.dateJoined = dateJoined;
@@ -20,10 +33,33 @@ class Membership {
 		//this.points = points; 
 	}
 	
-	
-	//returns the date the member joined the goup
+	//returns the date the member joined the group
     Date getDateJoined() {
 		return this.dateJoined;
+	}
+	
+    
+    //returns the member in this membership
+	Member getMember() {
+		return member;
+	}
+	
+	
+	//returns the group in this membership
+	Group getGroup() {
+		return group;
+	}
+
+    
+	//returns all questions in this membership
+    List<Question> getQuestions() {
+		return questions;
+	}
+
+
+  //returns all answers in this membership
+	List<Answer> getAnswers() {
+		return answers;
 	}
 	
 	
