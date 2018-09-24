@@ -7,7 +7,7 @@ public class Group {
     String title;
     String description;
     private List<Answer> answers;
-    private List<Membership> memberships;
+    private List<Membership> memberships = new ArrayList<>();
     private List<Question> questions;
 
     public Group(String title, String description, Date date) {
@@ -30,7 +30,7 @@ public class Group {
     }
 
     public int getNumberOfMembers() {
-        return -1;
+        return memberships.size();
     }
 
     // Returns the Member of this group that corresponds to the emailAddress
