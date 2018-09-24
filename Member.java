@@ -11,10 +11,8 @@ public class Member {
 	private String lastName;
 	private String screenName; // emailAddress & screenName must be unique
 	private String emailAddress;
-    
 	private List<Membership> memberships = new ArrayList<>();
 	
-
 
 	// Constructor method	
 	public Member(String firstName, String lastName, String screenName, String emailAddress, Date dateCreated) {
@@ -56,7 +54,7 @@ public class Member {
 	}
 	
 	
-	//returns list of memberships this member is a part of////////////////////////////////
+	//returns list of memberships this member is a part of
 	public List<Membership> getMemberships() {
 		return memberships;
 	}
@@ -81,7 +79,7 @@ public class Member {
 	public Group getGroup(String groupID) {
 		Group temp = null;
 		for (Membership membership: this.memberships) {
-			if ( membership.getGroup().getTitle().equals(groupID) ) {//should group class have group ID variable?
+			if ( membership.getGroup().getTitle().equals(groupID) ) {
 				temp = membership.getGroup();
 			}
 		}
@@ -120,8 +118,7 @@ public class Member {
 				temp=membership.getDateJoined();
 			}
 		}
-		
-		return temp;//This method does not work yet
+		return temp;
 	}
 
 	
@@ -133,7 +130,6 @@ public class Member {
 			if (membership.getGroup().equals(groupName)) {
 				answer.setMembership(membership);
 				membership.getAnswers().add(answer);
-				//membership.addAnswer(answer);
 			}
 		}			
 	}
@@ -172,7 +168,5 @@ public class Member {
 			   "\nScreen Name: " + this.screenName + 
 			   "\nEmail address: " + this.emailAddress + 
 			   "\nDate Joined: " + this.dateCreated;
-
 	}
-
 }//end of Member.java class
