@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.Date;
 import java.util.ArrayList;
 
-public class GroupTest {
+public class MainTest {
 
     public static void main(String[] args) {
         Date date = new Date();
