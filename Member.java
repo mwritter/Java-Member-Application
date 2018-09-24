@@ -59,6 +59,7 @@ public class Member {
 	public void joinGroup(Group groupName, Date localDateTime) {
 		Membership membership = new Membership(localDateTime, this, groupName);
 	    this.memberships.add(membership);
+	    groupName.addMembership(membership);
 	}
 
 	
