@@ -24,12 +24,22 @@ public class MainTest {
         matt.addQuestion(group1, question1, date);
         matt.addQuestion(group1, question2, date);
         matt.addQuestion(group2, question2, date);
-
+        
+        System.out.println("============");
+        System.out.println("getMember(mwritter@valdosta.edu):" + group1.getMember("mwritter@valdosta.edu"));
+        System.out.println("============");
+        
         for (Group group : matt.getGroups()) {
             System.out.println(matt.getScreenName() + " Joined: " + group.getTitle() + " " + matt.getDateJoined(group)
                     + "\n" + "============");
         }
-
+        for (Group group : virginia.getGroups()) {
+            System.out.println(virginia.getScreenName() + " Joined: " + group.getTitle() + " " + virginia.getDateJoined(group)
+                    + "\n" + "============\n");
+        }
+        System.out.println("============");
+        System.out.println("getMembers(group2):" + group2.getMembers());
+        System.out.println("============");
         Answer answer1 = new Answer(question1, "This is the answer", date);
 
         matt.addAnswer(group1, question1, answer1, date);
