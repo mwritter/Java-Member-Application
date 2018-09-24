@@ -2,11 +2,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
-class Membership {//this class should have package level visibility
-	//instance variables
+class Membership {
+	
 	private Date dateJoined;
 	private int points =0;
-    Member member;
+                  Member member;
 	Group group;
 	List<Question> questions = new ArrayList<>();
 	List<Answer> answers = new ArrayList<>();
