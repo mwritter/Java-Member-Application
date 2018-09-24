@@ -2,13 +2,15 @@ import java.util.List;
 import java.util.Date;
 import java.util.ArrayList;
 
-public class GroupTest {
+public class MainTest {
 
     public static void main(String[] args) {
+
         Date date = new Date();
 
         Member matt = new Member("Matthew", "Ritter", "Matt", "mwritter@valdosta.edu", date);
         Member virginia = new Member("Virginia", "Ritter", "Gin", "vrharnevious@valdosta.edu", date);
+
         Group group1 = new Group("First Group", "This is an awesome Group1", date);
         Group group2 = new Group("Second Group", "This is an awesome Group2", date);
 
@@ -24,18 +26,23 @@ public class GroupTest {
         matt.addQuestion(group2, question2, date);
 
         for (Group group : matt.getGroups()) {
-            System.out.println(matt.getScreenName() + " Joined: " + group.getTitle() + matt.getDateJoined(group) + "\n"
-                    + "============");
+            System.out.println(matt.getScreenName() + " Joined: " + group.getTitle() + " " + matt.getDateJoined(group)
+                    + "\n" + "============");
         }
 
         Answer answer1 = new Answer(question1, "This is the answer", date);
 
         matt.addAnswer(group1, question1, answer1, date);
-        System.out.println("GetQuestions: " + matt.getQuestions(group1));
-        System.out.println("GetAnswers: " + matt.getAnswers(group1));
-        System.out.println("GetAuthor: " + answer1.getAuthor());
+        System.out.println("============");
+        System.out.println("GetQuestions For Matt: \n" + matt.getQuestions(group1));
+        System.out.println("============");
+        System.out.println("GetAnswers For Matt: " + matt.getAnswers(group1));
+        System.out.println("============");
+        System.out.println("GetAuthor of answer1" + answer1.getAuthor());
+        System.out.println("============");
         System.out.println("Member toString method: " + matt.toString());
-        System.out.println("No errors Member and Membership look good");
+        System.out.println("============");
+        System.out.println("No errors");
 
     }
 
