@@ -53,9 +53,9 @@ abstract class Post {
     }
 
     // sets membership status
-    protected void setMembership(Membership originalMembership) {
+    protected void setMembership(Membership membership) {
 
-        this.membership = originalMembership;
+        this.membership = membership;
 
     }
 
