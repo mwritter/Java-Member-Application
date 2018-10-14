@@ -45,7 +45,11 @@ class GroupTest {
 
 	@Test
 	void testGetMember() {
-		fail("Not yet implemented");
+		Date date = new Date();
+		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
+		Group group1 = new Group("Group One", "The best Group ONE", date);
+		matt.joinGroup(group1, date);
+		assertEquals(matt,group1.getMember("mritter2283@gmail.com"));
 	}
 
 	@Test
