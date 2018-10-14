@@ -77,12 +77,38 @@ class GroupTest {
 
 	@Test
 	void testGetQuestions() {
-		fail("Not yet implemented");
+		Date date = new Date();
+		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
+		Group group1 = new Group("Group One", "The best Group ONE", date);
+		matt.joinGroup(group1, date);
+		Question q1 = new Question("Q1 Title", "Whats the weather like", date);
+		matt.addQuestion(group1, q1, date);
+		List<Question> myGroupQuestions = new ArrayList<Question>();
+		myGroupQuestions.add(q1);
+		System.out.println(myGroupQuestions);
+		System.out.println(group1.getQuestions());
+		
+		assertEquals(myGroupQuestions, group1.getQuestions());
 	}
 
 	@Test
 	void testGetAnswers() {
-		fail("Not yet implemented");
+		Date date = new Date();
+		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
+		Group group1 = new Group("Group One", "The best Group ONE", date);
+		matt.joinGroup(group1, date);
+		Question q1 = new Question("Q1 Title", "Whats the weather like", date);
+		Answer a1 = new Answer(q1, "Weather looks greate", date);
+		matt.addQuestion(group1, q1, date);
+		List<Question> myGroupQuestions = new ArrayList<Question>();
+		List<Answer> myGroupAnswers = new ArrayList<Answer>();
+		
+		myGroupAnswers.add(a1);
+		
+		System.out.println(myGroupAnswers);
+		System.out.println(group1.getAnswers());
+		
+		assertEquals(myGroupAnswers, group1.getAnswers());
 	}
 
 	@Test
