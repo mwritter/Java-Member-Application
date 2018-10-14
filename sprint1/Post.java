@@ -1,3 +1,4 @@
+package sprint1;
 import java.util.Date;
 
 abstract class Post {
