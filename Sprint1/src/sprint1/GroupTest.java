@@ -3,8 +3,10 @@ package sprint1;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Date;
-
+import java.util.List;
+import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
+
 
 class GroupTest {
 
@@ -54,12 +56,23 @@ class GroupTest {
 
 	@Test
 	void testAddMembership() {
-		fail("Not yet implemented");
+		Date date = new Date();
+		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
+		Group group1 = new Group("Group One", "The best Group ONE", date);
+		matt.joinGroup(group1, date);
+		assertEquals(1, group1.getNumberOfMembers());
 	}
 
 	@Test
 	void testGetMembers() {
-		fail("Not yet implemented");
+		Date date = new Date();
+		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
+		Group group1 = new Group("Group One", "The best Group ONE", date);
+		matt.joinGroup(group1, date);
+		List<Member> myGroupMembers = new ArrayList<Member>();
+		myGroupMembers.add(matt);
+		
+		assertEquals(myGroupMembers,group1.getMembers());
 	}
 
 	@Test
