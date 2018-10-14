@@ -113,7 +113,9 @@ class GroupTest {
 
 	@Test
 	void testToString() {
-		fail("Not yet implemented");
+		Date date = new Date();
+		Group group1 = new Group("Group One", "The best Group ONE", date);
+		assertEquals("Group: Group One",group1.toString());
 	}
 
 }
