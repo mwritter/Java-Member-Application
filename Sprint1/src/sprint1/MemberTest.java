@@ -95,7 +95,8 @@ class MemberTest {
 
 	@Test
 	void testGetDateJoined() {
-		fail("Not yet implemented");
+		matt.joinGroup(g, date);
+		assertEquals(date, matt.getDateJoined(g));
 	}
 
 	@Test
