@@ -45,7 +45,13 @@ class MemberTest {
 
 	@Test
 	void testGetMemberships() {
-		fail("Not yet implemented");
+		Group g = new Group("Group one", "The best Group", date);
+		matt.joinGroup(g, date);
+		
+		for(Membership m : matt.getMemberships()) {
+			assertTrue(m.getGroup().getTitle().equals(g.getTitle()));
+			
+		}
 	}
 
 	@Test
