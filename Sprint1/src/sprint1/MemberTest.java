@@ -2,6 +2,7 @@ package sprint1;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.junit.jupiter.api.Test;
@@ -111,7 +112,13 @@ class MemberTest {
 
 	@Test
 	void testGetQuestions() {
-		fail("Not yet implemented");
+		matt.joinGroup(g, date);
+		Question q = new Question("Question one", "This is a question?", date);
+		matt.addQuestion(g, q, date);
+		ArrayList<Question> qs = new ArrayList<Question>();
+		qs.add(q);
+		assertEquals(qs, matt.getQuestions(g));
+		
 	}
 
 	@Test
