@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 class MemberTest {
 	
 	Date date = new Date();
+	Group g = new Group("Group one", "The best Group", date);
 	Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
 	@Test
 	void testMember() {
@@ -45,7 +46,7 @@ class MemberTest {
 
 	@Test
 	void testGetMemberships() {
-		Group g = new Group("Group one", "The best Group", date);
+		
 		matt.joinGroup(g, date);
 		
 		for(Membership m : matt.getMemberships()) {
@@ -56,7 +57,11 @@ class MemberTest {
 
 	@Test
 	void testJoinGroup() {
-		fail("Not yet implemented");
+		matt.joinGroup(g, date);
+		
+		for(Membership m : matt.getMemberships()) {
+			assertTrue(m.getGroup().getTitle().equals(g.getTitle()));
+		}
 	}
 
 	@Test
