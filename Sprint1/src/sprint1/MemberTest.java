@@ -87,7 +87,10 @@ class MemberTest {
 
 	@Test
 	void testAddQuestion() {
-		fail("Not yet implemented");
+		matt.joinGroup(g, date);
+		Question q = new Question("Question one", "This is a question?", date);
+		matt.addQuestion(g, q, date);
+		assertTrue(matt.getQuestions(g).contains(q));
 	}
 
 	@Test
