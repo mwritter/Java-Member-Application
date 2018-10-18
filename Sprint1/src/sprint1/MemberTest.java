@@ -135,7 +135,11 @@ class MemberTest {
 
 	@Test
 	void testToString() {
-		fail("Not yet implemented");
+
+		String expected = "Member InformationFirst Name: MatthewLast Name: RitterScreen Name: MattEmail address: mritter2283@gmail.comDate Joined: " + date;
+		System.out.println(expected);
+		assertEquals(expected, matt.toString().replaceAll("\n", ""));
+		
 	}
 	
 
