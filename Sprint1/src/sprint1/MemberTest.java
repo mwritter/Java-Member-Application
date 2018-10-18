@@ -66,7 +66,8 @@ class MemberTest {
 
 	@Test
 	void testGetNumGroups() {
-		fail("Not yet implemented");
+		matt.joinGroup(g, date);
+		assertEquals(1, matt.getNumGroups());
 	}
 
 	@Test
