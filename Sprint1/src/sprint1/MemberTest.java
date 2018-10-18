@@ -40,7 +40,7 @@ class MemberTest {
 
 	@Test
 	void testGetScreenName() {
-		fail("Not yet implemented");
+		assertEquals("Matt",matt.getScreenName());
 	}
 
 	@Test
