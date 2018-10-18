@@ -12,7 +12,17 @@ class GroupTest {
 
 	@Test
 	void testGroup() {
-		fail("Not yet implemented");
+		Date date = new Date();
+		Group group1 = new Group("Group One", "The best Group ONE", date);
+		
+		assertTrue(isGroup(group1));
+	}
+	
+	boolean isGroup(Group g) {
+		if(g.getDateCreated() != null && g.getTitle() != null && g.getDescription() != null) {
+			return true;
+		}
+		return false;
 	}
 
 	@Test
