@@ -17,7 +17,7 @@ class AnswerTest {
 	@Test
 	void testAnswer() {
 		String expected = "Answer: This is an answer! for question Question One";
-		assertTrue(a.toString().equals(expected));
+		assertTrue(a != null);
 	}
 
 	@Test
@@ -28,7 +28,8 @@ class AnswerTest {
 
 	@Test
 	void testToString() {
-		fail("Not yet implemented");
+		String expected = "Answer: This is an answer! for question Question One";
+		assertTrue(a.toString().equals(expected));
 	}
 
 }
