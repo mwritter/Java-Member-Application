@@ -72,7 +72,9 @@ class MemberTest {
 
 	@Test
 	void testGetGroup() {
-		fail("Not yet implemented");
+		matt.joinGroup(g, date);
+		String groupName = "Group one";
+		assertTrue((groupName).equals(matt.getGroup(g.getTitle()).getTitle()));
 	}
 
 	@Test
