@@ -22,7 +22,8 @@ class AnswerTest {
 
 	@Test
 	void testGetQuestion() {
-		fail("Not yet implemented");
+		String expected = a.getQuestion().getText();
+		assertEquals(expected, q.getText());
 	}
 
 	@Test
