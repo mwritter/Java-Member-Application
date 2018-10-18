@@ -30,7 +30,7 @@ class MemberTest {
 
 	@Test
 	void testGetFirstName() {
-		fail("Not yet implemented");
+		assertEquals("Matthew",matt.getFirstName());
 	}
 
 	@Test
