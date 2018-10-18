@@ -79,7 +79,10 @@ class MemberTest {
 
 	@Test
 	void testGetGroups() {
-		fail("Not yet implemented");
+		matt.joinGroup(g, date);
+		for(Group group : matt.getGroups()) {
+			assertEquals(group, g);
+		}
 	}
 
 	@Test
