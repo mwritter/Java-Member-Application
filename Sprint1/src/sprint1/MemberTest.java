@@ -35,7 +35,7 @@ class MemberTest {
 
 	@Test
 	void testGetLastName() {
-		fail("Not yet implemented");
+		assertEquals("Ritter",matt.getLastName());
 	}
 
 	@Test
