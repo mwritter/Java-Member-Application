@@ -123,7 +123,14 @@ class MemberTest {
 
 	@Test
 	void testGetAnswers() {
-		fail("Not yet implemented");
+		matt.joinGroup(g, date);
+		Question q = new Question("Question one", "This is a question?", date);
+		matt.addQuestion(g, q, date);
+		Answer a = new Answer(q, "This is the Answer", date);
+		matt.addAnswer(g, q, a, date);
+		ArrayList<Answer> as = new ArrayList<Answer>();
+		as.add(a);
+		assertEquals(as, matt.getAnswers(g));
 	}
 
 	@Test
