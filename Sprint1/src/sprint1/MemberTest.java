@@ -6,20 +6,21 @@ import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 
+
+
 class MemberTest {
 	
-	
+	Date date = new Date();
+	Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
 	@Test
 	void testMember() {
-		Date date = new Date();
-		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
 		assertTrue(matt.getFirstName() != null && matt.getEmailAddress() != null);
 
 	}
 
 	@Test
 	void testGetEmailAddress() {
-		fail("Not yet implemented");
+		assertEquals("mritter2283@gmail.com", matt.getEmailAddress());
 	}
 
 	@Test
@@ -96,5 +97,6 @@ class MemberTest {
 	void testToString() {
 		fail("Not yet implemented");
 	}
+	
 
 }
