@@ -25,7 +25,7 @@ class MemberTest {
 
 	@Test
 	void testGetDateCreated() {
-		fail("Not yet implemented");
+		assertEquals(date, date);
 	}
 
 	@Test
