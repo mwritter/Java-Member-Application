@@ -18,7 +18,10 @@ class QuestionTest {
 
 	@Test
 	void testGetTitle() {
-		fail("Not yet implemented");
+		Date date = new Date();
+		Question q1 = new Question("Q1 title", "What time is it", date);
+		
+		assertEquals("Q1 title", q1.getTitle());
 	}
 
 	@Test
