@@ -94,7 +94,7 @@ class PostTest {
 		matt.addQuestion(group1, q1, date);
 		matt.addAnswer(group1, q1, a1, date);
 		
-		System.out.println(a1.getMembership().getGroup());
+		
 		boolean isMembershipSet = false;
 		if(a1.getMembership().getGroup() == group1 && a1.getMembership().getMember() == matt) {
 		 isMembershipSet = true;	
@@ -108,7 +108,18 @@ class PostTest {
 
 	@Test
 	void testGetMembership() {
-		fail("Not yet implemented");
+		Date date = new Date();
+		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
+		Group group1 = new Group("Group One", "The best Group ONE", date);
+		matt.joinGroup(group1, date);
+		Question q1 = new Question("Q1 Title", "Whats the weather like", date);
+		Answer a1 = new Answer(q1, "Weather looks greate", date);
+		matt.addQuestion(group1, q1, date);
+		matt.addAnswer(group1, q1, a1, date);
+		Membership m = a1.getMembership();
+		
+		assertTrue(m.getAnswers().contains(a1));
+		
 	}
 
 }
