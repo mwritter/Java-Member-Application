@@ -71,7 +71,16 @@ class PostTest {
 
 	@Test
 	void testGetGroup() {
-		fail("Not yet implemented");
+		Date date = new Date();
+		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
+		Group group1 = new Group("Group One", "The best Group ONE", date);
+		matt.joinGroup(group1, date);
+		Question q1 = new Question("Q1 Title", "Whats the weather like", date);
+		Answer a1 = new Answer(q1, "Weather looks greate", date);
+		matt.addQuestion(group1, q1, date);
+		matt.addAnswer(group1, q1, a1, date);
+		
+		assertEquals(group1, a1.getGroup());
 	}
 
 	@Test
