@@ -1,30 +1,30 @@
 package sprint1;
+
+
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.Arrays;
+
+
 import java.util.Date;
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.*;
 
 public class Member {
-
-	// instance variables
-	private Date dateCreated;
+	//private Date dateCreated;
+	private LocalDateTime dateCreated;
 	private String firstName;
 	private String lastName;
 	private String screenName; // emailAddress & screenName must be unique
 	private String emailAddress;
-<<<<<<< HEAD:Member.java
-	private List<Membership> memberships = new ArrayList<>();
-	
-
-=======
-    
 	private List<Membership> memberships = new ArrayList<>();
 	
 
 
->>>>>>> dacdc6f67d3ba5e8bde4fdfc8b150056d03e09c3:Sprint1/src/sprint1/Member.java
 	// Constructor method	
-	public Member(String firstName, String lastName, String screenName, String emailAddress, Date dateCreated) {
+	public Member(String firstName, String lastName, String screenName, String emailAddress, LocalDateTime dateCreated) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.screenName = screenName;
@@ -40,7 +40,7 @@ public class Member {
 
 	
 	//returns the date member was created
-	public Date getDateCreated() {
+	public LocalDateTime getDateCreated() {
 		return this.dateCreated;
 	}
 
@@ -63,22 +63,18 @@ public class Member {
 	}
 	
 	
-<<<<<<< HEAD:Member.java
 	//returns list of memberships this member is a part of
-=======
-	//returns list of memberships this member is a part of////////////////////////////////
->>>>>>> dacdc6f67d3ba5e8bde4fdfc8b150056d03e09c3:Sprint1/src/sprint1/Member.java
-	public List<Membership> getMemberships() {
+	protected List<Membership> getMemberships() {
 		return memberships;
 	}
 	// end of getter methods
 	
 	
     //Joins this member to group and records the dateJoined
-	public void joinGroup(Group groupName, Date localDateTime) {
-		Membership membership = new Membership(localDateTime, this, groupName);
+	public void joinGroup(Group group, LocalDateTime date) {
+		Membership membership = new Membership(date, this, group);
 	    this.memberships.add(membership);
-	    groupName.addMembership(membership);
+	    group.addMembership(membership);
 	}
 
 	
@@ -92,12 +88,9 @@ public class Member {
 	public Group getGroup(String groupID) {
 		Group temp = null;
 		for (Membership membership: this.memberships) {
-<<<<<<< HEAD:Member.java
 			if ( membership.getGroup().getTitle().equals(groupID) ) {
-=======
-			if ( membership.getGroup().getTitle().equals(groupID) ) {//should group class have group ID variable?
->>>>>>> dacdc6f67d3ba5e8bde4fdfc8b150056d03e09c3:Sprint1/src/sprint1/Member.java
 				temp = membership.getGroup();
+				return temp;
 			}
 		}
 		return temp;
@@ -108,49 +101,49 @@ public class Member {
 	public List<Group> getGroups() {
 		ArrayList<Group> groupList = new ArrayList<Group>();
 		for (Membership membership: this.memberships) {
-			groupList.add(membership.getGroup());
-		}
+			groupList.add(membership.getGroup());  
+		}      
+		/////////////////////////////////////////////////////////////////////////sort by title
+		
 		return groupList;
 	}	
 	
 	
 	//Adds the question to the group by this member and records
 	//the date the question was asked
-	public void addQuestion(Group groupName, Question question, Date date) {
-		for (Membership membership: memberships) {
+	public void addQuestion(Group groupName, Question question, LocalDateTime date) {
+			for (Membership membership: memberships) {
 			if (membership.getGroup().equals(groupName)) {
 				question.setMembership(membership);
-				membership.getQuestions().add(question);
-				//membership.addQuestion(question);
+				//membership.getQuestions().add(question);
+				membership.addQuestion(question);
 			}
 		}	
 	}
 
 	
 	//Returns the date this member joined this group
-	public Date getDateJoined(Group groupName) {
-		Date temp =null;
+	public LocalDateTime getDateJoined(Group groupName) {
+		LocalDateTime temp =null;
 		for (Membership membership: memberships) {
 			if (membership.getGroup().equals(groupName)) {
 				temp=membership.getDateJoined();
 			}
 		}
+		
 		return temp;
 	}
 
 	
 	//Adds this member's answer to this question which is in this group and 
 	//records the date answered
-	public void addAnswer(Group groupName, Question question, Answer answer, Date date) {
+	public void addAnswer(Group groupName, Question question, Answer answer, LocalDateTime date) {
 		question.addAnswer(answer);
 		for (Membership membership: memberships) {
 			if (membership.getGroup().equals(groupName)) {
 				answer.setMembership(membership);
 				membership.getAnswers().add(answer);
-<<<<<<< HEAD:Member.java
-=======
 				//membership.addAnswer(answer);
->>>>>>> dacdc6f67d3ba5e8bde4fdfc8b150056d03e09c3:Sprint1/src/sprint1/Member.java
 			}
 		}			
 	}
@@ -164,7 +157,8 @@ public class Member {
 				questionsList.addAll( membership.getQuestions());
 			}
 		}
-		return questionsList;
+		Collections.reverse(questionsList);
+		return (questionsList);
 	}
 
 	
@@ -176,18 +170,73 @@ public class Member {
 				answersList.addAll( membership.getAnswers());
 			}
 		}
-		return answersList;
+	    Collections.reverse(answersList);
+	    return answersList;
 	}
+	
+	
+	//getGroups(n:int):List<Group> – Returns a list of the n Groups that the member is most active in,
+	//sorted on title. Measure most active by the total questions posted and answers provided, in total. 
+	//If there are not n groups, then return the groups that exist.
+	List<Group> getGroups(int n) {
+		int activity=0;
+		Map<Group, Integer> map = new TreeMap<>();
+		ArrayList<Group> GroupList = new ArrayList<>();
+		for (Membership membership: memberships) {
+			 map.put(membership.getGroup(), membership.getGroup().getQuestions().size() + membership.getGroup().getAnswers().size() );///////////////////////
+		}
+		int counter =0;
+		for (Map.Entry entry : map.entrySet() ) {
+			counter++;
+			if (counter <= map.size() - n) {
+				GroupList.add((Group)entry.getKey() );
+			}
+		}
+		return GroupList;
+	}
+	
+	
+	//b.	getQuestions(group:Group, n:int):List<Question> – Returns the n most recent questions asked by 
+	//this member in this group sorted on the order they were asked, most recent first.
+	//List<Question> getQuestions(Group group, int n) {
+	//	
+		//return ;
+	//}
+	//		c.	getAnswers (group:Group, n:int):List<Answer> – Returns the n most recent answers asked by this 
+	//member in this group sorted on the order they were provided, most recent first.
+
 
 	
 	//Provides useful information about this member, neatly formatted
 	@Override
 	public String toString() {
-		return "\nMember Information" + //added "\n before "Member" and before "First" 
-			   "\nFirst Name: " +this.firstName +
-			   "\nLast Name: " + this.lastName + 
-			   "\nScreen Name: " + this.screenName + 
-			   "\nEmail address: " + this.emailAddress + 
-			   "\nDate Joined: " + this.dateCreated;
+		String data  = "\n------Member Information------" + 
+			   "\nFirst Name: " +firstName +
+			   "\nLast Name: " + lastName + 
+			   "\nScreen Name: " + screenName + 
+			   "\nEmail address: " + emailAddress + 
+			   "\nDate Joined: " + dateCreated +
+			   "\n------Questions by this member:------\n";
+				
+				for (Membership membership: memberships) {
+					 for (Question question: membership.getQuestions()) {
+						data += question + "\n"; 
+					 }
+					
+					//data +=(getQuestions(membership.getGroup()) + "");
+				}
+				data += "\n------Answers by this member------\n";
+				for (Membership membership: memberships) {
+					for (Answer answer: membership.getAnswers()) {
+						data += answer + "\n"; 
+					 //data +=(getAnswers(membership.getGroup()) + "");
+					}
+				}
+				data += "\n------Groups this member is a member of------\n";
+				for (Membership membership: memberships) { 
+						data += membership.getGroup() + "\n"; 
+				}				
+        return data;       		
 	}
+
 }//end of Member.java class
