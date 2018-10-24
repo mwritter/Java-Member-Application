@@ -103,8 +103,12 @@ public class Member {
 		for (Membership membership: this.memberships) {
 			groupList.add(membership.getGroup());  
 		}      
-		/////////////////////////////////////////////////////////////////////////sort by title
-		
+		Collections.sort(groupList, new Comparator<Group>()  {
+			@Override 
+			public int compare(Group o1, Group o2) {
+				return o1.getTitle().compareTo(o2.getTitle() );
+			}
+		});
 		return groupList;
 	}	
 	
@@ -185,6 +189,12 @@ public class Member {
 		for (Membership membership: memberships) {
 			 map.put(membership.getGroup(), membership.getGroup().getQuestions().size() + membership.getGroup().getAnswers().size() );///////////////////////
 		}
+		if (map.size() <= n) {
+			for (Map.Entry entry : map.entrySet() ) {
+				GroupList.add((Group)entry.getKey() );
+			}			
+			return GroupList; 	
+		}
 		int counter =0;
 		for (Map.Entry entry : map.entrySet() ) {
 			counter++;
@@ -198,15 +208,39 @@ public class Member {
 	
 	//b.	getQuestions(group:Group, n:int):List<Question> – Returns the n most recent questions asked by 
 	//this member in this group sorted on the order they were asked, most recent first.
-	//List<Question> getQuestions(Group group, int n) {
-	//	
-		//return ;
-	//}
-	//		c.	getAnswers (group:Group, n:int):List<Answer> – Returns the n most recent answers asked by this 
-	//member in this group sorted on the order they were provided, most recent first.
-
+	List<Question> getQuestions(Group group, int n) {
+		ArrayList<Question> questionsList = new ArrayList<Question>();
+		for (Membership membership: memberships) {
+			if (membership.getGroup().equals(group) ) {
+				questionsList.addAll( membership.getQuestions());
+			}
+		}
+		
+		for (int i = 0; i < questionsList.size() - n; i++) {
+			questionsList.remove(i);
+		}
+		Collections.reverse(questionsList);
+		return questionsList;
+	}
 
 	
+	//c.getAnswers (group:Group, n:int):List<Answer> – Returns the n most recent answers asked by this 
+	//member in this group sorted on the order they were provided, most recent first.
+	List<Question> getAnswers(Group group, int n) {
+		ArrayList<Question> answersList = new ArrayList<Question>();
+		for (Membership membership: memberships) {
+			if (membership.getGroup().equals(group) ) {
+				answersList.addAll( membership.getQuestions());
+			}
+		}
+		for (int i = 0; i < answersList.size() - n; i++) {
+			answersList.remove(i);
+		}
+		Collections.reverse(answersList);
+		return answersList;
+	}
+
+
 	//Provides useful information about this member, neatly formatted
 	@Override
 	public String toString() {
@@ -217,19 +251,15 @@ public class Member {
 			   "\nEmail address: " + emailAddress + 
 			   "\nDate Joined: " + dateCreated +
 			   "\n------Questions by this member:------\n";
-				
 				for (Membership membership: memberships) {
 					 for (Question question: membership.getQuestions()) {
 						data += question + "\n"; 
 					 }
-					
-					//data +=(getQuestions(membership.getGroup()) + "");
 				}
 				data += "\n------Answers by this member------\n";
 				for (Membership membership: memberships) {
 					for (Answer answer: membership.getAnswers()) {
 						data += answer + "\n"; 
-					 //data +=(getAnswers(membership.getGroup()) + "");
 					}
 				}
 				data += "\n------Groups this member is a member of------\n";
