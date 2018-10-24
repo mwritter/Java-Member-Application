@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 
 class GroupTest {
 	LocalDateTime date = LocalDateTime.now();
-	
 	Group group1 = new Group("Group One", "The best Group ONE", date);
+	Member matt = new Member("Matthew", "Ritter", "Matt", "mwritter@valdosta.edu", date);
 	@Test
 	void testGroup() {
 		
@@ -48,15 +48,15 @@ class GroupTest {
 	@Test
 	void testGetNumberOfMembers() {
 		
-		Group group1 = new Group("Group One", "The best Group ONE", date);
+		
 		matt.joinGroup(group1, date);
-		assertEquals(1,group1.getNumberOfMembers());
+		assertEquals(1,group1.getNumOfMembers());
 	}
 
 	@Test
 	void testGetMember() {
 		
-		Group group1 = new Group("Group One", "The best Group ONE", date);
+		
 		matt.joinGroup(group1, date);
 		assertEquals(matt,group1.getMember("mritter2283@gmail.com"));
 	}
@@ -64,16 +64,16 @@ class GroupTest {
 	@Test
 	void testAddMembership() {
 		
-		Group group1 = new Group("Group One", "The best Group ONE", date);
+		
 		matt.joinGroup(group1, date);
-		assertEquals(1, group1.getNumberOfMembers());
+		assertEquals(1, group1.getNumOfMembers());
 	}
 
 	@Test
 	void testGetMembers() {
 		
 		
-		Group group1 = new Group("Group One", "The best Group ONE", date);
+		
 		matt.joinGroup(group1, date);
 		List<Member> myGroupMembers = new ArrayList<Member>();
 		myGroupMembers.add(matt);
@@ -84,7 +84,7 @@ class GroupTest {
 	@Test
 	void testGetQuestions() {
 		
-		Group group1 = new Group("Group One", "The best Group ONE", date);
+		
 		matt.joinGroup(group1, date);
 		Question q1 = new Question("Q1 Title", "Whats the weather like", date);
 		matt.addQuestion(group1, q1, date);
@@ -99,7 +99,7 @@ class GroupTest {
 	@Test
 	void testGetAnswers() {
 		
-		Group group1 = new Group("Group One", "The best Group ONE", date);
+		
 		matt.joinGroup(group1, date);
 		Question q1 = new Question("Q1 Title", "Whats the weather like", date);
 		Answer a1 = new Answer(q1, "Weather looks greate", date);
