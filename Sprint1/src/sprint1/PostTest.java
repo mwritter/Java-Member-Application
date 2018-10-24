@@ -5,11 +5,11 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 
 class PostTest {
-
+	LocalDateTime date = LocalDateTime.now();
 
 	@Test
 	void testGetText() {
-		LocalDateTime date = new LocalDateTime.now();
+		
 		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
 		Group group1 = new Group("Group One", "The best Group ONE", date);
 		matt.joinGroup(group1, date);
@@ -25,7 +25,7 @@ class PostTest {
 
 	@Test
 	void testGetDate() {
-		LocalDateTime date = new LocalDateTime.now();
+		
 		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
 		Group group1 = new Group("Group One", "The best Group ONE", date);
 		matt.joinGroup(group1, date);
@@ -39,7 +39,7 @@ class PostTest {
 
 	@Test
 	void testSetText() {
-		Date date = new Date();
+		
 		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
 		Group group1 = new Group("Group One", "The best Group ONE", date);
 		matt.joinGroup(group1, date);
@@ -55,7 +55,7 @@ class PostTest {
 
 	@Test
 	void testGetAuthor() {
-		Date date = new Date();
+		
 		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
 		Group group1 = new Group("Group One", "The best Group ONE", date);
 		matt.joinGroup(group1, date);
@@ -69,7 +69,7 @@ class PostTest {
 
 	@Test
 	void testGetGroup() {
-		Date date = new Date();
+		
 		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
 		Group group1 = new Group("Group One", "The best Group ONE", date);
 		matt.joinGroup(group1, date);
@@ -83,7 +83,7 @@ class PostTest {
 
 	@Test
 	void testSetMembership() {
-		Date date = new Date();
+		
 		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
 		Group group1 = new Group("Group One", "The best Group ONE", date);
 		matt.joinGroup(group1, date);
@@ -106,7 +106,7 @@ class PostTest {
 
 	@Test
 	void testGetMembership() {
-		Date date = new Date();
+		
 		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
 		Group group1 = new Group("Group One", "The best Group ONE", date);
 		matt.joinGroup(group1, date);
