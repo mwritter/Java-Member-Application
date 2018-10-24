@@ -1,9 +1,7 @@
 package sprint1;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Date;
-
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 
 class PostTest {
@@ -11,7 +9,7 @@ class PostTest {
 
 	@Test
 	void testGetText() {
-		Date date = new Date();
+		LocalDateTime date = new LocalDateTime.now();
 		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
 		Group group1 = new Group("Group One", "The best Group ONE", date);
 		matt.joinGroup(group1, date);
@@ -27,7 +25,7 @@ class PostTest {
 
 	@Test
 	void testGetDate() {
-		Date date = new Date();
+		LocalDateTime date = new LocalDateTime.now();
 		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
 		Group group1 = new Group("Group One", "The best Group ONE", date);
 		matt.joinGroup(group1, date);

@@ -1,17 +1,15 @@
 package sprint1;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.ArrayList;
-import java.util.Date;
-
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 
 class QuestionTest {
 
 	@Test
 	void testQuestion() {
-		Date date = new Date();
+		LocalDateTime date = new LocalDateTime.now();
 		Question q1 = new Question("Q1 title", "What time is it", date);
 		
 		assertFalse(q1 == null);
@@ -19,7 +17,7 @@ class QuestionTest {
 
 	@Test
 	void testGetTitle() {
-		Date date = new Date();
+		LocalDateTime date = new LocalDateTime.now();
 		Question q1 = new Question("Q1 title", "What time is it", date);
 		
 		assertEquals("Q1 title", q1.getTitle());
@@ -27,7 +25,7 @@ class QuestionTest {
 
 	@Test
 	void testSetTitle() {
-		Date date = new Date();
+		LocalDateTime date = new LocalDateTime.now();
 		Question q1 = new Question("Q1 title", "What time is it", date);
 		q1.setTitle("New Title");
 		assertEquals("New Title", q1.getTitle());
@@ -35,7 +33,7 @@ class QuestionTest {
 
 	@Test
 	void testAddAnswer() {
-		Date date = new Date();
+		LocalDateTime date = new LocalDateTime.now();
 		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
 		Group group1 = new Group("Group One", "The best Group ONE", date);
 		matt.joinGroup(group1, date);
@@ -49,7 +47,7 @@ class QuestionTest {
 
 	@Test
 	void testGetAnswers() {
-		Date date = new Date();
+		LocalDateTime date = new LocalDateTime.now();
 		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
 		Group group1 = new Group("Group One", "The best Group ONE", date);
 		matt.joinGroup(group1, date);
@@ -65,7 +63,7 @@ class QuestionTest {
 
 	@Test
 	void testToString() {
-		Date date = new Date();
+		LocalDateTime date = new LocalDateTime.now();
 		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
 		Group group1 = new Group("Group One", "The best Group ONE", date);
 		matt.joinGroup(group1, date);

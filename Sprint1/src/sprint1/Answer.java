@@ -1,6 +1,6 @@
 package sprint1;
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -9,7 +9,7 @@ import java.util.List;
     	private String title;
 		private Question question;
 
-		public Answer (Question question, String text, Date dateCreated) { 
+		public Answer (Question question, String text, LocalDateTime dateCreated) { 
     		super(text,dateCreated);
     		this.question = question;
     		}
