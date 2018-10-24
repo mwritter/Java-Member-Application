@@ -1,3 +1,4 @@
+package sprint1;
 import java.util.List;
 import java.util.Date;
 import java.util.ArrayList;
@@ -11,9 +12,17 @@ public class Member {
 	private String lastName;
 	private String screenName; // emailAddress & screenName must be unique
 	private String emailAddress;
+<<<<<<< HEAD:Member.java
 	private List<Membership> memberships = new ArrayList<>();
 	
 
+=======
+    
+	private List<Membership> memberships = new ArrayList<>();
+	
+
+
+>>>>>>> dacdc6f67d3ba5e8bde4fdfc8b150056d03e09c3:Sprint1/src/sprint1/Member.java
 	// Constructor method	
 	public Member(String firstName, String lastName, String screenName, String emailAddress, Date dateCreated) {
 		this.firstName = firstName;
@@ -54,7 +63,11 @@ public class Member {
 	}
 	
 	
+<<<<<<< HEAD:Member.java
 	//returns list of memberships this member is a part of
+=======
+	//returns list of memberships this member is a part of////////////////////////////////
+>>>>>>> dacdc6f67d3ba5e8bde4fdfc8b150056d03e09c3:Sprint1/src/sprint1/Member.java
 	public List<Membership> getMemberships() {
 		return memberships;
 	}
@@ -79,7 +92,11 @@ public class Member {
 	public Group getGroup(String groupID) {
 		Group temp = null;
 		for (Membership membership: this.memberships) {
+<<<<<<< HEAD:Member.java
 			if ( membership.getGroup().getTitle().equals(groupID) ) {
+=======
+			if ( membership.getGroup().getTitle().equals(groupID) ) {//should group class have group ID variable?
+>>>>>>> dacdc6f67d3ba5e8bde4fdfc8b150056d03e09c3:Sprint1/src/sprint1/Member.java
 				temp = membership.getGroup();
 			}
 		}
@@ -130,6 +147,10 @@ public class Member {
 			if (membership.getGroup().equals(groupName)) {
 				answer.setMembership(membership);
 				membership.getAnswers().add(answer);
+<<<<<<< HEAD:Member.java
+=======
+				//membership.addAnswer(answer);
+>>>>>>> dacdc6f67d3ba5e8bde4fdfc8b150056d03e09c3:Sprint1/src/sprint1/Member.java
 			}
 		}			
 	}
