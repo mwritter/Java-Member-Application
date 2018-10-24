@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 
 class AnswerTest {
 
-	LocalDateTime date = new LocalDateTime.now();
+	LocalDateTime date;
 	Question q = new Question("Question One", "This is a question?", date);
-	Answer a = new Answer(q, "This is an answer!", date);
+	Answer a = new Answer(q, "This is an answer!", date.now());
 	
 	
 	@Test

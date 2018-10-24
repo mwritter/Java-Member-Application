@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 
 class MemberTest {
 	
-	LocalDateTime date = new LocalDateTime.now();
-	Group g = new Group("Group one", "The best Group", date);
+	LocalDateTime date;
+	Group g = new Group("Group one", "The best Group", date.now());
 	Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
 	@Test
 	void testMember() {
