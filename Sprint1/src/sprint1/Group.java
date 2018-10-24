@@ -1,23 +1,23 @@
 package sprint1;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Group {
-    private Date dateCreated;
+    private LocalDateTime dateCreated;
     private String title;
     private String description;
     private List<Answer> answers;
     private List<Membership> memberships = new ArrayList<>();
     private List<Question> questions;
 
-    Group(String title, String description, Date date) {
+    Group(String title, String description, LocalDateTime date) {
         this.title = title;
         this.description = description;
         this.dateCreated = date;
     }
 
-    Date getDateCreated() {
+    LocalDateTime getDateCreated() {
         return dateCreated;
     }
 
@@ -30,7 +30,7 @@ public class Group {
         return description;
     }
 
-    int getNumberOfMembers() {
+    int getNumOfMembers() {
         return memberships.size();
     }
 
