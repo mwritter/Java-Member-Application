@@ -1,11 +1,11 @@
 package sprint1;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 abstract class Post {
 
     // initialize variables
     protected String text;
-    protected Date date;
+    protected LocalDateTime date;
 
     protected Membership membership;
 

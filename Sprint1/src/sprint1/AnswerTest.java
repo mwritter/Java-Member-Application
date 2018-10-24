@@ -1,15 +1,14 @@
 package sprint1;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class AnswerTest {
 
-	Date date = new Date();
+	LocalDateTime date = new LocalDateTime.now();
 	Question q = new Question("Question One", "This is a question?", date);
 	Answer a = new Answer(q, "This is an answer!", date);
 	
