@@ -6,10 +6,11 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 
 class QuestionTest {
-
+	LocalDateTime date = LocalDateTime.now();
+	
 	@Test
 	void testQuestion() {
-		LocalDateTime date = new LocalDateTime.now();
+		
 		Question q1 = new Question("Q1 title", "What time is it", date);
 		
 		assertFalse(q1 == null);
@@ -17,7 +18,7 @@ class QuestionTest {
 
 	@Test
 	void testGetTitle() {
-		LocalDateTime date = new LocalDateTime.now();
+		
 		Question q1 = new Question("Q1 title", "What time is it", date);
 		
 		assertEquals("Q1 title", q1.getTitle());
@@ -25,7 +26,7 @@ class QuestionTest {
 
 	@Test
 	void testSetTitle() {
-		LocalDateTime date = new LocalDateTime.now();
+		
 		Question q1 = new Question("Q1 title", "What time is it", date);
 		q1.setTitle("New Title");
 		assertEquals("New Title", q1.getTitle());
@@ -33,7 +34,7 @@ class QuestionTest {
 
 	@Test
 	void testAddAnswer() {
-		LocalDateTime date = new LocalDateTime.now();
+		
 		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
 		Group group1 = new Group("Group One", "The best Group ONE", date);
 		matt.joinGroup(group1, date);
@@ -47,7 +48,7 @@ class QuestionTest {
 
 	@Test
 	void testGetAnswers() {
-		LocalDateTime date = new LocalDateTime.now();
+		
 		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
 		Group group1 = new Group("Group One", "The best Group ONE", date);
 		matt.joinGroup(group1, date);
@@ -63,7 +64,7 @@ class QuestionTest {
 
 	@Test
 	void testToString() {
-		LocalDateTime date = new LocalDateTime.now();
+		
 		Member matt = new Member("Matthew", "Ritter", "Matt", "mritter2283@gmail.com", date);
 		Group group1 = new Group("Group One", "The best Group ONE", date);
 		matt.joinGroup(group1, date);
