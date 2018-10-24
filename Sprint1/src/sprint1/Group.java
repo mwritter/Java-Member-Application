@@ -36,14 +36,13 @@ public class Group {
 
     // Returns the Member of this group that corresponds to the emailAddress
     Member getMember(String emailAddress) {
-
         for (Membership membership : memberships) {
             if (membership.getMember().getEmailAddress().equals(emailAddress)) {
                 return membership.getMember();
             }
         }
-        Date date = new Date();
-        return new Member("Dummy", "Dummy", "NoScreenName", "NoEmail", date);
+        
+        return null;
     }
 
     void addMembership(Membership membership) {
@@ -70,9 +69,13 @@ public class Group {
     List<Answer> getAnswers() {
         return answers;
     }
+    
+   
+    
 
     // Provides useful information about this group, neatly formatted
     public String toString() {
         return "Group: " + this.title;
     }
+    
 }
