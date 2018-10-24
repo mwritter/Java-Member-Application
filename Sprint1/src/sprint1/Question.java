@@ -1,6 +1,6 @@
 package sprint1;
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 class Question extends Post {
@@ -8,7 +8,7 @@ class Question extends Post {
     private String title;
     private List<Answer> answers = new ArrayList<>();
 
-    public Question(String title, String text, Date dateCreated) {
+    public Question(String title, String text, LocalDateTime dateCreated) {
         super(text, dateCreated);
         this.title = title;
     }
