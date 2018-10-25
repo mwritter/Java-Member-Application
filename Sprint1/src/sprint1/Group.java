@@ -37,6 +37,7 @@ public class Group {
     // Returns the Member of this group that corresponds to the emailAddress
     Member getMember(String emailAddress) {
         for (Membership membership : memberships) {
+        	System.out.println(membership.getMember().getEmailAddress());
             if (membership.getMember().getEmailAddress().equals(emailAddress)) {
                 return membership.getMember();
             }
@@ -60,14 +61,28 @@ public class Group {
     // Returns all questions that have been asked in this group in the order
     // that they were asked
     List<Question> getQuestions() {
-        return questions;
+    	List<Question> groupQuestions = new ArrayList<>();
+    	for(Member member : this.getMembers()) {
+    		for(Question question : member.getQuestions(this)) {
+    			groupQuestions.add(question);
+    		}
+    		
+    	}
+        return groupQuestions;
     }
 
     // Returns all answers to all questions that have been asked in this group in
     // the order
     // that they were answered
     List<Answer> getAnswers() {
-        return answers;
+    	List<Answer> groupAnswers = new ArrayList<>();
+    	for(Member member : this.getMembers()) {
+    		for(Answer answer : member.getAnswers(this)) {
+    			groupAnswers.add(answer);
+    		}
+    		
+    	}
+        return groupAnswers;
     }
     
    

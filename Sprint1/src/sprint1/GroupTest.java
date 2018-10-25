@@ -56,9 +56,8 @@ class GroupTest {
 	@Test
 	void testGetMember() {
 		
-		
 		matt.joinGroup(group1, date);
-		assertEquals(matt,group1.getMember("mritter2283@gmail.com"));
+		assertEquals(matt,group1.getMember("mwritter@valdosta.edu"));
 	}
 
 	@Test
@@ -106,7 +105,7 @@ class GroupTest {
 		matt.addQuestion(group1, q1, date);
 		List<Question> myGroupQuestions = new ArrayList<Question>();
 		List<Answer> myGroupAnswers = new ArrayList<Answer>();
-		
+		matt.addAnswer(group1, q1, a1, date);
 		myGroupAnswers.add(a1);
 		
 		System.out.println(myGroupAnswers);

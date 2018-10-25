@@ -50,6 +50,8 @@ public class MainTest {
         System.out.println("============");
         System.out.println("GetAnswers For Matt: " + matt.getAnswers(group1));
         System.out.println("============");
+        System.out.println("GetAnswers For Group1: " + group1.getAnswers());
+        System.out.println("============");
         System.out.println("GetAuthor of answer1" + answer1.getAuthor());
         System.out.println("============");
         System.out.println("Member toString method: " + matt.toString());
