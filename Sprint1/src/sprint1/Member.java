@@ -204,6 +204,24 @@ public class Member {
 	
 	//b.	getQuestions(group:Group, n:int):List<Question> – Returns the n most recent questions asked by 
 	//this member in this group sorted on the order they were asked, most recent first.
+	List<Question> getQuestions(Group group, int n) {
+		ArrayList<Question> questionsList = new ArrayList<Question>();
+		for (Membership membership: memberships) {
+			if (membership.getGroup().equals(group) ) {
+				questionsList.addAll( membership.getQuestions());
+			}
+		}
+		
+		for (int i = 0; i < questionsList.size() - n; i++) {
+			questionsList.remove(i);
+		}
+		Collections.reverse(questionsList);
+		return questionsList;
+	}
+
+	
+	//c.getAnswers (group:Group, n:int):List<Answer> – Returns the n most recent answers asked by this 
+	//member in this group sorted on the order they were provided, most recent first.
 	
 
 	//Provides useful information about this member, neatly formatted
@@ -233,5 +251,7 @@ public class Member {
 				}				
         return data;       		
 	}
+
+}//end of Member.java class
 
 }//end of Member.java class
