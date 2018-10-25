@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+
 import org.junit.jupiter.api.Test;
 
 
@@ -70,14 +72,19 @@ class GroupTest {
 
 	@Test
 	void testGetMembers() {
-		
-		
+		Member b = new Member("V", "b", "Gin", "mwritter@valdosta.edu", date);
+		Member a = new Member("M", "a", "Matt", "mwritter@valdosta.edu", date);
 		
 		matt.joinGroup(group1, date);
-		List<Member> myGroupMembers = new ArrayList<Member>();
-		myGroupMembers.add(matt);
-		
-		assertEquals(myGroupMembers,group1.getMembers());
+		List<String> myGroupMembers = new ArrayList<>();
+		myGroupMembers.add(matt.getLastName());
+		myGroupMembers.add(b.getLastName());
+		myGroupMembers.add(a.getLastName());
+		Collections.sort(myGroupMembers);
+		b.joinGroup(group1, date);
+		a.joinGroup(group1, date);
+		System.out.println("THESE ARE THE MEMBERS: "+group1.getMembers());
+		assertEquals(myGroupMembers.get(0),group1.getMembers().get(0).getLastName());
 	}
 
 	@Test
