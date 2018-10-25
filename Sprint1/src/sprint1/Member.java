@@ -103,8 +103,12 @@ public class Member {
 		for (Membership membership: this.memberships) {
 			groupList.add(membership.getGroup());  
 		}      
-		/////////////////////////////////////////////////////////////////////////sort by title
-		
+		Collections.sort(groupList, new Comparator<Group>()  {
+			@Override 
+			public int compare(Group o1, Group o2) {
+				return o1.getTitle().compareTo(o2.getTitle() );
+			}
+		});
 		return groupList;
 	}	
 	
