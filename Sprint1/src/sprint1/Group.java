@@ -1,6 +1,8 @@
 package sprint1;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Group {
@@ -55,6 +57,17 @@ public class Group {
         for (Membership membership : memberships) {
             members.add(membership.getMember());
         }
+        
+        Collections.sort(members, new Comparator<Member>() {
+        	public int compare(Member m1, Member m2) {
+        		if(m1.getLastName().equals(m2.getLastName())) {
+        			return m1.getFirstName().compareTo(m2.getFirstName());
+        		} else {
+        			return m1.getLastName().compareTo(m2.getLastName());
+        		}
+        	}
+        });
+        
         return members;
     }
 
