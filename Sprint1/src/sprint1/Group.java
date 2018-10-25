@@ -55,6 +55,7 @@ public class Group {
     List<Member> getMembers() {
         List<Member> members = new ArrayList<>();
         for (Membership membership : memberships) {
+        	
             members.add(membership.getMember());
         }
         

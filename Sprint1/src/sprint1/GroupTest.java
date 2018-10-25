@@ -72,18 +72,19 @@ class GroupTest {
 
 	@Test
 	void testGetMembers() {
-		Member b = new Member("V", "b", "Gin", "mwritter@valdosta.edu", date);
-		Member a = new Member("M", "a", "Matt", "mwritter@valdosta.edu", date);
+		Member b = new Member("V", "Aitter", "Gin", "mwritter@valdosta.edu", date);
+		Member a = new Member("M", "Bitter", "Matt", "mwritter@valdosta.edu", date);
 		
 		matt.joinGroup(group1, date);
 		List<String> myGroupMembers = new ArrayList<>();
 		myGroupMembers.add(matt.getLastName());
 		myGroupMembers.add(b.getLastName());
 		myGroupMembers.add(a.getLastName());
+		
 		Collections.sort(myGroupMembers);
 		b.joinGroup(group1, date);
 		a.joinGroup(group1, date);
-		System.out.println("THESE ARE THE MEMBERS: "+group1.getMembers());
+		System.out.println("\nTHESE ARE THE MEMBERS: "+group1.getMembers());
 		assertEquals(myGroupMembers.get(0),group1.getMembers().get(0).getLastName());
 	}
 
