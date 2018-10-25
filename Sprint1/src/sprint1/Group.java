@@ -103,6 +103,29 @@ public class Group {
         return groupAnswers;
     }
     
+    List<Member> getActiveMembers(int n){
+    	 List<Member> members = new ArrayList<>();
+         for (Membership membership : memberships) {
+             members.add(membership.getMember());
+         }
+         
+         Group memberGroup = this;
+       
+         
+         Collections.sort(members, new Comparator<Member>() {
+        	 public int compare(Member m1, Member m2) {
+        		 int activityLevel_m1 = m1.getAnswers(memberGroup).size() +
+        				 			m1.getQuestions(memberGroup).size();
+        		 int activityLevel_m2 = m1.getAnswers(memberGroup).size() +
+				 					m2.getQuestions(memberGroup).size();
+        		 
+        		 return activityLevel_m1 - activityLevel_m2;
+        	 }
+         });
+         
+         return members;
+         
+    }
    
     
 
