@@ -123,13 +123,16 @@ public class Group {
         		 return activityLevel_m2 - activityLevel_m1;
         	 }
          });
-         
-         
-         
          return members.subList(0, n);
-         
+    }
+    
+    List<Question> getQuestions(int n){	
+    	return this.getQuestions().subList(0, n);
     }
    
+    List<Answer> getAnswers(int n){
+    	return this.getAnswers().subList(0, n);
+    }
     
 
     // Provides useful information about this group, neatly formatted
