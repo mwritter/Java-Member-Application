@@ -8,16 +8,41 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
+
 class GroupTest {
+	
 	LocalDateTime date = LocalDateTime.now();
 	Group group1 = new Group("Group One", "The best Group ONE", date);
 	Member matt = new Member("Matthew", "Ritter", "Matt", "mwritter@valdosta.edu", date);
+	List<Member> memberList = new ArrayList<>(10);
+	Question question = new Question("title","text", date);
+	
+	@BeforeEach
+	void makeGroups() {
+		int id = 0;
+		
+		while(memberList.size() <= 10) {
+			int random = (int) (Math.random() * 100);
+			memberList.add(new Member("id"+id, "lastname", "screenname", "email", date));
+			id++;
+			memberList.get(memberList.size()-1).joinGroup(group1, date);
+			while(random > 0) {
+				memberList.get(memberList.size()-1).addAnswer(group1, question, (new Answer(question,"answer",date)), date);
+				random--;
+			}
+			
+		}
+		
+		
+	}
+	
 	@Test
 	void testGroup() {
-		
 		
 		assertTrue(isGroup(group1));
 	}
@@ -120,6 +145,18 @@ class GroupTest {
 		System.out.println(group1.getAnswers());
 		
 		assertEquals(myGroupAnswers, group1.getAnswers());
+	}
+	
+	@Test 
+	void testGetActiveMembers(){
+		System.out.println("================ACTIVE=========");
+		
+		
+		for(Member m : group1.getActiveMembers(5)) {
+			System.out.print(m.getFirstName());
+			System.out.println("# of answers"+ m.getAnswers(group1).size());
+			System.out.println("# of questions" + m.getQuestions(group1).size());
+		}
 	}
 
 	@Test

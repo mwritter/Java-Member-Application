@@ -102,7 +102,7 @@ public class Group {
     	Collections.reverse(groupAnswers);
         return groupAnswers;
     }
-    
+    //Returns most the n most active members based on number of posts
     List<Member> getActiveMembers(int n){
     	 List<Member> members = new ArrayList<>();
          for (Membership membership : memberships) {
@@ -116,14 +116,17 @@ public class Group {
         	 public int compare(Member m1, Member m2) {
         		 int activityLevel_m1 = m1.getAnswers(memberGroup).size() +
         				 			m1.getQuestions(memberGroup).size();
-        		 int activityLevel_m2 = m1.getAnswers(memberGroup).size() +
+        		 int activityLevel_m2 = m2.getAnswers(memberGroup).size() +
 				 					m2.getQuestions(memberGroup).size();
         		 
-        		 return activityLevel_m1 - activityLevel_m2;
+        		 
+        		 return activityLevel_m2 - activityLevel_m1;
         	 }
          });
          
-         return members;
+         
+         
+         return members.subList(0, n);
          
     }
    
