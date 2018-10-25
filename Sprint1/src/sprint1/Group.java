@@ -81,7 +81,10 @@ public class Group {
     			groupQuestions.add(question);
     		}
     		
+    		
+    		
     	}
+    	Collections.reverse(groupQuestions);
         return groupQuestions;
     }
 
@@ -96,6 +99,7 @@ public class Group {
     		}
     		
     	}
+    	Collections.reverse(groupAnswers);
         return groupAnswers;
     }
     
