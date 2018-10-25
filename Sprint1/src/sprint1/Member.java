@@ -222,7 +222,20 @@ public class Member {
 	
 	//c.getAnswers (group:Group, n:int):List<Answer> – Returns the n most recent answers asked by this 
 	//member in this group sorted on the order they were provided, most recent first.
-	
+	List<Question> getAnswers(Group group, int n) {
+		ArrayList<Question> answersList = new ArrayList<Question>();
+		for (Membership membership: memberships) {
+			if (membership.getGroup().equals(group) ) {
+				answersList.addAll( membership.getQuestions());
+			}
+		}
+		for (int i = 0; i < answersList.size() - n; i++) {
+			answersList.remove(i);
+		}
+		Collections.reverse(answersList);
+		return answersList;
+	}
+
 
 	//Provides useful information about this member, neatly formatted
 	@Override
@@ -251,7 +264,5 @@ public class Member {
 				}				
         return data;       		
 	}
-
-}//end of Member.java class
 
 }//end of Member.java class
