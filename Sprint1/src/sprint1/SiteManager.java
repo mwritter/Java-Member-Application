@@ -83,5 +83,15 @@ public class SiteManager {
 			});
 			return match;
 		}
+		public boolean addGroup(String title, String description, LocalDateTime dateCreated) {
+			Group newGroup = new Group(title, description, dateCreated);
+			for (int i = 0; i < groupList.size(); i++) {
+				if (newGroup.equals(groupList.get(i))) {
+					return false;
+				}
+			}
+			groupList.add(newGroup);
+			return true;
+		}
 }
 
