@@ -72,5 +72,16 @@ public class SiteManager {
 					match.add(Member);
 				}
 			}
+			Collections.sort(match, new Comparator<Member>() {
+				@Override
+				public int compare(Member o1, Member o2) {
+					int res = o1.getLastName().compareToIgnoreCase(o2.getLastName());
+					if (res != 0)
+						return res;
+					return o1.getFirstName().compareTo(o2.getFirstName());
+				}
+			});
+			return match;
+		}
 }
 
