@@ -108,5 +108,17 @@ public class SiteManager {
 
 			return group;
 		}
+		public List<Group> getGroups() {
+			if (groupList.size() <= 1) {
+				return groupList;
+			}
+			Collections.sort(groupList, new Comparator<Group>() {
+				@Override
+				public int compare(Group o1, Group o2) {
+					return o1.getTitle().compareTo(o2.getTitle());
+				}
+			});
+			return groupList;
+		}
 }
 
