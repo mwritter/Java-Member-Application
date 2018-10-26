@@ -27,8 +27,14 @@ class PersistanceManager {
    
    //Static method to read the system from file and return a SiteManager object
    public static SiteManager read (FileInputStream file) {
-      ObjectInputStream binFile = new ObjectInputStream(file);
-      SiteManager savedSiteManager = (SiteManager) binFile.readObject();
+	   SiteManager savedSiteManager = null;
+	   try {
+		   ObjectInputStream binFile = new ObjectInputStream(file);
+		   savedSiteManager = (SiteManager) binFile.readObject();
+	   }catch(Exception e){
+		   System.out.println(e);
+	   }
+     
       
       return savedSiteManager;
    }
