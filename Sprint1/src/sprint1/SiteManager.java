@@ -44,5 +44,21 @@ public class SiteManager {
 			}
 			return member;
 		}
+		// Returns a list of all Members, sorted by last name, then first name
+		public List<Member> getMembers() {
+			if (memberList.size() < 1) {
+				return memberList;
+			}
+			Collections.sort(memberList, new Comparator<Member>() {
+				@Override
+				public int compare(Member o1, Member o2) {
+					int res = o1.getLastName().compareToIgnoreCase(o2.getLastName());
+					if (res != 0)
+						return res;
+					return o1.getFirstName().compareTo(o2.getFirstName());
+				}
+			});
+			return memberList;
+		}
 }
 
