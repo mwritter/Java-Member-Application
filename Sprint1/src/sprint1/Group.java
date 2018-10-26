@@ -1,6 +1,8 @@
 package sprint1;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Group {
@@ -53,8 +55,20 @@ public class Group {
     List<Member> getMembers() {
         List<Member> members = new ArrayList<>();
         for (Membership membership : memberships) {
+        	
             members.add(membership.getMember());
         }
+        
+        Collections.sort(members, new Comparator<Member>() {
+        	public int compare(Member m1, Member m2) {
+        		if(m1.getLastName().equals(m2.getLastName())) {
+        			return m1.getFirstName().compareTo(m2.getFirstName());
+        		} else {
+        			return m1.getLastName().compareTo(m2.getLastName());
+        		}
+        	}
+        });
+        
         return members;
     }
 
@@ -67,7 +81,10 @@ public class Group {
     			groupQuestions.add(question);
     		}
     		
+    		
+    		
     	}
+    	Collections.reverse(groupQuestions);
         return groupQuestions;
     }
 
@@ -82,10 +99,40 @@ public class Group {
     		}
     		
     	}
+    	Collections.reverse(groupAnswers);
         return groupAnswers;
     }
+    //Returns most the n most active members based on number of posts
+    List<Member> getActiveMembers(int n){
+    	 List<Member> members = new ArrayList<>();
+         for (Membership membership : memberships) {
+             members.add(membership.getMember());
+         }
+         
+         Group memberGroup = this;
+       
+         
+         Collections.sort(members, new Comparator<Member>() {
+        	 public int compare(Member m1, Member m2) {
+        		 int activityLevel_m1 = m1.getAnswers(memberGroup).size() +
+        				 			m1.getQuestions(memberGroup).size();
+        		 int activityLevel_m2 = m2.getAnswers(memberGroup).size() +
+				 					m2.getQuestions(memberGroup).size();
+        		 
+        		 
+        		 return activityLevel_m2 - activityLevel_m1;
+        	 }
+         });
+         return members.subList(0, n);
+    }
     
+    List<Question> getQuestions(int n){	
+    	return this.getQuestions().subList(0, n);
+    }
    
+    List<Answer> getAnswers(int n){
+    	return this.getAnswers().subList(0, n);
+    }
     
 
     // Provides useful information about this group, neatly formatted
