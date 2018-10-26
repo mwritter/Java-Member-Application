@@ -60,5 +60,17 @@ public class SiteManager {
 			});
 			return memberList;
 		}
+		// Returns a list of all Members where text (partially) matches any of
+		// firstName, lastName,
+		// screenName, emailAddress across all Members, sorted by last name, then first
+		// name
+		public List<Member> getMembers(String text) {
+			List<Member> match = new ArrayList<>();
+			for (Member Member : memberList) {
+				if (Member.getFirstName().contains(text) || Member.getLastName().contains(text)
+						|| Member.getScreenName().contains(text) || Member.getEmailAddress().contains(text)) {
+					match.add(Member);
+				}
+			}
 }
 
