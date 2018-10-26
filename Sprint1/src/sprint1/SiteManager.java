@@ -180,5 +180,31 @@ public class SiteManager {
 			Collections.reverse(activeGroups);
 			return activeGroups;
 		}
+		// Returns a list of the n Members that have the most questions and answers
+		// across all the groups they are a member of, sorted descending on the total
+		// questions and answers
+		public List<Member> getActiveMembers(int n) {
+			List<Member> activeMembers = new ArrayList<>();
+			// for (int i=0; i< memberList.size(); i++) {//////////Unnecessary?///
+			// activeMembers.add(memberList.get(i) );///////Unnecessary?/////
+			// } ////////////////////////
+			Map<Integer, Member> map = new TreeMap<>();
+			for (Member Member : memberList) {
+				int counter = 0;
+				for (Membership Membership : Member.getMemberships()) {
+					counter += (Membership.getQuestions().size() + Membership.getAnswers().size());
+
+				}
+				map.put((Integer) (counter), Member);
+			}
+
+			// put n-last members in Treemap into activeMembers
+			for (int i = n; i > 0; i--) {
+				activeMembers.add(map.get(i));
+			}
+
+			return activeMembers;
+		}
+	}
 }
 
