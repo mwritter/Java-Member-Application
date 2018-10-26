@@ -93,5 +93,20 @@ public class SiteManager {
 			groupList.add(newGroup);
 			return true;
 		}
+		// Returns the Group corresponding to this title if it exists
+		public Group getGroup(String title) {
+			Group group = null;
+			if (groupList.size() == 0) {
+				return group;
+			}
+			for (int i = 0; i < groupList.size(); i++) {
+				if (groupList.get(i).getTitle().equals(title)) {
+					group = groupList.get(i);
+					break;
+				}
+			}
+
+			return group;
+		}
 }
 
