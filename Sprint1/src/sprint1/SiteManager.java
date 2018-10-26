@@ -120,5 +120,23 @@ public class SiteManager {
 			});
 			return groupList;
 		}
+		// Returns a list of all Groups where text (partially) matches any of title or
+		// description across all Groups, sorted by title
+		public List<Group> getGroups(String text) {
+			List<Group> match = new ArrayList<>();
+			for (Group group : groupList) {
+				if (group.getTitle().contains(text) || group.getDescription().contains(text)) {
+					match.add(group);
+				}
+			}
+			Collections.sort(match, new Comparator<Group>() {
+				@Override
+				public int compare(Group o1, Group o2) {
+					return o1.getTitle().compareTo(o2.getTitle());
+				}
+			});
+			return match;
+
+		}
 }
 
