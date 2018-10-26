@@ -44,6 +44,7 @@ public class SiteManager {
 			}
 			return member;
 		}
+		
 		// Returns a list of all Members, sorted by last name, then first name
 		public List<Member> getMembers() {
 			if (memberList.size() < 1) {
@@ -145,10 +146,19 @@ public class SiteManager {
 			for (int i = 0; i < groupList.size(); i++) {
 				popularGroups.add(groupList.get(i));
 			}
+			
 			Collections.sort(popularGroups, new Comparator<Group>() {
 				@Override
-				public int compare(Group o1, Group o2) {
-					return ((Integer) (o1.getNumOfMembers())).compareTo((Integer) (o2.getNumOfMembers()));
+				public int compare(Group group1, Group group2) {
+					
+					if(group1.getNumOfMembers() > group2.getNumOfMembers()) {
+						return 1;
+					}else if(group1.getNumOfMembers() < group2.getNumOfMembers()) {
+						return -1;
+					}else {
+						return 0;
+					}
+					
 				}
 			});
 

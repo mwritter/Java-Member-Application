@@ -56,6 +56,18 @@ public class MainTest {
         System.out.println("============");
         System.out.println("Member toString method: " + matt.toString());
         System.out.println("============");
+        System.out.println("***************SITEMANAGER STUFF***********");
+        SiteManager sm = new SiteManager();
+        sm.addGroup("First Group", "This is an awesome Group1", date);
+        sm.addGroup("Second Group", "This is an awesome Group2", date);
+        sm.addMember("Matthew", "Ritter", "Matt", "mwritter@valdosta.edu", date);
+        sm.getMember("mwritter@valdosta.edu").joinGroup(sm.getGroup("Second Group"), date);
+        sm.getMember("mwritter@valdosta.edu").joinGroup(sm.getGroup("First Group"), date);
+        System.out.println(sm.getMember("mwritter@valdosta.edu"));
+        System.out.println(sm.getGroup("First Group"));
+        System.out.println("g2 has: "+sm.getGroup("Second Group").getMembers());
+        System.out.println("g1 has: "+sm.getGroup("First Group").getMembers());
+        System.out.println(sm.getPopularGroups(5));
         System.out.println("No errors");
 
     }
