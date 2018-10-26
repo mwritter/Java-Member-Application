@@ -30,5 +30,19 @@ public class SiteManager {
 			return true;
 
 		}
+		// Returns the Member corresponding to this emailAddress if they exist
+		public Member getMember(String emailAddress) {
+			Member member = null;
+			if (memberList.size() == 0) {
+				return member;
+			}
+			for (int i = 0; i < memberList.size(); i++) {
+				if (memberList.get(i).getEmailAddress().equals(emailAddress)) {
+					member = memberList.get(i);
+					break;
+				}
+			}
+			return member;
+		}
 }
 
