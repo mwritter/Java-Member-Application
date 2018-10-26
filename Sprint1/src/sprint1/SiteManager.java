@@ -158,5 +158,27 @@ public class SiteManager {
 			Collections.reverse(popularGroups);
 			return popularGroups;
 		}
+		
+		// Returns a list of the n Groups that have the most questions and answers
+		// combined, sorted descending on the total number of questions and answers
+		public List<Group> getActiveGroups(int n) {
+			List<Group> activeGroups = new ArrayList<>();
+			for (int i = 0; i < groupList.size(); i++) {
+				activeGroups.add(groupList.get(i));
+			}
+			Collections.sort(activeGroups, new Comparator<Group>() {
+				@Override
+				public int compare(Group o1, Group o2) {
+					return ((Integer) ((o1.getQuestions().size()) + o1.getAnswers().size()))
+							.compareTo((Integer) (o2.getQuestions().size()) + o1.getAnswers().size());
+				}
+			});
+
+			for (int i = 0; i < activeGroups.size() - n; i++) {
+				activeGroups.remove(i);
+			}
+			Collections.reverse(activeGroups);
+			return activeGroups;
+		}
 }
 
