@@ -205,6 +205,6 @@ public class SiteManager {
 
 			return activeMembers;
 		}
-	}
+	
 }
 
