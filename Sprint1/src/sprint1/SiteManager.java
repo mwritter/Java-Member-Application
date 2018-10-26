@@ -138,5 +138,25 @@ public class SiteManager {
 			return match;
 
 		}
+		// Returns a list of the n Groups that have the most members, sorted descending
+		// on the number of members
+		public List<Group> getPopularGroups(int n) {
+			List<Group> popularGroups = new ArrayList<>();
+			for (int i = 0; i < groupList.size(); i++) {
+				popularGroups.add(groupList.get(i));
+			}
+			Collections.sort(popularGroups, new Comparator<Group>() {
+				@Override
+				public int compare(Group o1, Group o2) {
+					return ((Integer) (o1.getNumOfMembers())).compareTo((Integer) (o2.getNumOfMembers()));
+				}
+			});
+
+			for (int i = 0; i < popularGroups.size() - n; i++) {
+				popularGroups.remove(i);
+			}
+			Collections.reverse(popularGroups);
+			return popularGroups;
+		}
 }
 
