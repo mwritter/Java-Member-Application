@@ -1,6 +1,7 @@
 package sprint1;
 import java.time.LocalDateTime;
-
+import java.util.List;
+import java.util.ArrayList;
 abstract class Post {
 
     // initialize variables
@@ -8,6 +9,9 @@ abstract class Post {
     protected LocalDateTime date;
 
     protected Membership membership;
+    
+    List<Comment> comments = new ArrayList<>();
+    List<Like> likes = new ArrayList<>();
 
     // constructor to set initial values
     public Post(String txt, LocalDateTime date) {
