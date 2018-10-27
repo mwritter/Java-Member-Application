@@ -241,6 +241,15 @@ public class Member {
 		Collections.reverse(answersList);
 		return answersList;
 	}
+	
+	//Likes the post passed in as an argument and gives 5 points to the poster
+		private void likePost(Post post) {
+			if (this.getGroups().contains(post.getGroup() ) ) {//check if member is in the group in which "post" was posted
+				post.likes.add(new Like(this) );
+				post.getMembership().addPoints(5);
+			}
+		}
+
 
 
 	//Provides useful information about this member, neatly formatted
