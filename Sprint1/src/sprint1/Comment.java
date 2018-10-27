@@ -4,6 +4,7 @@ public class Comment {
 
 	private String text;
 	private Member commentor;
+	private Post post;
 	
 	public Comment(String text, Member commentor) {
 		this.text = text;
@@ -22,4 +23,7 @@ public class Comment {
 		return commentor;
 	}
 
+	public Post getPost() {
+		return post;
+	}
 }

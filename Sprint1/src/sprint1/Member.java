@@ -239,16 +239,15 @@ public class Member {
 	private void editComment(Comment comment, String newText) {
 		comment.editText(newText);
 	}
+	
+	private void deleteComment(Comment comment) {
+		comment.getPost().removeComment(comment);
+	}
 
 	//Adds 40 points to the member who wrote the best answer
 	private void chooseBestAnswer(Answer answer) {
 		answer.getMembership().addPoints(40);
 	}
-
-
-
-
-
 
 	//Provides useful information about this member, neatly formatted
 	@Override
