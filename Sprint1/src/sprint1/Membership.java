@@ -58,6 +58,11 @@ class Membership {
 	public void addPoints(int points) {
 		this.points += points;
 	}
+	
+	//Returns the number of points the member has earned in this group
+	public int getPoints() {
+		return points;
+	}
 		
     //returns information about member and group and the date the member joined
 	public String toString() {
