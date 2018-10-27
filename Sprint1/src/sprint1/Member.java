@@ -249,6 +249,15 @@ public class Member {
 	private void chooseBestAnswer(Answer answer) {
 		answer.getMembership().addPoints(40);
 	}
+	
+	//Displays the total number of points this member has earned
+	private String displayPoints() {
+		int points = 0;
+		for (Membership membership : memberships) {
+			points += membership.getPoints();
+		}
+		return this.screenName + " has " + points + " points.";
+	}
 
 	//Provides useful information about this member, neatly formatted
 	@Override
