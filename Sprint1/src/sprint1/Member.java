@@ -259,6 +259,12 @@ public class Member {
 			}
 		}
 		
+		private void editComment(Comment comment, String newText) {
+			comment.editText(newText);
+		}
+		
+		
+		
 
 
 
