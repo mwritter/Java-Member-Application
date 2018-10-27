@@ -17,5 +17,9 @@ public class Comment {
 	public void editText(String text) {
 		this.text = text;
 	}
+	
+	public Member getCommentor() {
+		return commentor;
+	}
 
 }
