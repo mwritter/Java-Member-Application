@@ -65,5 +65,13 @@ abstract class Post {
         return membership;
 
     }
+    
+    public void removeComment(Comment deleteComment) {
+    	for (Comment comment: comments) {
+    		if (deleteComment.equals(comment)) {
+    			comments.remove(comment);
+    		}
+    	}
+    } 
 
 }
