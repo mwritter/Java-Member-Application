@@ -265,6 +265,13 @@ public class Member {
 		
 		
 		
+		//Adds 40 points to the member who wrote the best answer
+		private void chooseBestAnswer(Answer answer) {
+			answer.getMembership().addPoints(40);
+		}
+		
+		
+		
 
 
 
