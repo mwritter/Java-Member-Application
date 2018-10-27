@@ -5,12 +5,12 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Arrays;
-
-
 import java.util.Date;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.*;
+import java.util.TreeMap;
+import java.util.Map;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Member {
 	//private Date dateCreated;
@@ -147,7 +147,6 @@ public class Member {
 			if (membership.getGroup().equals(groupName)) {
 				answer.setMembership(membership);
 				membership.getAnswers().add(answer);
-				//membership.addAnswer(answer);
 			}
 		}			
 	}
@@ -179,31 +178,34 @@ public class Member {
 	}
 	
 	
-	//getGroups(n:int):List<Group> – Returns a list of the n Groups that the member is most active in,
-	//sorted on title. Measure most active by the total questions posted and answers provided, in total. 
+	//Returns a list of the n Groups that the member is most active in, sorted on title.
+	//Measure most active by the total questions posted and answers provided, in total. 
 	//If there are not n groups, then return the groups that exist.
-	List<Group> getGroups(int n) {
-		int activity=0;
-		Map<Group, Integer> map = new TreeMap<>();
-		ArrayList<Group> GroupList = new ArrayList<>();
+	List<Group> getGroups(int n) {		
+		Map<Integer, Group> map = new TreeMap<>();
+		ArrayList<Group> groups = new ArrayList<>();
 		for (Membership membership: memberships) {
-			 map.put(membership.getGroup(), membership.getGroup().getQuestions().size() + membership.getGroup().getAnswers().size() );///////////////////////
+			map.put(membership.getGroup().getQuestions().size() + membership.getGroup().getAnswers().size(), membership.getGroup() );
 		}
-		if (map.size() <= n) {
-			for (Map.Entry entry : map.entrySet() ) {
-				GroupList.add((Group)entry.getKey() );
+		if (map.size() < n) {
+			for (int i=0; i < map.size(); i++ ) {
+				groups.add( map.get(i) );
 			}			
-			return GroupList; 	
+			return groups; 	
 		}
-		int counter =0;
-		for (Map.Entry entry : map.entrySet() ) {
-			counter++;
-			if (counter <= map.size() - n) {
-				GroupList.add((Group)entry.getKey() );
+		int count = n;
+		for (int i = map.size() -1; count > 0; count--, i--) {
+			groups.add(map.get(i));		
+		}
+
+		Collections.sort(groups, new Comparator<Group>()  {
+			@Override 
+			public int compare(Group o1, Group o2) {
+				return o1.getTitle().compareTo(o2.getTitle() );
 			}
-		}
-		return GroupList;
-	}
+		});
+		return groups;
+	} 
 	
 	
 	//b.	getQuestions(group:Group, n:int):List<Question> – Returns the n most recent questions asked by 
