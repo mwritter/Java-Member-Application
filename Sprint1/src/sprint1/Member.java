@@ -58,7 +58,6 @@ public class Member {
 		return memberships;
 	}
 
-
 	//Joins this member to group and records the dateJoined
 	public void joinGroup(Group group, LocalDateTime date) {
 		Membership membership = new Membership(date, this, group);
@@ -236,10 +235,12 @@ public class Member {
 		}
 	}
 
+	//Assigns new text to previously posted comment
 	private void editComment(Comment comment, String newText) {
 		comment.editText(newText);
 	}
 	
+	//Deletes comment permanently
 	private void deleteComment(Comment comment) {
 		comment.getPost().removeComment(comment);
 	}
