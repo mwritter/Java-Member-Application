@@ -249,6 +249,16 @@ public class Member {
 				post.getMembership().addPoints(5);
 			}
 		}
+		
+		
+		//Adds a comment to a post and gives 10 points to the poster
+		private void commentOnPost(Post post, Comment comment) {
+			if (this.getGroups().contains(post.getGroup() ) ) {//check if member is in the group in which "post" was posted
+				post.comments.add(comment);
+				post.getMembership().addPoints(10);
+			}
+		}
+		
 
 
 
