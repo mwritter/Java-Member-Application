@@ -64,6 +64,10 @@ class Membership {//this class should have package level visibility
 	}
 	
 	
+	public void addPoints(int points) {
+		this.points += points;
+	}
+	
     //returns information about member and group and the date the member joined
 	public String toString() {
 		return "\n" + this.member +"joined " + this.group + "on " + this.dateJoined + ".";
