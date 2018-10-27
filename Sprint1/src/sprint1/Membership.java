@@ -61,6 +61,7 @@ class Membership {
 		
     //returns information about member and group and the date the member joined
 	public String toString() {
-		return "\n" + this.member +"joined " + this.group + "on " + this.dateJoined + ".";
+		return "\n" + this.member.getFirstName() + " " + this.member.getLastName() +"joined " + 
+	           this.group.getTitle() + "on " + this.dateJoined + ".";
 	}
 }
