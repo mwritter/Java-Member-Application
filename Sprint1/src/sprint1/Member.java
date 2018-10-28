@@ -245,6 +245,8 @@ public class Member {
 		comment.getPost().removeComment(comment);
 	}
 
+	
+
 	//Adds 40 points to the member who wrote the best answer
 	private void chooseBestAnswer(Answer answer) {
 		answer.getMembership().addPoints(40);
@@ -256,7 +258,7 @@ public class Member {
 		for (Membership membership : memberships) {
 			points += membership.getPoints();
 		}
-		return this.screenName + " has " + points + " points.";
+		return  points + " points.";
 	}
 
 	//Provides useful information about this member, neatly formatted
@@ -268,6 +270,7 @@ public class Member {
 				"\nScreen Name: " + screenName + 
 				"\nEmail address: " + emailAddress + 
 				"\nDate Joined: " + dateCreated +
+				"\nPoints: " + displayPoints() +
 				"\n------Questions by this member:------\n";
 		for (Membership membership: memberships) {
 			for (Question question: membership.getQuestions()) {
