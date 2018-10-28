@@ -222,7 +222,7 @@ public class Member {
 	//Likes the post passed in as an argument and gives 5 points to the poster
 	private void likePost(Post post) {
 		if (this.getGroups().contains(post.getGroup() ) ) {//check if member is in the group in which "post" was posted
-			post.likes.add(new Like(this) );
+			post.addLike(new Like(this));
 			post.getMembership().addPoints(5);
 		}
 	}	
@@ -230,7 +230,7 @@ public class Member {
 	//Adds a comment to a post and gives 10 points to the poster
 	private void commentOnPost(Post post, Comment comment) {
 		if (this.getGroups().contains(post.getGroup() ) ) {//check if member is in the group in which "post" was posted
-			post.comments.add(comment);
+			post.addComment(comment);
 			post.getMembership().addPoints(10);
 		}
 	}

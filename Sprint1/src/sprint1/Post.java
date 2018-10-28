@@ -51,6 +51,16 @@ abstract class Post {
 	protected Membership getMembership() {
 		return membership;
 	}
+	
+	// add like to a post
+	protected void addLike(Like like) {
+		likes.add(like);
+	}
+	
+	// add comment to a post
+	protected void addComment(Comment comment) {
+		comments.add(comment);
+	}
 
 	//Permanently removes comment from post
 	public void removeComment(Comment deleteComment) {
