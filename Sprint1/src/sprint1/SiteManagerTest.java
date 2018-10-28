@@ -71,8 +71,7 @@ class SiteManagerTest {
 		sm.addGroup("Group-10", "10 is great", dateCreated);
 		assertEquals("Group-10",sm.getGroup("Group-10").getTitle());
 		assertTrue(sm.getGroups().size() == 11);
-		System.out.println(sm.getGroups().indexOf(sm.getGroup("Group-10")));
-		System.out.println(sm.getGroups());
+		
 		//Group-10 will be placed at index 2 because of the sorting algorithm based on strings
 		assertEquals(2,sm.getGroups().indexOf(sm.getGroup("Group-10")));
 		
@@ -80,27 +79,74 @@ class SiteManagerTest {
 
 	@Test
 	void testGetGroup() {
-		fail("Not yet implemented");
+		String groupTitle = sm.getGroup("Group-0").getTitle();
+		assertEquals("Group-0", groupTitle);
 	}
 
 	@Test
-	void testGetGroups() {
-		fail("Not yet implemented");
+	static void testGetGroups() {
+		assertEquals(10, sm.getGroups().size());
 	}
 
 	@Test
 	void testGetGroupsString() {
-		fail("Not yet implemented");
+		List<Group> expecteds = new ArrayList<>();
+		
+		expecteds.add(sm.getGroup("Group-0"));
+		expecteds.add(sm.getGroup("Group-10"));
+		
+		assertListEquals(expecteds, sm.getGroups("0"));
+	}
+
+	private static boolean assertListEquals(List<Group> expecteds, List<Group> groups) {
+		int size = groups.size() - 1;
+		while(size > 0) {
+			if(expecteds.get(size).getTitle().equals(groups.get(size).getTitle())) {
+				size--;
+				return true;
+			}
+			
+		}return false;
+		
 	}
 
 	@Test
 	void testGetPopularGroups() {
-		fail("Not yet implemented");
+		for(Member m : sm.getMembers("-5")) {
+			m.joinGroup(sm.getGroup("Group-5"), dateCreated);
+		}
+		for(Member m : sm.getMembers("0")) {
+			m.joinGroup(sm.getGroup("Group-0"), dateCreated);
+		}
+		
+		List<Group> expecteds = new ArrayList<>();
+		
+		expecteds.add(sm.getGroup("Group-5"));
+		expecteds.add(sm.getGroup("Group-0"));
+		
+		//assertListEquals(expecteds, sm.getPopularGroups(2));
+		
 	}
 
 	@Test
 	void testGetActiveGroups() {
-		fail("Not yet implemented");
+		Question q = new Question("Title", "Text", dateCreated);
+		Answer a = new Answer(q,"Text",dateCreated);
+		for(Member m : sm.getMembers("-5")) {
+			m.joinGroup(sm.getGroup("Group-5"), dateCreated);
+			m.addAnswer(sm.getGroup("Group-5"), q, a, dateCreated);
+		}
+		for(Member m : sm.getMembers("1")) {
+			m.joinGroup(sm.getGroup("Group-1"), dateCreated);
+			m.addAnswer(sm.getGroup("Group-1"), q, a, dateCreated);
+		}
+		
+		List<Group> expecteds = new ArrayList<>();
+		
+		expecteds.add(sm.getGroup("Group-1"));
+		expecteds.add(sm.getGroup("Group-5"));
+		
+		//assertListEquals(expecteds,sm.getActiveGroups(2));
 	}
 
 	@Test

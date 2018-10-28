@@ -166,7 +166,7 @@ public class SiteManager {
 				popularGroups.remove(i);
 			}
 			Collections.reverse(popularGroups);
-			return popularGroups;
+			return popularGroups.subList(0, n);
 		}
 		
 		// Returns a list of the n Groups that have the most questions and answers
@@ -178,9 +178,17 @@ public class SiteManager {
 			}
 			Collections.sort(activeGroups, new Comparator<Group>() {
 				@Override
-				public int compare(Group o1, Group o2) {
-					return ((Integer) ((o1.getQuestions().size()) + o1.getAnswers().size()))
-							.compareTo((Integer) (o2.getQuestions().size()) + o1.getAnswers().size());
+				
+				public int compare(Group group1, Group group2) {
+					
+					if(group1.getQuestions().size() + group1.getAnswers().size() > group2.getQuestions().size() + group2.getAnswers().size()) {
+						return 1;
+					}else if(group1.getQuestions().size() + group1.getAnswers().size() < group2.getQuestions().size() + group2.getAnswers().size()) {
+						return -1;
+					}else {
+						return 0;
+					}
+					
 				}
 			});
 
@@ -188,7 +196,7 @@ public class SiteManager {
 				activeGroups.remove(i);
 			}
 			Collections.reverse(activeGroups);
-			return activeGroups;
+			return activeGroups.subList(0, n);
 		}
 		// Returns a list of the n Members that have the most questions and answers
 		// across all the groups they are a member of, sorted descending on the total
