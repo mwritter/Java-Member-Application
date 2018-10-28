@@ -6,9 +6,10 @@ public class Comment {
 	private Member commentor;
 	private Post post;
 	
-	public Comment(String text, Member commentor) {
+	public Comment(String text, Member commentor, Post post) {
 		this.text = text;
 		this.commentor = commentor;
+		this.post = post;
 	}
 
 	public String getText() {
