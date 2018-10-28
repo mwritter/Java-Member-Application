@@ -55,12 +55,27 @@ class SiteManagerTest {
 
 	@Test
 	void testGetMembersString() {
-		fail("Not yet implemented");
+		sm.getMember("1@gmail.com").joinGroup(sm.getGroup("Group-9"), dateCreated);
+		sm.getMember("1@gmail.com").joinGroup(sm.getGroup("Group-2"), dateCreated);
+		
+		assertTrue(sm.getMembers("Group-2").contains(sm.getMember("1@gmail.com")));
+		assertTrue(sm.getMembers("-2").contains(sm.getMember("1@gmail.com")));
+		assertTrue(sm.getMembers("-5").size() == 25);
+		
+		sm.getMember("1@gmail.com").joinGroup(sm.getGroup("Group-5"), dateCreated);
+		assertTrue(sm.getMembers("-5").size() == 26);
 	}
 
 	@Test
 	void testAddGroup() {
-		fail("Not yet implemented");
+		sm.addGroup("Group-10", "10 is great", dateCreated);
+		assertEquals("Group-10",sm.getGroup("Group-10").getTitle());
+		assertTrue(sm.getGroups().size() == 11);
+		System.out.println(sm.getGroups().indexOf(sm.getGroup("Group-10")));
+		System.out.println(sm.getGroups());
+		//Group-10 will be placed at index 2 because of the sorting algorithm based on strings
+		assertEquals(2,sm.getGroups().indexOf(sm.getGroup("Group-10")));
+		
 	}
 
 	@Test
