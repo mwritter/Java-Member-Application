@@ -8,8 +8,8 @@ abstract class Post {
 	protected String text;
 	protected LocalDateTime date;
 	protected Membership membership;
-	List<Comment> comments = new ArrayList<>();
-	List<Like> likes = new ArrayList<>();
+	private List<Comment> comments = new ArrayList<>();
+	private List<Like> likes = new ArrayList<>();
 
 	// constructor to set initial values
 	public Post(String txt, LocalDateTime date) {
