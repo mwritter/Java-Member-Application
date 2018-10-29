@@ -4,7 +4,7 @@ import java.util.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class MainTest {
+public class IntMainTest {
 
     public static void main(String[] args) {
 

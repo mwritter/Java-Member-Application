@@ -74,7 +74,7 @@ static int index = 0;
 					System.out.println(g.getTitle() + ": " + m.getFirstName());
 				}
 			}
-		}catch(Exception e) {
+		} catch(Exception e) {
 			System.out.print(e);
 		}
 		

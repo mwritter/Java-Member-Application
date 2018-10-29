@@ -138,7 +138,7 @@ public class Group implements Serializable{
 
     // Provides useful information about this group, neatly formatted
     public String toString() {
-        return "Group: " + this.title;
+        return "Group: " + this.title + this.getMembers();
     }
     
 }

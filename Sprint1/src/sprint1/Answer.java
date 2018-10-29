@@ -17,8 +17,20 @@ import java.util.List;
         public Question getQuestion() {
 			return question;
         }
+        private String getLikes() {
+        	String result = "This post has: " + this.likes.size() + "\n=============\n";
+        	if(likes.size() > 0) {
+        		result += "Like by: [";
+        		for(Like like: this.likes) {
+            		result += " " + like.getUpVoter() + ",\n";
+            	}
+        		result += "]";
+        	}
+        	return result;	
+        }
         public String toString() {
 			String result = "Answer: " + text + " for question " + question.getTitle();
+			result += "\n" + getLikes();
 			return result;
         
        }

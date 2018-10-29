@@ -9,8 +9,8 @@ abstract class Post implements Serializable{
 	protected String text;
 	protected LocalDateTime date;
 	protected Membership membership;
-	private List<Comment> comments = new ArrayList<>();
-	private List<Like> likes = new ArrayList<>();
+	protected List<Comment> comments = new ArrayList<>();
+	protected List<Like> likes = new ArrayList<>();
 
 	// constructor to set initial values
 	public Post(String txt, LocalDateTime date) {
@@ -57,6 +57,7 @@ abstract class Post implements Serializable{
 	protected void addLike(Like like) {
 		likes.add(like);
 	}
+	
 	
 	// add comment to a post
 	protected void addComment(Comment comment) {
