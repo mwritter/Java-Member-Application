@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 class SiteManagerTest {
 	static int index = 0;
-	int random;
+	
 	static SiteManager sm = new SiteManager();
 	static LocalDateTime dateCreated = LocalDateTime.now();
 	
@@ -55,15 +55,9 @@ class SiteManagerTest {
 
 	@Test
 	void testGetMembersString() {
-		sm.getMember("1@gmail.com").joinGroup(sm.getGroup("Group-9"), dateCreated);
-		sm.getMember("1@gmail.com").joinGroup(sm.getGroup("Group-2"), dateCreated);
 		
-		assertTrue(sm.getMembers("Group-2").contains(sm.getMember("1@gmail.com")));
-		assertTrue(sm.getMembers("-2").contains(sm.getMember("1@gmail.com")));
-		assertTrue(sm.getMembers("-5").size() == 25);
-		
-		sm.getMember("1@gmail.com").joinGroup(sm.getGroup("Group-5"), dateCreated);
-		assertTrue(sm.getMembers("-5").size() == 26);
+		assertTrue(sm.getMember("11@gmail.com").equals(sm.getMembers("11").get(0)));
+		assertTrue(sm.getMembers("9@").size() == 10);
 	}
 
 	@Test
@@ -95,37 +89,18 @@ class SiteManagerTest {
 		expecteds.add(sm.getGroup("Group-0"));
 		expecteds.add(sm.getGroup("Group-10"));
 		
-		assertListEquals(expecteds, sm.getGroups("0"));
+		assertEquals(expecteds, sm.getGroups("0"));
 	}
 
-	private static boolean assertListEquals(List<Group> expecteds, List<Group> groups) {
-		int size = groups.size() - 1;
-		while(size > 0) {
-			if(expecteds.get(size).getTitle().equals(groups.get(size).getTitle())) {
-				size--;
-				return true;
-			}
-			
-		}return false;
-		
-	}
-
+	
 	@Test
 	void testGetPopularGroups() {
-		for(Member m : sm.getMembers("-5")) {
-			m.joinGroup(sm.getGroup("Group-5"), dateCreated);
-		}
-		for(Member m : sm.getMembers("0")) {
-			m.joinGroup(sm.getGroup("Group-0"), dateCreated);
-		}
+		List<Group> expected = new ArrayList<>();
+		expected.add(sm.getGroup("Group-1"));
+		expected.add(sm.getGroup("Group-5"));
 		
-		List<Group> expecteds = new ArrayList<>();
-		
-		expecteds.add(sm.getGroup("Group-5"));
-		expecteds.add(sm.getGroup("Group-0"));
-		
-		//assertListEquals(expecteds, sm.getPopularGroups(2));
-		
+		List<Group> actual = new ArrayList<>(sm.getPopularGroups(2));
+		assertEquals(expected, actual);
 	}
 
 	@Test
@@ -140,18 +115,37 @@ class SiteManagerTest {
 			m.joinGroup(sm.getGroup("Group-1"), dateCreated);
 			m.addAnswer(sm.getGroup("Group-1"), q, a, dateCreated);
 		}
+		for(Member m : sm.getMembers("2@gmail")) {
+			m.joinGroup(sm.getGroup("Group-2"), dateCreated);
+			m.addAnswer(sm.getGroup("Group-2"), q, a, dateCreated);
+		}
+		List<Group> expected = new ArrayList<>();
+		expected.add(sm.getGroup("Group-1"));
+		expected.add(sm.getGroup("Group-5"));
+		expected.add(sm.getGroup("Group-2"));
+		List<Group> actual = new ArrayList<>(sm.getActiveGroups(3));
 		
-		List<Group> expecteds = new ArrayList<>();
-		
-		expecteds.add(sm.getGroup("Group-1"));
-		expecteds.add(sm.getGroup("Group-5"));
-		
-		//assertListEquals(expecteds,sm.getActiveGroups(2));
 	}
+	
+	
 
 	@Test
 	void testGetActiveMembers() {
-		fail("Not yet implemented");
+		Question q = new Question("Title", "Text", dateCreated);
+		Answer a = new Answer(q,"Text",dateCreated);
+		for(Member m : sm.getMembers("-5")) {
+			m.joinGroup(sm.getGroup("Group-5"), dateCreated);
+			m.addAnswer(sm.getGroup("Group-5"), q, a, dateCreated);
+		}
+		for(Member m : sm.getMembers("1")) {
+			m.joinGroup(sm.getGroup("Group-1"), dateCreated);
+			m.addAnswer(sm.getGroup("Group-1"), q, a, dateCreated);
+		}
+		for(Member m : sm.getMembers("2@gmail")) {
+			m.joinGroup(sm.getGroup("Group-2"), dateCreated);
+			m.addAnswer(sm.getGroup("Group-2"), q, a, dateCreated);
+		}
+		System.out.println(sm.getActiveMembers(3));
 	}
 
 }

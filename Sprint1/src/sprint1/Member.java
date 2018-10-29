@@ -60,9 +60,12 @@ public class Member {
 
 	//Joins this member to group and records the dateJoined
 	public void joinGroup(Group group, LocalDateTime date) {
-		Membership membership = new Membership(date, this, group);
-		this.memberships.add(membership);
-		group.addMembership(membership);
+		if(!group.getMembers().contains(this)) {
+			Membership membership = new Membership(date, this, group);
+			this.memberships.add(membership);
+			group.addMembership(membership);
+		}
+		
 	}
 
 	//Returns the number of groups this member is a member of
@@ -271,13 +274,14 @@ public class Member {
 				"\nEmail address: " + emailAddress + 
 				"\nDate Joined: " + dateCreated +
 				"\nPoints: " + displayPoints() +
-				"\n------Questions by this member:------\n";
+				"\n------Total Posts by this member: "+ this.getNumberOfTotalPosts() + "------\n\n" +
+				"\n------Total Questions by this member: "+ this.getNumberOfTotalQuestions() + "------\n";
 		for (Membership membership: memberships) {
 			for (Question question: membership.getQuestions()) {
 				data += question + "\n"; 
 			}
 		}
-		data += "\n------Answers by this member------\n";
+		data += "\n------Answers by this member: "+ this.getNumberOfTotalAnswers() + "------\n";
 		for (Membership membership: memberships) {
 			for (Answer answer: membership.getAnswers()) {
 				data += answer + "\n"; 
@@ -288,6 +292,28 @@ public class Member {
 			data += membership.getGroup() + "\n"; 
 		}				
 		return data;       		
+	}
+	
+	private int getNumberOfTotalPosts() {
+		int count = 0;
+		for(Membership membership: this.memberships) {
+			count += membership.getAnswers().size() + membership.getQuestions().size();
+		}
+		return count;
+	}
+	private int getNumberOfTotalQuestions() {
+		int count = 0;
+		for(Membership membership: this.memberships) {
+			count += membership.getQuestions().size();
+		}
+		return count;
+	}
+	private int getNumberOfTotalAnswers() {
+		int count = 0;
+		for(Membership membership: this.memberships) {
+			count += membership.getAnswers().size();
+		}
+		return count;
 	}
 
 }//end of Member.java class

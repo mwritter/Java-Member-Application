@@ -202,26 +202,31 @@ public class SiteManager {
 		// across all the groups they are a member of, sorted descending on the total
 		// questions and answers
 		public List<Member> getActiveMembers(int n) {
-			List<Member> activeMembers = new ArrayList<>();
-			// for (int i=0; i< memberList.size(); i++) {//////////Unnecessary?///
-			// activeMembers.add(memberList.get(i) );///////Unnecessary?/////
-			// } ////////////////////////
-			Map<Integer, Member> map = new TreeMap<>();
-			for (Member Member : memberList) {
-				int counter = 0;
-				for (Membership Membership : Member.getMemberships()) {
-					counter += (Membership.getQuestions().size() + Membership.getAnswers().size());
-
+			List<Member> activeMembers = new ArrayList<>(this.getMembers());
+			
+			Collections.sort(activeMembers, new Comparator<Member>() {
+				public int compare(Member m1, Member m2) {
+					int m1_post_count = 0;
+					int m2_post_count = 0;
+					for(Membership membership: m1.getMemberships()) {
+						m1_post_count += (membership.getQuestions().size() + membership.getAnswers().size());
+					}
+					for(Membership membership: m2.getMemberships()) {
+						m2_post_count += (membership.getQuestions().size() + membership.getAnswers().size());
+					}
+					
+					if(m1_post_count > m2_post_count) {
+						return -1;
+					}else if (m1_post_count < m2_post_count) {
+						return 1;
+					} else {
+						return 0;
+					}
+					
 				}
-				map.put((Integer) (counter), Member);
-			}
-
-			// put n-last members in Treemap into activeMembers
-			for (int i = n; i > 0; i--) {
-				activeMembers.add(map.get(i));
-			}
-
-			return activeMembers;
+			});
+			
+			return activeMembers.subList(0, n);
 		}
 	
 }
