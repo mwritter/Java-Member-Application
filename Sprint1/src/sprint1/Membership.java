@@ -1,11 +1,12 @@
 package sprint1;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
-class Membership {
+class Membership implements Serializable{
 	private LocalDateTime dateJoined;
 	private int points =0;
     private Member member;

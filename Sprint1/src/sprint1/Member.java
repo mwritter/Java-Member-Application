@@ -1,5 +1,6 @@
 package sprint1;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Map;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Member {
+public class Member implements Serializable{
 	private LocalDateTime dateCreated;
 	private String firstName;
 	private String lastName;

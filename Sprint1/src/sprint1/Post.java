@@ -1,10 +1,11 @@
 package sprint1;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 
-abstract class Post {
+abstract class Post implements Serializable{
 	protected String text;
 	protected LocalDateTime date;
 	protected Membership membership;
