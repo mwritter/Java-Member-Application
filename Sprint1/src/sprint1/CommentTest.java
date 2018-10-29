@@ -31,7 +31,13 @@ class CommentTest {
 
 	@Test
 	void testEditText() {
-		fail("Not yet implemented");
+		LocalDateTime date = LocalDateTime.now();
+		Member m = new Member("matthew","ritter","matt", "mritter2283@gmail.com", date);
+		Question q = new Question("Question", "What time is it?", date);
+		Comment comment = new Comment("It depends on where you live.", m, q);
+		comment.editText("Could you be more spacific with your question?");
+		String expected = "Could you be more spacific with your question?";
+		assertEquals(expected, comment.getText());
 	}
 
 	@Test
