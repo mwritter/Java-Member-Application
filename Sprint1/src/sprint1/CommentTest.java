@@ -42,12 +42,20 @@ class CommentTest {
 
 	@Test
 	void testGetCommentor() {
-		fail("Not yet implemented");
+		LocalDateTime date = LocalDateTime.now();
+		Member m = new Member("matthew","ritter","matt", "mritter2283@gmail.com", date);
+		Question q = new Question("Question", "What time is it?", date);
+		Comment comment = new Comment("It depends on where you live.", m, q);
+		assertEquals(m, comment.getCommentor());
 	}
 
 	@Test
 	void testGetPost() {
-		fail("Not yet implemented");
+		LocalDateTime date = LocalDateTime.now();
+		Member m = new Member("matthew","ritter","matt", "mritter2283@gmail.com", date);
+		Question q = new Question("Question", "What time is it?", date);
+		Comment comment = new Comment("It depends on where you live.", m, q);
+		assertEquals(q, comment.getPost());
 	}
 
 }
