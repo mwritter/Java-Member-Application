@@ -1,9 +1,10 @@
 package sprint1;
 import java.util.ArrayList;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-class Question extends Post {
+class Question extends Post implements Serializable{
 
     private String title;
     private List<Answer> answers = new ArrayList<>();

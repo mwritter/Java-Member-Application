@@ -1,11 +1,12 @@
 package sprint1;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class Group {
+public class Group implements Serializable{
     private LocalDateTime dateCreated;
     private String title;
     private String description;
@@ -137,7 +138,7 @@ public class Group {
 
     // Provides useful information about this group, neatly formatted
     public String toString() {
-        return "Group: " + this.title;
+        return "Group: " + this.title + this.getMembers();
     }
     
 }

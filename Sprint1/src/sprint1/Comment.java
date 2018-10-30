@@ -1,6 +1,8 @@
 package sprint1;
 
-public class Comment {
+import java.io.Serializable;
+
+public class Comment implements Serializable{
 
 	private String text;
 	private Member commentor;
