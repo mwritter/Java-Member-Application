@@ -61,6 +61,10 @@ public class IntMainTest {
     		log("Group: " + g.getTitle() + " has " + g.getNumOfMembers() + " Members");
     	}
     	
+    	for(Member m : sm.getMembers()) {
+    		System.out.println(m);
+    	}
+    	
     	
     }
     
