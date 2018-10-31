@@ -1,11 +1,11 @@
 package sprint1;
+
 import java.util.ArrayList;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 class Question extends Post implements Serializable{
-
     private String title;
     private List<Answer> answers = new ArrayList<>();
 
@@ -19,14 +19,11 @@ class Question extends Post implements Serializable{
     }
 
     void setTitle(String title) {
-
         this.title = title;
     }
 
     public void addAnswer(Answer answer) {
-
         answers.add(answer);
-
     }
 
     public List<Answer> getAnswers() {

@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class IntMainTest {
-	
 	 static LocalDateTime date = LocalDateTime.now();
      static PersistanceManager pm = new PersistanceManager();
      static SiteManager sm = new SiteManager();
@@ -19,6 +18,7 @@ public class IntMainTest {
      		+ "readable content of a page when looking at its layout. The point of using Lorem Ipsum is "
      		+ "that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', "
      		+ "making it look like readable English.";
+     
     public static void main(String[] args) {
     	try {
     		File name_file = new File("member_names.txt");
@@ -31,41 +31,31 @@ public class IntMainTest {
     	}catch(Exception e) {
     		log(e.toString());
     	}
-    	
-        setUpData();
-        
+        setUpData();  
     }
-    
     
     static void setUpData() {
     	log("Setting up data...");
     	int size = member_lastnames.size();
     	int numberOfGroups = 10;
-    	
-    	
     	while(size > 0) {
     		sm.addMember(member_firstnames.get(size - 1), member_lastnames.get(size - 1), member_firstnames.get(size - 1),  member_lastnames.get(size - 1) + email_end[size % email_end.length], date);
     		size--;
     	}
-    	
     	while(numberOfGroups > 0) {
     		sm.addGroup(random_names[numberOfGroups - 1], lorem_ipsum, date);
     		numberOfGroups--;
-    	}
-    	
+    	}    	
     	for(Member m: sm.getMembers()) {
     		int random = (int) (Math.random() * 100) + 1;
     		sm.getMember(m.getEmailAddress()).joinGroup(sm.getGroups().get(random % random_names.length), date);
     	}
     	for(Group g : sm.getGroups()) {
     		log("Group: " + g.getTitle() + " has " + g.getNumOfMembers() + " Members");
-    	}
-    	
+    	}  	
     	for(Member m : sm.getMembers()) {
     		System.out.println(m);
     	}
-    	
-    	
     }
     
     static void log(String msg) {
@@ -75,13 +65,6 @@ public class IntMainTest {
     	System.out.println(num);
     }
    
-   
-    
-    
-  
-    
-   
-    
     static void log(boolean msg) {
     	System.out.println(msg);
     }

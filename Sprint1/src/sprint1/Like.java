@@ -3,7 +3,6 @@ package sprint1;
 import java.io.Serializable;
 
 public class Like implements Serializable{
-	
 	private Member upVoter;
 	
 	public Like(Member upVoter) {
@@ -13,5 +12,4 @@ public class Like implements Serializable{
 	public Member getUpVoter() {
 		return upVoter;
 	}
-	
 }

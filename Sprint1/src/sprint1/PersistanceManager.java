@@ -10,7 +10,6 @@ class PersistanceManager {
    
    public PersistanceManager() {
    }
-   
    //Static method to save the entire system. Hint: a binary file is the easiest way to do this
    public static void save(SiteManager sm, FileOutputStream file) {
       try {
@@ -21,8 +20,7 @@ class PersistanceManager {
       }
       catch (Exception e) {
          System.out.println(e);
-      }
-             
+      }      
    }
    
    //Static method to read the system from file and return a SiteManager object
@@ -34,8 +32,6 @@ class PersistanceManager {
 	   }catch(Exception e){
 		   System.out.println(e);
 	   }
-     
-      
       return savedSiteManager;
    }
 }

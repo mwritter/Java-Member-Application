@@ -66,7 +66,6 @@ public class Member implements Serializable{
 			this.memberships.add(membership);
 			group.addMembership(membership);
 		}
-		
 	}
 
 	//Returns the number of groups this member is a member of
@@ -107,7 +106,6 @@ public class Member implements Serializable{
 		for (Membership membership: memberships) {
 			if (membership.getGroup().equals(groupName)) {
 				question.setMembership(membership);
-				//membership.getQuestions().add(question);
 				membership.addQuestion(question);
 			}
 		}	
@@ -118,10 +116,9 @@ public class Member implements Serializable{
 		LocalDateTime temp =null;
 		for (Membership membership: memberships) {
 			if (membership.getGroup().equals(groupName)) {
-				temp=membership.getDateJoined();
+				return membership.getDateJoined();
 			}
 		}
-
 		return temp;
 	}
 
@@ -243,19 +240,17 @@ public class Member implements Serializable{
 	private void editComment(Comment comment, String newText) {
 		comment.editText(newText);
 	}
-	
+
 	//Deletes comment permanently
 	private void deleteComment(Comment comment) {
 		comment.getPost().removeComment(comment);
 	}
 
-	
-
 	//Adds 40 points to the member who wrote the best answer
 	private void chooseBestAnswer(Answer answer) {
 		answer.getMembership().addPoints(40);
 	}
-	
+
 	//Displays the total number of points this member has earned
 	private String displayPoints() {
 		int points = 0;
@@ -275,8 +270,6 @@ public class Member implements Serializable{
 				"\nEmail address: " + emailAddress + 
 				"\nDate Joined: " + dateCreated +
 				"\nPoints: " + displayPoints();
-				
-		
 		data += "\n------Groups this member is a member of------\n";
 		int size = this.memberships.size();
 		while(size > 0) {
@@ -285,7 +278,7 @@ public class Member implements Serializable{
 		}
 		return data;       		
 	}
-	
+
 	private int getNumberOfTotalPosts() {
 		int count = 0;
 		for(Membership membership: this.memberships) {
@@ -293,6 +286,7 @@ public class Member implements Serializable{
 		}
 		return count;
 	}
+	
 	private int getNumberOfTotalQuestions() {
 		int count = 0;
 		for(Membership membership: this.memberships) {
@@ -300,6 +294,7 @@ public class Member implements Serializable{
 		}
 		return count;
 	}
+	
 	private int getNumberOfTotalAnswers() {
 		int count = 0;
 		for(Membership membership: this.memberships) {
@@ -307,5 +302,4 @@ public class Member implements Serializable{
 		}
 		return count;
 	}
-
-}//end of Member.java class
+}
