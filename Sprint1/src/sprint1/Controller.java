@@ -6,12 +6,16 @@ import java.time.LocalDateTime;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -23,10 +27,10 @@ public class Controller {
 	private ListView<String> options;
 	@FXML
 	private TextArea optionInstructions;
-//	@FXML
-//	private HBox mainFunction;
 	@FXML
-	private VBox mainFunction;
+	private BorderPane mainFrame;
+	@FXML
+	private GridPane mainFunction;
 	
 	
 	public void initialize() {
@@ -35,6 +39,7 @@ public class Controller {
 		options.getItems().setAll(siteOptions);
 		options.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		optionInstructions.setEditable(false);
+		optionInstructions.setPrefRowCount(1);
 	}
 	
 	@FXML
@@ -42,7 +47,6 @@ public class Controller {
 		String option = options.getSelectionModel().getSelectedItem();
 		optionInstructions.setText("You've Choosen to: " + option);
 		if(option.equals("Add Member")) {
-			System.out.println("Add member");
 			createAddMemberScene();
 		} else {
 			mainFunction.getChildren().clear();
@@ -52,7 +56,7 @@ public class Controller {
 	
 	private void createAddMemberScene() {
 		//String firstName, String lastName, String screenName, String emailAddress, LocalDateTime dateCreated
-		Label emailL = new Label("email");
+		Label emailL = new Label("Email");
 		TextField emailTF = new TextField();
 		Label firstNameL = new Label("First Name");
 		TextField firstNameTF = new TextField();
@@ -75,8 +79,20 @@ public class Controller {
 				}	
 			}
 		});
-		mainFunction.getChildren().clear();
-		mainFunction.getChildren().addAll(emailL, emailTF, firstNameL, firstNameTF, lastNameL, lastNameTF, screenNameL,screenNameTF,btnSave );		
+		
+		mainFunction.setAlignment(Pos.CENTER);
+		mainFunction.setPadding(new Insets(20,20,20,20));
+		mainFunction.getChildren().clear();	
+		mainFunction.add(emailL, 0, 0);
+		mainFunction.add(emailTF, 1, 0);
+		mainFunction.add(firstNameL, 0, 1);
+		mainFunction.add(firstNameTF, 1, 1);
+		mainFunction.add(lastNameL, 0, 2);
+		mainFunction.add(lastNameTF, 1, 2);
+		mainFunction.add(screenNameL, 0, 3);
+		mainFunction.add(screenNameTF, 1, 3);
+		mainFunction.add(btnSave, 2, 4);
+		
 	}
 	
 	
