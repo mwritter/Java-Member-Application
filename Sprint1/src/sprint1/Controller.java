@@ -5,7 +5,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -29,6 +31,7 @@ public class Controller {
 	private PersistanceManager pm;
 	private File file = new File("SiteManger_File");
 	private List<Member> members;
+	private List<Group> groups;
 	
 	@FXML
 	private ListView<String> options;
@@ -46,13 +49,15 @@ public class Controller {
 			try {
 				FileInputStream fis = new FileInputStream(file);
 				sm = pm.read(fis);
-				 members = sm.getMembers();
-				
+				members = sm.getMembers();
+				groups = sm.getGroups();
 			} catch(Exception e) {
 				System.out.println(e + "Erro Couldnt Load SiteManager");
 			}
 		} else {
 			sm = new SiteManager();
+			members = new ArrayList<Member>();
+			groups = new ArrayList<Group>();
 		}
 		
 		
@@ -78,6 +83,8 @@ public class Controller {
 			createAddGroupScene();
 		} else if(option.equals("Members")) {
 			createMembersScene();
+		} else if(option.equals("Groups")) {
+			createGroupScene();
 		}
 		else {
 			mainFunction.getChildren().clear();
@@ -87,7 +94,7 @@ public class Controller {
 	}
 	
 	private void createAddMemberScene() {
-		//String firstName, String lastName, String screenName, String emailAddress, LocalDateTime dateCreated
+		mainFunction.getChildren().clear();
 		Label emailL = new Label("Email");
 		TextField emailTF = new TextField();
 		Label firstNameL = new Label("First Name");
@@ -99,26 +106,25 @@ public class Controller {
 		Button btnSave = new Button();
 		btnSave.setText("Save");
 		btnSave.setOnAction(new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(ActionEvent event) {
 				if(!emailTF.getText().isEmpty() && !firstNameTF.getText().isEmpty() && !lastNameTF.getText().isEmpty()
 						&& !screenNameTF.getText().isEmpty()) {
 					LocalDateTime dateCreated = LocalDateTime.now();
 					if(!sm.addMember(firstNameTF.getText(), lastNameTF.getText(), screenNameTF.getText(), emailTF.getText(), dateCreated)) {
-						optionInstructions.appendText("  ERROR - Member with this email already exists");
+						optionInstructions.setText("  ERROR - Member with this email already exists");
+					} else {
+						optionInstructions.setText("  SUCSESS - Member was added");
 					}
 					save();
 					
 				} else {
-					optionInstructions.appendText("  ERROR - all fields are required");
+					optionInstructions.setText("  ERROR - all fields are required");
 				}	
 			}
 		});
-		
 		mainFunction.setAlignment(Pos.CENTER);
 		mainFunction.setPadding(new Insets(20,20,20,20));
-		mainFunction.getChildren().clear();	
 		mainFunction.add(emailL, 0, 0);
 		mainFunction.add(emailTF, 1, 0);
 		mainFunction.add(firstNameL, 0, 1);
@@ -132,7 +138,6 @@ public class Controller {
 	
 	private void createAddGroupScene() {
 		mainFunction.getChildren().clear();
-		//String title, String description, LocalDateTime date
 		Label titleL = new Label("Title");
 		TextField titleTF = new TextField();
 		Label descriptionL = new Label("Description");
@@ -140,21 +145,23 @@ public class Controller {
 		Button btnSave = new Button();
 		btnSave.setText("Save");
 		btnSave.setOnAction(new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(ActionEvent event) {
 				if(!titleTF.getText().isEmpty() && !descriptionTA.getText().isEmpty()) {
 					LocalDateTime dateCreated = LocalDateTime.now();
-					sm.addGroup(titleTF.getText(), descriptionTA.getText(), dateCreated);
-					System.out.println(sm.getGroups());
+					if(!sm.addGroup(titleTF.getText(), descriptionTA.getText(), dateCreated)) {
+						optionInstructions.setText("  ERROR - Group already exists");
+					} else {
+						optionInstructions.setText("  SUCSESS - Group added");
+						save();
+					}
 				} else {
-					optionInstructions.appendText("  ERROR - all fields are required");;
+					optionInstructions.setText("  ERROR - all fields are required");
 				}	
 			}
 		});
 		mainFunction.setAlignment(Pos.CENTER);
 		mainFunction.setPadding(new Insets(20,20,20,20));
-		mainFunction.getChildren().clear();	
 		mainFunction.add(titleL, 0, 0);
 		mainFunction.add(titleTF, 1, 0);
 		mainFunction.add(descriptionL, 0, 1);
@@ -163,15 +170,22 @@ public class Controller {
 	}
 	
 	private void createMembersScene() {
-		ListView<Member> membersList = new ListView<Member>();
 		ListView<String> membersEmailList = new ListView<String>();
 		BorderPane bp = new BorderPane();
 		bp.setLeft(membersEmailList);
 		for(Member member : members) {
 			membersEmailList.getItems().add(member.getEmailAddress()); 
 		}
-		
-		membersList.getItems().addAll(members);
+		mainFrame.setCenter(bp);
+	}
+	
+	private void createGroupScene() {
+		ListView<String> groupTitles = new ListView<String>();
+		BorderPane bp = new BorderPane();
+		bp.setLeft(groupTitles);
+		for(Group group : groups) {
+			groupTitles.getItems().add(group.getTitle());
+		}
 		
 		mainFrame.setCenter(bp);
 	}

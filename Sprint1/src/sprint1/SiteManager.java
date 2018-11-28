@@ -89,9 +89,15 @@ public class SiteManager implements Serializable{
 	}
 	public boolean addGroup(String title, String description, LocalDateTime dateCreated) {
 		Group newGroup = new Group(title, description, dateCreated);
-		if(groupList.contains(newGroup)) {
-			return false;
+		for(int i = 0; i < groupList.size(); i++) {
+			String str1 = groupList.get(i).getTitle().toLowerCase().replaceAll("\\s+","");
+			String str2 = newGroup.getTitle().toLowerCase().replaceAll("\\s+", "");
+			System.out.println(str1 + " : " + str2);
+			if(str1.equals(str2)) {
+				return false;
+			}
 		}
+		
 		groupList.add(newGroup);
 		return true;
 	}
