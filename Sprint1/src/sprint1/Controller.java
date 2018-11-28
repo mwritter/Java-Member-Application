@@ -1,7 +1,11 @@
 package sprint1;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,7 +25,10 @@ import javafx.scene.layout.VBox;
 
 
 public class Controller {
-	SiteManager sm;
+	private SiteManager sm;
+	private PersistanceManager pm;
+	private File file = new File("SiteManger_File");
+	private List<Member> members;
 	
 	@FXML
 	private ListView<String> options;
@@ -33,8 +40,23 @@ public class Controller {
 	private GridPane mainFunction;
 	
 	
+	
 	public void initialize() {
-		sm = new SiteManager();
+		if(file.exists()) {
+			try {
+				FileInputStream fis = new FileInputStream(file);
+				sm = pm.read(fis);
+				 members = sm.getMembers();
+				
+			} catch(Exception e) {
+				System.out.println(e + "Erro Couldnt Load SiteManager");
+			}
+		} else {
+			sm = new SiteManager();
+		}
+		
+		
+		pm = new PersistanceManager();
 		String[] siteOptions = {"Add Member", "Add Group", "Members", "Groups"};
 		options.getItems().setAll(siteOptions);
 		options.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -48,11 +70,16 @@ public class Controller {
 		optionInstructions.setText("You've Choosen to: " + option);
 		
 		if(option.equals("Add Member")) {
+			mainFrame.setCenter(mainFunction);
 			createAddMemberScene();
 		} 
 		else if(option.equals("Add Group")) {
+			mainFrame.setCenter(mainFunction);
 			createAddGroupScene();
-		} else {
+		} else if(option.equals("Members")) {
+			createMembersScene();
+		}
+		else {
 			mainFunction.getChildren().clear();
 		}
 		
@@ -78,10 +105,13 @@ public class Controller {
 				if(!emailTF.getText().isEmpty() && !firstNameTF.getText().isEmpty() && !lastNameTF.getText().isEmpty()
 						&& !screenNameTF.getText().isEmpty()) {
 					LocalDateTime dateCreated = LocalDateTime.now();
-					sm.addMember(firstNameTF.getText(), lastNameTF.getText(), screenNameTF.getText(), emailTF.getText(), dateCreated);
-					System.out.println(sm.getMembers());
+					if(!sm.addMember(firstNameTF.getText(), lastNameTF.getText(), screenNameTF.getText(), emailTF.getText(), dateCreated)) {
+						optionInstructions.appendText("  ERROR - Member with this email already exists");
+					}
+					save();
+					
 				} else {
-					optionInstructions.appendText("  ERROR - all fields are required");;
+					optionInstructions.appendText("  ERROR - all fields are required");
 				}	
 			}
 		});
@@ -98,7 +128,6 @@ public class Controller {
 		mainFunction.add(screenNameL, 0, 3);
 		mainFunction.add(screenNameTF, 1, 3);
 		mainFunction.add(btnSave, 2, 4);
-		
 	}
 	
 	private void createAddGroupScene() {
@@ -131,6 +160,29 @@ public class Controller {
 		mainFunction.add(descriptionL, 0, 1);
 		mainFunction.add(descriptionTA, 1, 1);
 		mainFunction.add(btnSave, 2, 4);
+	}
+	
+	private void createMembersScene() {
+		ListView<Member> membersList = new ListView<Member>();
+		ListView<String> membersEmailList = new ListView<String>();
+		BorderPane bp = new BorderPane();
+		bp.setLeft(membersEmailList);
+		for(Member member : members) {
+			membersEmailList.getItems().add(member.getEmailAddress()); 
+		}
+		
+		membersList.getItems().addAll(members);
+		
+		mainFrame.setCenter(bp);
+	}
+	
+	private void save() {
+		try {
+			FileOutputStream fos = new FileOutputStream(file);
+			pm.save(sm, fos);
+		} catch(Exception e) {
+			System.out.println("ERROR: "+ e);
+		}
 	}
 	
 }

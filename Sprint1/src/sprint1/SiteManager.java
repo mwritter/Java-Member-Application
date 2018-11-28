@@ -22,9 +22,12 @@ public class SiteManager implements Serializable{
 	public boolean addMember(String firstName, String lastName, String screenName, String emailAddress,
 			LocalDateTime dateCreated) {
 		Member newMember = new Member(firstName, lastName, screenName, emailAddress, dateCreated);
-		if(memberList.contains(newMember)) {
-			return false;
+		for(int i = 0; i < memberList.size(); i++) {
+			if(memberList.get(i).getEmailAddress().equals(newMember.getEmailAddress())) {
+				return false;
+			}
 		}
+		
 		memberList.add(newMember);
 		return true;
 	}

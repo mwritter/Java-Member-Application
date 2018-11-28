@@ -30,14 +30,12 @@
 		
 		<left>
 			<ListView fx:id="options" onMouseClicked="#handleClickListView">
-				
 			</ListView>
 		</left>
 		
 		<center>
-
+		
 			<GridPane fx:id="mainFunction" vgap="10" hgap="10">
-				
 			</GridPane>
 
 		</center>
