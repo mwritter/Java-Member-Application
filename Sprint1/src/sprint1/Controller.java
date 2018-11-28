@@ -35,7 +35,7 @@ public class Controller {
 	
 	public void initialize() {
 		sm = new SiteManager();
-		String[] siteOptions = {"Add Member", "Add Group", "Get Member", "Get Group"};
+		String[] siteOptions = {"Add Member", "Add Group", "Members", "Groups"};
 		options.getItems().setAll(siteOptions);
 		options.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		optionInstructions.setEditable(false);
@@ -46,11 +46,16 @@ public class Controller {
 	public void handleClickListView() {
 		String option = options.getSelectionModel().getSelectedItem();
 		optionInstructions.setText("You've Choosen to: " + option);
+		
 		if(option.equals("Add Member")) {
 			createAddMemberScene();
+		} 
+		else if(option.equals("Add Group")) {
+			createAddGroupScene();
 		} else {
 			mainFunction.getChildren().clear();
 		}
+		
 		
 	}
 	
@@ -70,12 +75,13 @@ public class Controller {
 
 			@Override
 			public void handle(ActionEvent event) {
-				if(!emailTF.getText().isEmpty()) {
+				if(!emailTF.getText().isEmpty() && !firstNameTF.getText().isEmpty() && !lastNameTF.getText().isEmpty()
+						&& !screenNameTF.getText().isEmpty()) {
 					LocalDateTime dateCreated = LocalDateTime.now();
 					sm.addMember(firstNameTF.getText(), lastNameTF.getText(), screenNameTF.getText(), emailTF.getText(), dateCreated);
 					System.out.println(sm.getMembers());
 				} else {
-					System.out.println("Email is Empty");
+					optionInstructions.appendText("  ERROR - all fields are required");;
 				}	
 			}
 		});
@@ -95,5 +101,36 @@ public class Controller {
 		
 	}
 	
+	private void createAddGroupScene() {
+		mainFunction.getChildren().clear();
+		//String title, String description, LocalDateTime date
+		Label titleL = new Label("Title");
+		TextField titleTF = new TextField();
+		Label descriptionL = new Label("Description");
+		TextArea descriptionTA = new TextArea();
+		Button btnSave = new Button();
+		btnSave.setText("Save");
+		btnSave.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				if(!titleTF.getText().isEmpty() && !descriptionTA.getText().isEmpty()) {
+					LocalDateTime dateCreated = LocalDateTime.now();
+					sm.addGroup(titleTF.getText(), descriptionTA.getText(), dateCreated);
+					System.out.println(sm.getGroups());
+				} else {
+					optionInstructions.appendText("  ERROR - all fields are required");;
+				}	
+			}
+		});
+		mainFunction.setAlignment(Pos.CENTER);
+		mainFunction.setPadding(new Insets(20,20,20,20));
+		mainFunction.getChildren().clear();	
+		mainFunction.add(titleL, 0, 0);
+		mainFunction.add(titleTF, 1, 0);
+		mainFunction.add(descriptionL, 0, 1);
+		mainFunction.add(descriptionTA, 1, 1);
+		mainFunction.add(btnSave, 2, 4);
+	}
 	
 }
