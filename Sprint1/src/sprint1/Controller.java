@@ -1,9 +1,20 @@
 package sprint1;
 
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +28,17 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
 
 public class Controller {
@@ -92,6 +107,8 @@ public class Controller {
 		
 		
 	}
+	
+	
 	
 	private void createAddMemberScene() {
 		mainFunction.getChildren().clear();
@@ -171,11 +188,57 @@ public class Controller {
 	
 	private void createMembersScene() {
 		ListView<String> membersEmailList = new ListView<String>();
+		ListView<String> memberGroupList = new ListView<String>();
 		BorderPane bp = new BorderPane();
+		VBox memberInfoVB = new VBox();
+		Label memberNameL = new Label();
+		Label groupL = new Label("Groups");
+		Label groupL2 = new Label("Groups");
+		Label memberDateCreatedL = new Label();
+		ScrollPane sp = new ScrollPane();
 		bp.setLeft(membersEmailList);
+		
 		for(Member member : members) {
 			membersEmailList.getItems().add(member.getEmailAddress()); 
 		}
+		
+		
+		
+		membersEmailList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		membersEmailList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				try {
+					String member = membersEmailList.getSelectionModel().getSelectedItem();
+					Member thisMember = sm.getMember(member);
+					for(Group group : thisMember.getGroups()) {
+						memberGroupList.getItems().add(group.getDescription());
+					}
+					memberGroupList.setMaxHeight(100.0);
+					
+					optionInstructions.setText("You've Choosen to: " + member);
+					String name = sm.getMember(member).getFirstName() + " " + sm.getMember(member).getLastName();
+					memberNameL.setText(name);
+					memberDateCreatedL.setText("Added: " +  thisMember.getDateCreated().toString());
+					memberInfoVB.getChildren().addAll(memberNameL, memberDateCreatedL, groupL, memberGroupList);
+					
+					sp.setContent(memberInfoVB);
+					
+					bp.setCenter(sp);
+					
+					System.out.println("Click member: " + name);
+					System.out.println("Email: " + thisMember.getEmailAddress());
+					System.out.println("Number of Groups: " + thisMember.getGroups().size());
+					System.out.println("Part of these Groups: " + thisMember.getGroups().toString());
+					System.out.println("Date Created: " + thisMember.getDateCreated());
+					
+					
+				} catch(Exception e) {
+					System.out.println("Click at member");
+				}
+			}
+		});
+		
 		mainFrame.setCenter(bp);
 	}
 	
@@ -199,4 +262,7 @@ public class Controller {
 		}
 	}
 	
+	private void handelEmailListClick() {
+		
+	}
 }
