@@ -20,12 +20,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
@@ -89,7 +92,9 @@ public class Controller {
 		String option = options.getSelectionModel().getSelectedItem();
 		optionInstructions.setText("You've Choosen to: " + option);
 		
-		if(option.equals("Add Member")) {
+	if(option == null){
+		optionInstructions.setText("");
+	}else if(option.equals("Add Member")) {
 			mainFrame.setCenter(mainFunction);
 			createAddMemberScene();
 		} 
@@ -100,7 +105,7 @@ public class Controller {
 			createMembersScene();
 		} else if(option.equals("Groups")) {
 			createGroupScene();
-		}
+		} 
 		else {
 			mainFunction.getChildren().clear();
 		}
@@ -187,68 +192,109 @@ public class Controller {
 	}
 	
 	private void createMembersScene() {
+		mainFunction.getChildren().clear();
 		ListView<String> membersEmailList = new ListView<String>();
-		ListView<String> memberGroupList = new ListView<String>();
 		BorderPane bp = new BorderPane();
-		VBox memberInfoVB = new VBox();
-		Label memberNameL = new Label();
-		Label groupL = new Label("Groups");
-		Label groupL2 = new Label("Groups");
-		Label memberDateCreatedL = new Label();
-		ScrollPane sp = new ScrollPane();
 		bp.setLeft(membersEmailList);
-		
-		for(Member member : members) {
-			membersEmailList.getItems().add(member.getEmailAddress()); 
+
+		for(Member m : members) {
+			membersEmailList.getItems().add(m.getEmailAddress()); 
 		}
-		
-		
 		
 		membersEmailList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		membersEmailList.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				try {
+					ComboBox<String> groupCB = new ComboBox<String>();
+					ListView<String> memberGroupList = new ListView<String>();
+					List<String> thisMembersGroups = new ArrayList<String>();
+					VBox memberInfoVB = new VBox();
+					HBox labelAndCombo = new HBox();
+					Label memberNameL = new Label();
+					Label groupL = new Label("Groups");
+					Label memberDateCreatedL = new Label();
+					ScrollPane sp = new ScrollPane();
+					VBox groupInfoVB = new VBox();
+					Label groupNameL = new Label();
+					groupCB.setPromptText("Join Group");
 					String member = membersEmailList.getSelectionModel().getSelectedItem();
-					Member thisMember = sm.getMember(member);
-					for(Group group : thisMember.getGroups()) {
-						memberGroupList.getItems().add(group.getDescription());
+
+					for(Group group : sm.getMember(member).getGroups()) {
+						if(!memberGroupList.getItems().contains(group.getTitle())) {
+							memberGroupList.getItems().add(group.getTitle());
+							thisMembersGroups.add(group.getTitle());
+						}
+						
 					}
+					
+					for(Group group : sm.getGroups()) {
+						if(!thisMembersGroups.contains(group.getTitle())) {
+							groupCB.getItems().add(group.getTitle());
+						}
+					}
+					
+					groupCB.valueProperty().addListener(new ChangeListener<String>() {
+						@Override
+						public void changed(ObservableValue<? extends String> observable, String oldValue,
+								String newValue) {
+							LocalDateTime date = LocalDateTime.now();
+							System.out.println(newValue);
+							sm.getMember(membersEmailList.getSelectionModel().getSelectedItem()).joinGroup(sm.getGroup(newValue), date);
+							for(Group group : sm.getMember(member).getGroups()) {
+								if(!memberGroupList.getItems().contains(group.getTitle())) {
+									memberGroupList.getItems().add(group.getTitle());
+									thisMembersGroups.add(group.getTitle());
+								}
+								
+							}
+							
+							save();
+						}
+						
+					});
+					
 					memberGroupList.setMaxHeight(100.0);
+					memberGroupList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+						@Override
+						public void handle(MouseEvent event) {
+							groupInfoVB.getChildren().clear();
+							groupNameL.setText(memberGroupList.getSelectionModel().getSelectedItem());
+							groupInfoVB.getChildren().addAll(groupNameL);
+						}
+					});
+					
+					
+					
 					
 					optionInstructions.setText("You've Choosen to: " + member);
 					String name = sm.getMember(member).getFirstName() + " " + sm.getMember(member).getLastName();
 					memberNameL.setText(name);
-					memberDateCreatedL.setText("Added: " +  thisMember.getDateCreated().toString());
-					memberInfoVB.getChildren().addAll(memberNameL, memberDateCreatedL, groupL, memberGroupList);
-					
+					memberDateCreatedL.setText("Added: " +  sm.getMember(member).getDateCreated().toString());
+					labelAndCombo.getChildren().addAll(memberGroupList, groupCB);
+					memberInfoVB.getChildren().addAll(memberNameL, memberDateCreatedL, groupL, labelAndCombo, groupInfoVB);
 					sp.setContent(memberInfoVB);
-					
 					bp.setCenter(sp);
-					
-					System.out.println("Click member: " + name);
-					System.out.println("Email: " + thisMember.getEmailAddress());
-					System.out.println("Number of Groups: " + thisMember.getGroups().size());
-					System.out.println("Part of these Groups: " + thisMember.getGroups().toString());
-					System.out.println("Date Created: " + thisMember.getDateCreated());
-					
-					
-				} catch(Exception e) {
-					System.out.println("Click at member");
-				}
-			}
+			}catch(Exception e) {
+				System.out.println(e);
+			}}
 		});
 		
 		mainFrame.setCenter(bp);
 	}
 	
 	private void createGroupScene() {
+		VBox vb = new VBox();
 		ListView<String> groupTitles = new ListView<String>();
 		BorderPane bp = new BorderPane();
 		bp.setLeft(groupTitles);
 		for(Group group : groups) {
 			groupTitles.getItems().add(group.getTitle());
 		}
+		
+		
+		bp.setCenter(vb);
+		
 		
 		mainFrame.setCenter(bp);
 	}
@@ -262,7 +308,7 @@ public class Controller {
 		}
 	}
 	
-	private void handelEmailListClick() {
+	
 		
-	}
+	
 }
