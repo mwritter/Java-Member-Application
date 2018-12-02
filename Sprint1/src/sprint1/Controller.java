@@ -293,9 +293,39 @@ public class Controller {
 	private void createGroupScene() {
 		groupInfoVB.getChildren().clear();
 		ListView<String> groupTitles = new ListView<String>();
+		VBox groupsListVBox = new VBox();
+		Button getActiveGroupsB = new Button("Active Groups");
+		Button getPopularGroupsB = new Button("Popular Groups");
+		groupsListVBox.getChildren().addAll(getPopularGroupsB, getActiveGroupsB, groupTitles);
 		groupTitles.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		BorderPane bp = new BorderPane();
-		bp.setLeft(groupTitles);
+		bp.setLeft(groupsListVBox);
+		
+		
+		getPopularGroupsB.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				groupTitles.getItems().clear();
+				for (Group g: sm.getPopularGroups(sm.getGroups().size()) ) {
+					groupTitles.getItems().add(g.getTitle());
+				}
+				
+				
+			}
+		});
+		
+		getActiveGroupsB.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				groupTitles.getItems().clear();
+				for (Group g: sm.getActiveGroups(sm.getGroups().size()) ) {
+					groupTitles.getItems().add(g.getTitle());
+				}
+			}
+		});
+		
+		
+		
 		for(Group group : groups) {
 			groupTitles.getItems().add(group.getTitle());
 		}
@@ -312,12 +342,20 @@ public class Controller {
 		
 		mainFrame.setCenter(bp);
 	}
-	
+	/*
 	private void createGroupPane(String groupTitle, String member, ListView<String> membersEmailList) {
 		groupInfoVB.getChildren().clear();
+		String memberEmail = member;
 		Label groupL = new Label(groupTitle);
-		Label questionL = new Label("Questions");
+		Label questionL = new Label();
+		questionL.setText("Questions (" + sm.getGroup(groupTitle).getQuestions().size() + ")" );
 		ListView<String> questions = new ListView<String>();
+		questions.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		ArrayList<Question> questionsList = new ArrayList<Question>();
+		Label memberL = new Label();
+		memberL.setText("Members (" + sm.getGroup(groupTitle).getNumOfMembers() + ")" );
+		ListView<String> members = new ListView<String>();
+		
 		Button btnAdd = new Button("Add Question");
 		
 		btnAdd.setOnAction(new EventHandler<ActionEvent>() {
@@ -347,7 +385,104 @@ public class Controller {
 		}
 		
 		
+	}*/
+	
+	
+	
+	private void createGroupPane(String groupTitle, String member, ListView<String> membersEmailList) {
+		groupInfoVB.getChildren().clear();
+		String memberEmail = member;
+		Label groupL = new Label(groupTitle);
+		Label questionL = new Label();
+		questionL.setText("Questions (" + sm.getGroup(groupTitle).getQuestions().size() + ")" );////
+		ListView<String> questions = new ListView<String>();
+		questions.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		ArrayList<Question> questionsList = new ArrayList<Question>();///
+		Label memberL = new Label();
+		memberL.setText("Members (" + sm.getGroup(groupTitle).getNumOfMembers() + ")" );////
+		ListView<String> members = new ListView<String>();
+		Button btnAdd = new Button("Add Question");
+		for(Question question : sm.getGroup(groupTitle).getQuestions()) {
+			if(!questions.getItems().contains(question.getTitle())) {
+				questions.getItems().add(question.getTitle());//question.getTitle() + "\n" + question.likes.size + " likes" 
+				questionsList.add(question);
+			}
+		}
+		for (Member m: sm.getGroup(groupTitle).getMembers()) {////
+			if(!members.getItems().contains(m.getScreenName())) {/////
+				members.getItems().add(m.getScreenName());///////////
+			}
+		}
+
+		questions.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				groupInfoVB.getChildren().clear();
+				String questionClicked = questions.getSelectionModel().getSelectedItem();
+				ListView<String> answers = new ListView<String>();
+				for (Question q: questionsList) {//////////
+					if (q.getTitle() == questionClicked) {
+						for (Answer a: q.getAnswers()) {
+							answers.getItems().add(a.getText());
+						}
+					}
+				}		
+				
+				
+				Label questionsL = new Label("Questions");
+				Label answersL = new Label("Answers");
+				groupInfoVB.getChildren().addAll(questionsL, questions, answersL, answers);
+
+			}
+		});
+
+
+		btnAdd.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {		
+				/*
+				groupInfoVB.getChildren().clear();				
+				LocalDateTime dateCreated = LocalDateTime.now();
+				Question q = new Question("Title of Question", "Description of question", dateCreated);
+				sm.getMember(memberEmail).addQuestion(sm.getGroup(groupTitle), q, dateCreated);
+				for(Question question : sm.getGroup(groupTitle).getQuestions()) {
+					if(!questions.getItems().contains(question.getTitle())) {
+						questions.getItems().add(question.getTitle());
+					}
+				}
+				*/
+				createAddQuestionPane(sm.getMember(member), sm.getGroup(groupTitle));
+				
+				BorderPane bp = new BorderPane();
+				bp.setCenter(questionFormVB);
+				
+				mainFrame.setCenter(bp);
+			}
+		});
+		
+		
+		if (member == null) {
+		groupInfoVB.getChildren().addAll(groupL, questionL, questions, memberL, members);
+		} else if (member != null) {
+			groupInfoVB.getChildren().addAll(groupL, questionL, questions);
+		}
+		
+		
+		
+		if(member != null) {
+			groupInfoVB.getChildren().add(btnAdd);
+		}
+
+
+
 	}
+	
+	
+	
+	
+	
+	
+	
 	
 	private void createAddQuestionPane(Member member, Group group) {
 		Label questionTitleL = new Label("Title");
