@@ -51,8 +51,8 @@ public class Controller {
 	private List<Group> groups;
 	protected VBox groupInfoVB = new VBox();
 	protected VBox questionFormVB = new VBox();
-	
-	
+
+
 	@FXML
 	private ListView<String> options;
 	@FXML
@@ -61,9 +61,9 @@ public class Controller {
 	private BorderPane mainFrame;
 	@FXML
 	private GridPane mainFunction;
-	
-	
-	
+
+
+
 	public void initialize() {
 		if(file.exists()) {
 			try {
@@ -79,8 +79,8 @@ public class Controller {
 			members = new ArrayList<Member>();
 			groups = new ArrayList<Group>();
 		}
-		
-		
+
+
 		pm = new PersistanceManager();
 		String[] siteOptions = {"Add Member", "Add Group", "Members", "Groups"};
 		options.getItems().setAll(siteOptions);
@@ -88,15 +88,15 @@ public class Controller {
 		optionInstructions.setEditable(false);
 		optionInstructions.setPrefRowCount(1);
 	}
-	
+
 	@FXML
 	public void handleClickListView() {
 		String option = options.getSelectionModel().getSelectedItem();
 		optionInstructions.setText("You've Choosen to: " + option);
-		
-	if(option == null){
-		optionInstructions.setText("");
-	}else if(option.equals("Add Member")) {
+
+		if(option == null){
+			optionInstructions.setText("");
+		}else if(option.equals("Add Member")) {
 			mainFrame.setCenter(mainFunction);
 			createAddMemberScene();
 		} 
@@ -111,12 +111,12 @@ public class Controller {
 		else {
 			mainFunction.getChildren().clear();
 		}
-		
-		
+
+
 	}
-	
-	
-	
+
+
+
 	private void createAddMemberScene() {
 		mainFunction.getChildren().clear();
 		Label emailL = new Label("Email");
@@ -141,7 +141,7 @@ public class Controller {
 						optionInstructions.setText("  SUCSESS - Member was added");
 					}
 					save();
-					
+
 				} else {
 					optionInstructions.setText("  ERROR - all fields are required");
 				}	
@@ -159,7 +159,7 @@ public class Controller {
 		mainFunction.add(screenNameTF, 1, 3);
 		mainFunction.add(btnSave, 2, 4);
 	}
-	
+
 	private void createAddGroupScene() {
 		mainFunction.getChildren().clear();
 		Label titleL = new Label("Title");
@@ -192,7 +192,7 @@ public class Controller {
 		mainFunction.add(descriptionTA, 1, 1);
 		mainFunction.add(btnSave, 2, 4);
 	}
-	
+
 	private void createMembersScene(String member) {
 		mainFunction.getChildren().clear();
 		ListView<String> membersEmailList = new ListView<String>();
@@ -202,7 +202,7 @@ public class Controller {
 		for(Member m : members) {
 			membersEmailList.getItems().add(m.getEmailAddress()); 
 		}
-		
+
 		membersEmailList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		if(member != null) {
 			membersEmailList.getSelectionModel().select(member);
@@ -211,7 +211,7 @@ public class Controller {
 			@Override
 			public void handle(MouseEvent event) {
 				try {
-					
+
 					groupInfoVB.getChildren().clear();
 					ComboBox<String> groupCB = new ComboBox<String>();
 					ListView<String> memberGroupList = new ListView<String>();
@@ -222,7 +222,7 @@ public class Controller {
 					Label groupL = new Label("Groups");
 					Label memberDateCreatedL = new Label();
 					ScrollPane sp = new ScrollPane();
-					
+
 					Label groupNameL = new Label();
 					groupCB.setPromptText("Join Group");
 					String member = membersEmailList.getSelectionModel().getSelectedItem();
@@ -232,15 +232,15 @@ public class Controller {
 							memberGroupList.getItems().add(group.getTitle());
 							thisMembersGroups.add(group.getTitle());
 						}
-						
+
 					}
-					
+
 					for(Group group : sm.getGroups()) {
 						if(!thisMembersGroups.contains(group.getTitle())) {
 							groupCB.getItems().add(group.getTitle());
 						}
 					}
-					
+
 					groupCB.valueProperty().addListener(new ChangeListener<String>() {
 						@Override
 						public void changed(ObservableValue<? extends String> observable, String oldValue,
@@ -253,14 +253,14 @@ public class Controller {
 									memberGroupList.getItems().add(group.getTitle());
 									thisMembersGroups.add(group.getTitle());
 								}
-								
+
 							}
-							
+
 							save();
 						}
-						
+
 					});
-					
+
 					memberGroupList.setMaxHeight(100.0);
 					memberGroupList.setOnMouseClicked(new EventHandler<MouseEvent>() {
 						@Override
@@ -270,10 +270,10 @@ public class Controller {
 							createGroupPane(groupTitle, member, membersEmailList);
 						}
 					});
-					
-					
-					
-					
+
+
+
+
 					optionInstructions.setText("You've Choosen to: " + member);
 					String name = sm.getMember(member).getFirstName() + " " + sm.getMember(member).getLastName();
 					memberNameL.setText(name);
@@ -282,14 +282,14 @@ public class Controller {
 					memberInfoVB.getChildren().addAll(memberNameL, memberDateCreatedL, groupL, labelAndCombo, groupInfoVB);
 					sp.setContent(memberInfoVB);
 					bp.setCenter(sp);
-			}catch(Exception e) {
-				System.out.println(e);
-			}}
+				}catch(Exception e) {
+					System.out.println(e);
+				}}
 		});
-		
+
 		mainFrame.setCenter(bp);
 	}
-	
+
 	private void createGroupScene() {
 		groupInfoVB.getChildren().clear();
 		ListView<String> groupTitles = new ListView<String>();
@@ -300,8 +300,8 @@ public class Controller {
 		groupTitles.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		BorderPane bp = new BorderPane();
 		bp.setLeft(groupsListVBox);
-		
-		
+
+
 		getPopularGroupsB.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -309,11 +309,11 @@ public class Controller {
 				for (Group g: sm.getPopularGroups(sm.getGroups().size()) ) {
 					groupTitles.getItems().add(g.getTitle());
 				}
-				
-				
+
+
 			}
 		});
-		
+
 		getActiveGroupsB.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -323,9 +323,9 @@ public class Controller {
 				}
 			}
 		});
-		
-		
-		
+
+
+
 		for(Group group : groups) {
 			groupTitles.getItems().add(group.getTitle());
 		}
@@ -336,10 +336,10 @@ public class Controller {
 				createGroupPane(groupTitle, null, null);
 			}
 		});
-		
+
 		bp.setCenter(groupInfoVB);
-		
-		
+
+
 		mainFrame.setCenter(bp);
 	}
 	/*
@@ -355,9 +355,9 @@ public class Controller {
 		Label memberL = new Label();
 		memberL.setText("Members (" + sm.getGroup(groupTitle).getNumOfMembers() + ")" );
 		ListView<String> members = new ListView<String>();
-		
+
 		Button btnAdd = new Button("Add Question");
-		
+
 		btnAdd.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -375,20 +375,20 @@ public class Controller {
 					}
 				});
 				mainFrame.setCenter(bp);
-				
+
 			}
 		});
-		
+
 		groupInfoVB.getChildren().addAll(groupL, questionL, questions);
 		if(member != null) {
 			groupInfoVB.getChildren().add(btnAdd);
 		}
-		
-		
+
+
 	}*/
-	
-	
-	
+
+
+
 	private void createGroupPane(String groupTitle, String member, ListView<String> membersEmailList) {
 		groupInfoVB.getChildren().clear();
 		String memberEmail = member;
@@ -427,8 +427,8 @@ public class Controller {
 						}
 					}
 				}		
-				
-				
+
+
 				Label questionsL = new Label("Questions");
 				Label answersL = new Label("Answers");
 				groupInfoVB.getChildren().addAll(questionsL, questions, answersL, answers);
@@ -450,25 +450,25 @@ public class Controller {
 						questions.getItems().add(question.getTitle());
 					}
 				}
-				*/
+				 */
 				createAddQuestionPane(sm.getMember(member), sm.getGroup(groupTitle));
-				
+
 				BorderPane bp = new BorderPane();
 				bp.setCenter(questionFormVB);
-				
+
 				mainFrame.setCenter(bp);
 			}
 		});
-		
-		
+
+
 		if (member == null) {
-		groupInfoVB.getChildren().addAll(groupL, questionL, questions, memberL, members);
+			groupInfoVB.getChildren().addAll(groupL, questionL, questions, memberL, members);
 		} else if (member != null) {
 			groupInfoVB.getChildren().addAll(groupL, questionL, questions);
 		}
-		
-		
-		
+
+
+
 		if(member != null) {
 			groupInfoVB.getChildren().add(btnAdd);
 		}
@@ -476,14 +476,14 @@ public class Controller {
 
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
 	private void createAddQuestionPane(Member member, Group group) {
 		Label questionTitleL = new Label("Title");
 		TextField questionTitleTF = new TextField();
@@ -510,17 +510,17 @@ public class Controller {
 					System.out.println(error);
 				} 
 			}
-			
+
 		});
-		
+
 		HBox titleHBox = new HBox();
 		titleHBox.getChildren().addAll(questionTitleL, questionTitleTF);
-		
+
 		questionFormVB = new VBox(titleHBox, questionDescriptionL, questionDescriptionTA, btnSubmitQuestion);
-		
-		
+
+
 	}
-	
+
 	private void save() {
 		try {
 			FileOutputStream fos = new FileOutputStream(file);
@@ -529,8 +529,8 @@ public class Controller {
 			System.out.println("ERROR: "+ e);
 		}
 	}
-	
-	
-		
-	
+
+
+
+
 }
