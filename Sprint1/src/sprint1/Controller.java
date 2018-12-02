@@ -82,7 +82,7 @@ public class Controller {
 
 
 		pm = new PersistanceManager();
-		String[] siteOptions = {"Add Member", "Add Group", "Members", "Groups"};
+		String[] siteOptions = {"Add Member", "Add Group", "Members", "Groups", "Test"};
 		options.getItems().setAll(siteOptions);
 		options.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		optionInstructions.setEditable(false);
@@ -107,7 +107,7 @@ public class Controller {
 			createMembersScene(null);
 		} else if(option.equals("Groups")) {
 			createGroupScene();
-		} 
+		}
 		else {
 			mainFunction.getChildren().clear();
 		}
@@ -342,51 +342,6 @@ public class Controller {
 
 		mainFrame.setCenter(bp);
 	}
-	/*
-	private void createGroupPane(String groupTitle, String member, ListView<String> membersEmailList) {
-		groupInfoVB.getChildren().clear();
-		String memberEmail = member;
-		Label groupL = new Label(groupTitle);
-		Label questionL = new Label();
-		questionL.setText("Questions (" + sm.getGroup(groupTitle).getQuestions().size() + ")" );
-		ListView<String> questions = new ListView<String>();
-		questions.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-		ArrayList<Question> questionsList = new ArrayList<Question>();
-		Label memberL = new Label();
-		memberL.setText("Members (" + sm.getGroup(groupTitle).getNumOfMembers() + ")" );
-		ListView<String> members = new ListView<String>();
-
-		Button btnAdd = new Button("Add Question");
-
-		btnAdd.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				System.out.println("Creating Add Question Form for: "+ member + " : " + groupTitle);
-				createAddQuestionPane(sm.getMember(member), sm.getGroup(groupTitle));
-				BorderPane bp = new BorderPane();
-				bp.setCenter(questionFormVB);
-				bp.setLeft(membersEmailList);
-				membersEmailList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-				membersEmailList.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-					@Override
-					public void handle(MouseEvent event) {
-						createMembersScene(membersEmailList.getSelectionModel().getSelectedItem());
-					}
-				});
-				mainFrame.setCenter(bp);
-
-			}
-		});
-
-		groupInfoVB.getChildren().addAll(groupL, questionL, questions);
-		if(member != null) {
-			groupInfoVB.getChildren().add(btnAdd);
-		}
-
-
-	}*/
-
 
 
 	private void createGroupPane(String groupTitle, String member, ListView<String> membersEmailList) {
@@ -413,28 +368,45 @@ public class Controller {
 				members.getItems().add(m.getScreenName());///////////
 			}
 		}
-
-		questions.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				groupInfoVB.getChildren().clear();
-				String questionClicked = questions.getSelectionModel().getSelectedItem();
-				ListView<String> answers = new ListView<String>();
-				for (Question q: questionsList) {//////////
-					if (q.getTitle() == questionClicked) {
-						for (Answer a: q.getAnswers()) {
-							answers.getItems().add(a.getText());
+		if(member != null) {
+			questions.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					groupInfoVB.getChildren().clear();
+					Question question = new Question(null,null,null);
+					for(Question q : sm.getGroup(groupTitle).getQuestions()) {
+						if(questions.getSelectionModel().getSelectedItem().equals(q.getTitle())) {
+							question = q;
 						}
-					}
-				}		
+					}	
+					AnswerFormPane ap = new AnswerFormPane(sm.getMember(member), sm.getGroup(groupTitle), question);
+					groupInfoVB.getChildren().add(ap.createAnswerFormPane());
+				}
+			});
+		} else {
+			questions.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					ListView<String> answers = new ListView<String>();
+					String questionClicked = questions.getSelectionModel().getSelectedItem();
+					for (Question q: questionsList) {//////////
+						if (q.getTitle() == questionClicked) {
+							for (Answer a: q.getAnswers()) {
+								answers.getItems().add(a.getText());
+							}
+					 }
+					}		
 
 
-				Label questionsL = new Label("Questions");
-				Label answersL = new Label("Answers");
-				groupInfoVB.getChildren().addAll(questionsL, questions, answersL, answers);
-
-			}
-		});
+					Label questionsL = new Label("Questions");
+					Label answersL = new Label("Answers");
+					groupInfoVB.getChildren().clear();
+					groupInfoVB.getChildren().addAll(questionsL, questions, answersL, answers);
+				}
+				
+			});
+		}
+		
 
 
 		btnAdd.setOnAction(new EventHandler<ActionEvent>() {
@@ -521,7 +493,7 @@ public class Controller {
 
 	}
 
-	private void save() {
+	protected void save() {
 		try {
 			FileOutputStream fos = new FileOutputStream(file);
 			pm.save(sm, fos);
