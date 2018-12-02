@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -51,6 +50,8 @@ public class Controller {
 	private List<Member> members;
 	private List<Group> groups;
 	protected VBox groupInfoVB = new VBox();
+	protected VBox questionFormVB = new VBox();
+	
 	
 	@FXML
 	private ListView<String> options;
@@ -103,7 +104,7 @@ public class Controller {
 			mainFrame.setCenter(mainFunction);
 			createAddGroupScene();
 		} else if(option.equals("Members")) {
-			createMembersScene();
+			createMembersScene(null);
 		} else if(option.equals("Groups")) {
 			createGroupScene();
 		} 
@@ -192,7 +193,7 @@ public class Controller {
 		mainFunction.add(btnSave, 2, 4);
 	}
 	
-	private void createMembersScene() {
+	private void createMembersScene(String member) {
 		mainFunction.getChildren().clear();
 		ListView<String> membersEmailList = new ListView<String>();
 		BorderPane bp = new BorderPane();
@@ -203,10 +204,14 @@ public class Controller {
 		}
 		
 		membersEmailList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		if(member != null) {
+			membersEmailList.getSelectionModel().select(member);
+		}
 		membersEmailList.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				try {
+					
 					groupInfoVB.getChildren().clear();
 					ComboBox<String> groupCB = new ComboBox<String>();
 					ListView<String> memberGroupList = new ListView<String>();
@@ -262,7 +267,7 @@ public class Controller {
 						public void handle(MouseEvent event) {
 							groupInfoVB.getChildren().clear();
 							String groupTitle = memberGroupList.getSelectionModel().getSelectedItem();
-							createGroupPane(groupTitle, member);
+							createGroupPane(groupTitle, member, membersEmailList);
 						}
 					});
 					
@@ -298,7 +303,7 @@ public class Controller {
 			@Override
 			public void handle(MouseEvent event) {
 				String groupTitle = groupTitles.getSelectionModel().getSelectedItem();
-				createGroupPane(groupTitle, null);
+				createGroupPane(groupTitle, null, null);
 			}
 		});
 		
@@ -308,30 +313,31 @@ public class Controller {
 		mainFrame.setCenter(bp);
 	}
 	
-	private void createGroupPane(String groupTitle, String member) {
+	private void createGroupPane(String groupTitle, String member, ListView<String> membersEmailList) {
 		groupInfoVB.getChildren().clear();
-		String memberEmail = member;
 		Label groupL = new Label(groupTitle);
 		Label questionL = new Label("Questions");
 		ListView<String> questions = new ListView<String>();
 		Button btnAdd = new Button("Add Question");
-		for(Question question : sm.getGroup(groupTitle).getQuestions()) {
-			if(!questions.getItems().contains(question.getTitle())) {
-				questions.getItems().add(question.getTitle());
-			}
-		}
 		
 		btnAdd.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				LocalDateTime dateCreated = LocalDateTime.now();
-				Question q = new Question("Title of Question", "Description of question", dateCreated);
-				sm.getMember(memberEmail).addQuestion(sm.getGroup(groupTitle), q, dateCreated);
-				for(Question question : sm.getGroup(groupTitle).getQuestions()) {
-					if(!questions.getItems().contains(question.getTitle())) {
-						questions.getItems().add(question.getTitle());
+				System.out.println("Creating Add Question Form for: "+ member + " : " + groupTitle);
+				createAddQuestionPane(sm.getMember(member), sm.getGroup(groupTitle));
+				BorderPane bp = new BorderPane();
+				bp.setCenter(questionFormVB);
+				bp.setLeft(membersEmailList);
+				membersEmailList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+				membersEmailList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+					@Override
+					public void handle(MouseEvent event) {
+						createMembersScene(membersEmailList.getSelectionModel().getSelectedItem());
 					}
-				}
+				});
+				mainFrame.setCenter(bp);
+				
 			}
 		});
 		
@@ -339,6 +345,43 @@ public class Controller {
 		if(member != null) {
 			groupInfoVB.getChildren().add(btnAdd);
 		}
+		
+		
+	}
+	
+	private void createAddQuestionPane(Member member, Group group) {
+		Label questionTitleL = new Label("Title");
+		TextField questionTitleTF = new TextField();
+		Label questionDescriptionL = new Label("Description");
+		TextArea questionDescriptionTA = new TextArea();
+		Button btnSubmitQuestion = new Button("Submit");
+		btnSubmitQuestion.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				if(!questionDescriptionTA.getText().isEmpty() && !questionTitleTF.getText().isEmpty()) {
+					try {
+						LocalDateTime dateCreated = LocalDateTime.now();
+						Question question = new Question(questionTitleTF.getText(), questionDescriptionTA.getText(), dateCreated);
+						sm.getMember(member.getEmailAddress()).addQuestion(group, question, dateCreated);
+						save();
+						createMembersScene(member.getEmailAddress());
+						System.out.println("Question Added");
+					} catch(Exception e) {
+						String error = "ERROR - " + e;
+						System.out.println(error);
+					}
+				}else {
+					String error = "ERROR - All fields required"; 
+					System.out.println(error);
+				} 
+			}
+			
+		});
+		
+		HBox titleHBox = new HBox();
+		titleHBox.getChildren().addAll(questionTitleL, questionTitleTF);
+		
+		questionFormVB = new VBox(titleHBox, questionDescriptionL, questionDescriptionTA, btnSubmitQuestion);
 		
 		
 	}
