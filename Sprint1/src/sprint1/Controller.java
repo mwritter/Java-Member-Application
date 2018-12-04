@@ -248,7 +248,7 @@ public class Controller {
 						public void changed(ObservableValue<? extends String> observable, String oldValue,
 								String newValue) {
 							LocalDateTime date = LocalDateTime.now();
-							System.out.println(newValue);
+							//System.out.println(newValue);
 							sm.getMember(membersEmailList.getSelectionModel().getSelectedItem()).joinGroup(sm.getGroup(newValue), date);
 							for(Group group : sm.getMember(member).getGroups()) {
 								if(!memberGroupList.getItems().contains(group.getTitle())) {
@@ -362,7 +362,7 @@ public class Controller {
 				if(!questions.getItems().contains(question.getTitle())) {
 					questions.getItems().add(question.getTitle()); 
 					questionsList.add(question);
-					System.out.println(question.getTitle());
+					//System.out.println(question.getTitle());
 				}
 			}	
 		}
@@ -470,7 +470,7 @@ public class Controller {
 							groupInfoVB.getChildren().add(alert);
 						} else {
 							ListView<String> filteredAnswers = new ListView<String>();
-							System.out.println();
+							//System.out.println();
 							for (int i = 1; i <= filterNumber; i++)  {
 								filteredAnswers.getItems().add(clickedQuestion.getAnswers().get(clickedQuestion.getAnswers().size() - i).getText());
 							}
@@ -513,7 +513,7 @@ public class Controller {
 						sm.getMember(member.getEmailAddress()).addQuestion(group, question, dateCreated);
 						save();
 						createMembersScene(member.getEmailAddress());
-						System.out.println("Question Added");
+						//System.out.println("Question Added");
 					} catch(Exception e) {
 						String error = "ERROR - " + e;
 						System.out.println(error);

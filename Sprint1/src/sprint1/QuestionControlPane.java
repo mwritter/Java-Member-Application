@@ -60,7 +60,7 @@ public class QuestionControlPane {
 			public void handle(ActionEvent event) {
 				Like like = new Like(member);
 				question.addLike(like);
-				System.out.println(question.likes.get(0).getUpVoter());
+				//System.out.println(question.likes.get(0).getUpVoter());
 				save();
 			}
 		});
