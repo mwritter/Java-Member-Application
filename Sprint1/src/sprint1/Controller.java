@@ -188,6 +188,7 @@ public class Controller {
 	
 	private void createMembersScene(String member) {
 		mainFunction.getChildren().clear();
+		
 		BorderPane bp = new BorderPane();
 		bp.setLeft(membersEmailList);
 		bp.setCenter(createAddMemberScene());
@@ -211,6 +212,7 @@ public class Controller {
 				try {
 
 					groupInfoVB.getChildren().clear();
+					Label exp = new Label("EXP: ");
 					ComboBox<String> groupCB = new ComboBox<String>();
 					ListView<String> memberGroupList = new ListView<String>();
 					List<String> thisMembersGroups = new ArrayList<String>();
@@ -223,6 +225,12 @@ public class Controller {
 					Label groupNameL = new Label();
 					groupCB.setPromptText("Join Group");
 					String member = membersEmailList.getSelectionModel().getSelectedItem();
+					int count = 0;
+					for(Membership membership : sm.getMember(member).getMemberships()) {
+						count += membership.getPoints();
+					}
+					exp.setText("EXP: " + count);
+					
 					for(Group group : sm.getMember(member).getGroups()) {
 						if(!memberGroupList.getItems().contains(group.getTitle())) {
 							memberGroupList.getItems().add(group.getTitle());
@@ -265,7 +273,7 @@ public class Controller {
 					memberNameL.setText(name);
 					memberDateCreatedL.setText("Added: " +  sm.getMember(member).getDateCreated().toString());
 					labelAndCombo.getChildren().addAll(memberGroupList, groupCB);
-					memberInfoVB.getChildren().addAll(memberNameL, memberDateCreatedL, groupL, labelAndCombo, groupInfoVB);
+					memberInfoVB.getChildren().addAll(memberNameL, exp, memberDateCreatedL, groupL, labelAndCombo, groupInfoVB);
 					sp.setContent(memberInfoVB);
 					bp.setCenter(sp);
 				}catch(Exception e) {

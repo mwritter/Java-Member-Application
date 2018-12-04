@@ -3,6 +3,8 @@ package sprint1;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -31,8 +33,16 @@ public class CommentFormPane {
 		TextArea commentTA = new TextArea();
 		commentTA.setWrapText(true);
 		Button btnSubmit = new Button("Submit");
+		btnSubmit.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				Comment comment = new Comment(commentTA.getText(), member, post);
+				post.addComment(comment);
+				save();
+			}
+		});
 		vb.getChildren().addAll(headingL,commentL, commentTA,btnSubmit);
-		
 		return vb;
 	}
 	
