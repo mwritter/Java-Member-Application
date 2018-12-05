@@ -176,7 +176,9 @@ public class Controller {
 	}
 	
 	private GridPane createAddGroupScene() {
+		
 		mainFunction.getChildren().clear();
+		
 		headingLabel.setText("Add New Group");
 		Label titleL = new Label("Title");
 		TextField titleTF = new TextField();
