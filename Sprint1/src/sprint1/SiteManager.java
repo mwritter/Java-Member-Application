@@ -133,7 +133,8 @@ public class SiteManager implements Serializable{
 	public List<Group> getGroups(String text) {
 		List<Group> match = new ArrayList<>();
 		for (Group group : groupList) {
-			if (group.getTitle().contains(text) || group.getDescription().contains(text)) {
+			if (group.getTitle().toLowerCase().contains(text.toLowerCase()) || 
+					group.getDescription().toLowerCase().contains(text.toLowerCase())) {
 				match.add(group);
 			}
 		}

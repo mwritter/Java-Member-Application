@@ -307,6 +307,7 @@ public class Controller {
 							createGroupPane(groupTitle, member, membersEmailList, false, 0);
 						}
 					});
+					
 					optionInstructions.setStyle("-fx-text-fill: black;");
 					optionInstructions.setText("You've Choosen to: " + member);
 					String name = sm.getMember(member).getFirstName() + " " + sm.getMember(member).getLastName();
@@ -331,13 +332,34 @@ public class Controller {
 		HBox filterButtons = new HBox();
 		Button getActiveGroupsB = new Button("Active Groups");
 		Button getPopularGroupsB = new Button("Popular Groups");
+		
+		Button getMatchingGroupSB = new Button("Search Groups");
+		TextField searchGroupsTF = new TextField();
+		HBox searchBox = new HBox();
+		searchBox.getChildren().addAll(getMatchingGroupSB, searchGroupsTF);
 		filterButtons.getChildren().addAll(getActiveGroupsB, getPopularGroupsB);
-		groupsListVBox.getChildren().addAll(filterButtons, groupTitles);
+		groupsListVBox.getChildren().addAll(searchBox, groupTitles, filterButtons);
 		groupTitles.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		BorderPane bp = new BorderPane();
 		groupsListVBox.setVgrow(groupTitles, Priority.ALWAYS);
 		bp.setLeft(groupsListVBox);
 		bp.setCenter(createAddGroupScene());
+		
+		getMatchingGroupSB.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				if(!searchGroupsTF.getText().isEmpty()) {
+					groupTitles.getItems().clear();
+					for(Group g: sm.getGroups(searchGroupsTF.getText())) {
+						groupTitles.getItems().add(g.getTitle());
+					}
+				}
+			}
+			
+		});
+		
+		
 		getPopularGroupsB.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -414,7 +436,6 @@ public class Controller {
 				if(!questions.getItems().contains(question.getTitle())) {
 					questions.getItems().add(question.getTitle()); 
 					questionsList.add(question);
-					//System.out.println(question.getTitle());
 				}
 			}	
 		}
