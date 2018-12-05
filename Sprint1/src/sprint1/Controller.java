@@ -37,6 +37,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -78,11 +79,12 @@ public class Controller {
 			groups = new ArrayList<Group>();
 		}
 		pm = new PersistanceManager();
-		String[] siteOptions = { "Add Group", "Members", "Groups"};
+		String[] siteOptions = {"Members", "Groups"};
 		options.getItems().setAll(siteOptions);
 		options.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		optionInstructions.setEditable(false);
 		optionInstructions.setPrefRowCount(1);
+		
 	}
 
 	@FXML
@@ -129,6 +131,10 @@ public class Controller {
 					if(!sm.addMember(firstNameTF.getText(), lastNameTF.getText(), screenNameTF.getText(), emailTF.getText(), dateCreated)) {
 						optionInstructions.setText("  ERROR - Member with this email already exists");
 					} else {
+						membersEmailList.getItems().clear();
+						for(Member m : sm.getMembers()) {
+							membersEmailList.getItems().add(m.getEmailAddress());
+						}
 						optionInstructions.setText("  SUCCESS - Member was added");
 					}
 					save();
@@ -141,18 +147,18 @@ public class Controller {
 		mainFunction.setAlignment(Pos.CENTER);
 		mainFunction.setPadding(new Insets(20,20,20,20));
 		mainFunction.add(emailL, 0, 0);
-		mainFunction.add(emailTF, 1, 0);
-		mainFunction.add(firstNameL, 0, 1);
-		mainFunction.add(firstNameTF, 1, 1);
-		mainFunction.add(lastNameL, 0, 2);
-		mainFunction.add(lastNameTF, 1, 2);
-		mainFunction.add(screenNameL, 0, 3);
-		mainFunction.add(screenNameTF, 1, 3);
-		mainFunction.add(btnSave, 2, 4);
+		mainFunction.add(emailTF, 0, 1);
+		mainFunction.add(firstNameL, 0, 2);
+		mainFunction.add(firstNameTF, 0, 3);
+		mainFunction.add(lastNameL, 0, 4);
+		mainFunction.add(lastNameTF, 0, 5);
+		mainFunction.add(screenNameL, 0, 6);
+		mainFunction.add(screenNameTF, 0, 7);
+		mainFunction.add(btnSave, 0, 8);
 		return mainFunction;
 	}
 	
-	private void createAddGroupScene() {
+	private GridPane createAddGroupScene() {
 		mainFunction.getChildren().clear();
 		Label titleL = new Label("Title");
 		TextField titleTF = new TextField();
@@ -178,17 +184,16 @@ public class Controller {
 			}
 		});
 		mainFunction.setAlignment(Pos.CENTER);
-		mainFunction.setPadding(new Insets(20,20,20,20));
 		mainFunction.add(titleL, 0, 0);
-		mainFunction.add(titleTF, 1, 0);
-		mainFunction.add(descriptionL, 0, 1);
-		mainFunction.add(descriptionTA, 1, 1);
-		mainFunction.add(btnSave, 2, 4);
+		mainFunction.add(titleTF, 0, 1);
+		mainFunction.add(descriptionL, 0, 2);
+		mainFunction.add(descriptionTA, 0, 3);
+		mainFunction.add(btnSave, 0, 4);
+		return mainFunction;
 	}
 	
 	private void createMembersScene(String member) {
 		mainFunction.getChildren().clear();
-		
 		BorderPane bp = new BorderPane();
 		bp.setLeft(membersEmailList);
 		bp.setCenter(createAddMemberScene());
@@ -217,7 +222,9 @@ public class Controller {
 					ListView<String> memberGroupList = new ListView<String>();
 					List<String> thisMembersGroups = new ArrayList<String>();
 					VBox memberInfoVB = new VBox();
-					HBox labelAndCombo = new HBox();
+					memberInfoVB.setSpacing(5);
+					memberInfoVB.setPadding(new Insets(10,10,10,10));
+					groupInfoVB.setSpacing(5);
 					Label memberNameL = new Label();
 					Label groupL = new Label("Groups");
 					Label memberDateCreatedL = new Label();
@@ -236,7 +243,6 @@ public class Controller {
 							memberGroupList.getItems().add(group.getTitle());
 							thisMembersGroups.add(group.getTitle());
 						}
-
 					}
 					for(Group group : sm.getGroups()) {
 						if(!thisMembersGroups.contains(group.getTitle())) {
@@ -272,8 +278,7 @@ public class Controller {
 					String name = sm.getMember(member).getFirstName() + " " + sm.getMember(member).getLastName();
 					memberNameL.setText(name);
 					memberDateCreatedL.setText("Added: " +  sm.getMember(member).getDateCreated().toString());
-					labelAndCombo.getChildren().addAll(memberGroupList, groupCB);
-					memberInfoVB.getChildren().addAll(memberNameL, exp, memberDateCreatedL, groupL, labelAndCombo, groupInfoVB);
+					memberInfoVB.getChildren().addAll(memberNameL, exp, memberDateCreatedL, groupL, memberGroupList, groupCB, groupInfoVB);
 					sp.setContent(memberInfoVB);
 					bp.setCenter(sp);
 				}catch(Exception e) {
@@ -287,12 +292,16 @@ public class Controller {
 		groupInfoVB.getChildren().clear();
 		ListView<String> groupTitles = new ListView<String>();
 		VBox groupsListVBox = new VBox();
+		HBox filterButtons = new HBox();
 		Button getActiveGroupsB = new Button("Active Groups");
 		Button getPopularGroupsB = new Button("Popular Groups");
-		groupsListVBox.getChildren().addAll(getActiveGroupsB, getPopularGroupsB, groupTitles);
+		filterButtons.getChildren().addAll(getActiveGroupsB, getPopularGroupsB);
+		groupsListVBox.getChildren().addAll(filterButtons, groupTitles);
 		groupTitles.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		BorderPane bp = new BorderPane();
+		groupsListVBox.setVgrow(groupTitles, Priority.ALWAYS);
 		bp.setLeft(groupsListVBox);
+		bp.setCenter(createAddGroupScene());
 		getPopularGroupsB.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -322,11 +331,15 @@ public class Controller {
 		groupTitles.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
+				bp.getChildren().clear();
+				bp.setLeft(groupsListVBox);
+				bp.setCenter(groupInfoVB);
 				String groupTitle = groupTitles.getSelectionModel().getSelectedItem();
 				createGroupPane(groupTitle, null, null, false, 0);////!
 			}
 		});
-		bp.setCenter(groupInfoVB);
+		
+			
 		mainFrame.setCenter(bp);
 	}
 
@@ -374,6 +387,7 @@ public class Controller {
 		}
 
 		if(member != null) {
+			questions.setMaxHeight(100.0);
 			questions.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
@@ -524,9 +538,14 @@ public class Controller {
 				} 
 			}
 		});
-		HBox titleHBox = new HBox();
-		titleHBox.getChildren().addAll(questionTitleL, questionTitleTF);
-		questionFormVB = new VBox(addQuestionL,titleHBox, questionDescriptionL, questionDescriptionTA, btnSubmitQuestion);
+		BorderPane bp = new BorderPane();
+		VBox vb = new VBox();
+		vb.getChildren().addAll(addQuestionL,questionTitleL,questionTitleTF, questionDescriptionL, questionDescriptionTA, btnSubmitQuestion);
+		bp.setLeft(vb);
+		questionFormVB = new VBox(bp);
+		vb.setSpacing(5);
+		vb.setPadding(new Insets(10,10,10,10));
+		
 	}
 
 		private void save() {

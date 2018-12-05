@@ -42,6 +42,7 @@
 		<bottom>
 		<TextArea promptText="Welcome to Team 8 Site Manager" fx:id="optionInstructions" />
 		</bottom>
+		
 </BorderPane>
 
 			
