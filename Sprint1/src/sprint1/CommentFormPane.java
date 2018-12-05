@@ -5,10 +5,12 @@ import java.io.FileOutputStream;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 public class CommentFormPane {
 
@@ -28,8 +30,10 @@ public class CommentFormPane {
 	
 	public VBox createCommentFormPane() {
 		VBox vb = new VBox();
-		Label headingL = new Label("Post\nTitle: " + post.getText() + "\nAuthor: " + post.getAuthor().getFirstName() + post.getAuthor().getLastName());
+		Label headingL = new Label("Title: " + post.getText() + "\nAuthor: " + post.getAuthor().getFirstName() + post.getAuthor().getLastName());
 		Label commentL = new Label("Leave a comment");
+		commentL.setStyle("-fx-font-weight: bold;");
+		commentL.setFont(new Font("Arial", 30));
 		TextArea commentTA = new TextArea();
 		commentTA.setWrapText(true);
 		Button btnSubmit = new Button("Submit");
@@ -42,7 +46,8 @@ public class CommentFormPane {
 				save();
 			}
 		});
-		vb.getChildren().addAll(headingL,commentL, commentTA,btnSubmit);
+		vb.getChildren().addAll(commentL,headingL, commentTA,btnSubmit);
+		vb.setSpacing(5);
 		return vb;
 	}
 	

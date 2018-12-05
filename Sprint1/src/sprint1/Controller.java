@@ -39,6 +39,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
@@ -52,6 +53,8 @@ public class Controller {
 	private ListView<String> membersEmailList = new ListView<String>();
 	protected VBox groupInfoVB = new VBox();
 	protected VBox questionFormVB = new VBox();
+	Label headingLabel = new Label("");
+	
 
 	@FXML
 	private ListView<String> options;
@@ -84,13 +87,19 @@ public class Controller {
 		options.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		optionInstructions.setEditable(false);
 		optionInstructions.setPrefRowCount(1);
+		Label welcome = new Label("Welcome");
+		headingLabel.setStyle("-fx-font-weight: bold;");
+		headingLabel.setFont(new Font("Arial", 30));
+		mainFrame.setCenter(welcome);
+		
 		
 	}
 
 	@FXML
 	public void handleClickListView() {
 		String option = options.getSelectionModel().getSelectedItem();
-		optionInstructions.setText("You've Choosen to: " + option);
+		optionInstructions.setStyle("-fx-text-fill: black;");
+		optionInstructions.setText("You've Choosen: " + option);
 		if(option == null){
 			optionInstructions.setText("");
 		}else if(option.equals("Add Member")) {
@@ -112,6 +121,7 @@ public class Controller {
 	private GridPane createAddMemberScene() {
 		mainFunction.getChildren().clear();
 		membersEmailList.getItems().clear();
+		headingLabel.setText("Add New Member");
 		Label emailL = new Label("Email");
 		TextField emailTF = new TextField();
 		Label firstNameL = new Label("First Name");
@@ -129,37 +139,45 @@ public class Controller {
 						&& !screenNameTF.getText().isEmpty()) {
 					LocalDateTime dateCreated = LocalDateTime.now();
 					if(!sm.addMember(firstNameTF.getText(), lastNameTF.getText(), screenNameTF.getText(), emailTF.getText(), dateCreated)) {
+						optionInstructions.setStyle("-fx-text-fill: red;");
 						optionInstructions.setText("  ERROR - Member with this email already exists");
 					} else {
 						membersEmailList.getItems().clear();
 						for(Member m : sm.getMembers()) {
 							membersEmailList.getItems().add(m.getEmailAddress());
 						}
+						optionInstructions.setStyle("-fx-text-fill: green;");
 						optionInstructions.setText("  SUCCESS - Member was added");
 					}
 					save();
 
 				} else {
+					optionInstructions.setStyle("-fx-text-fill: red;");
 					optionInstructions.setText("  ERROR - all fields are required");
 				}	
 			}
 		});
-		mainFunction.setAlignment(Pos.CENTER);
+		
+		
+		
+		
 		mainFunction.setPadding(new Insets(20,20,20,20));
-		mainFunction.add(emailL, 0, 0);
-		mainFunction.add(emailTF, 0, 1);
-		mainFunction.add(firstNameL, 0, 2);
-		mainFunction.add(firstNameTF, 0, 3);
-		mainFunction.add(lastNameL, 0, 4);
-		mainFunction.add(lastNameTF, 0, 5);
-		mainFunction.add(screenNameL, 0, 6);
-		mainFunction.add(screenNameTF, 0, 7);
-		mainFunction.add(btnSave, 0, 8);
+		mainFunction.add(headingLabel, 0, 0);
+		mainFunction.add(emailL, 0, 1);
+		mainFunction.add(emailTF, 0, 2);
+		mainFunction.add(firstNameL, 0, 3);
+		mainFunction.add(firstNameTF, 0, 4);
+		mainFunction.add(lastNameL, 0, 5);
+		mainFunction.add(lastNameTF, 0, 6);
+		mainFunction.add(screenNameL, 0, 7);
+		mainFunction.add(screenNameTF, 0, 8);
+		mainFunction.add(btnSave, 0, 9);
 		return mainFunction;
 	}
 	
 	private GridPane createAddGroupScene() {
 		mainFunction.getChildren().clear();
+		headingLabel.setText("Add New Group");
 		Label titleL = new Label("Title");
 		TextField titleTF = new TextField();
 		Label descriptionL = new Label("Description");
@@ -173,22 +191,25 @@ public class Controller {
 				if(!titleTF.getText().isEmpty() && !descriptionTA.getText().isEmpty()) {
 					LocalDateTime dateCreated = LocalDateTime.now();
 					if(!sm.addGroup(titleTF.getText(), descriptionTA.getText(), dateCreated)) {
+						optionInstructions.setStyle("-fx-text-fill: red;");
 						optionInstructions.setText("  ERROR - Group already exists");
 					} else {
+						optionInstructions.setStyle("-fx-text-fill: green;");
 						optionInstructions.setText("  SUCCESS - Group added");
 						save();
 					}
 				} else {
+					optionInstructions.setStyle("-fx-text-fill: red;");
 					optionInstructions.setText("  ERROR - all fields are required");
 				}	
 			}
 		});
-		mainFunction.setAlignment(Pos.CENTER);
-		mainFunction.add(titleL, 0, 0);
-		mainFunction.add(titleTF, 0, 1);
-		mainFunction.add(descriptionL, 0, 2);
-		mainFunction.add(descriptionTA, 0, 3);
-		mainFunction.add(btnSave, 0, 4);
+		mainFunction.add(headingLabel, 0, 0);
+		mainFunction.add(titleL, 0, 1);
+		mainFunction.add(titleTF, 0, 2);
+		mainFunction.add(descriptionL, 0, 3);
+		mainFunction.add(descriptionTA, 0, 4);
+		mainFunction.add(btnSave, 0, 5);
 		return mainFunction;
 	}
 	
@@ -226,10 +247,20 @@ public class Controller {
 					memberInfoVB.setPadding(new Insets(10,10,10,10));
 					groupInfoVB.setSpacing(5);
 					Label memberNameL = new Label();
+					memberNameL.setStyle("-fx-font-weight: bold;");
+					memberNameL.setFont(new Font("Arial", 20));
+					
 					Label groupL = new Label("Groups");
+					groupL.setStyle("-fx-font-weight: bold;");
+					groupL.setFont(new Font("Arial", 20));
+					
+					
 					Label memberDateCreatedL = new Label();
 					ScrollPane sp = new ScrollPane();
 					Label groupNameL = new Label();
+					groupNameL.setStyle("-fx-font-weight: bold;");
+					groupNameL.setFont(new Font("Arial", 30));
+					
 					groupCB.setPromptText("Join Group");
 					String member = membersEmailList.getSelectionModel().getSelectedItem();
 					int count = 0;
@@ -274,10 +305,13 @@ public class Controller {
 							createGroupPane(groupTitle, member, membersEmailList, false, 0);
 						}
 					});
+					optionInstructions.setStyle("-fx-text-fill: black;");
 					optionInstructions.setText("You've Choosen to: " + member);
 					String name = sm.getMember(member).getFirstName() + " " + sm.getMember(member).getLastName();
 					memberNameL.setText(name);
 					memberDateCreatedL.setText("Added: " +  sm.getMember(member).getDateCreated().toString());
+					exp.setFont(new Font("Arial", 15));
+					
 					memberInfoVB.getChildren().addAll(memberNameL, exp, memberDateCreatedL, groupL, memberGroupList, groupCB, groupInfoVB);
 					sp.setContent(memberInfoVB);
 					bp.setCenter(sp);
@@ -331,10 +365,13 @@ public class Controller {
 		groupTitles.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
+				String groupTitle = groupTitles.getSelectionModel().getSelectedItem();
+				optionInstructions.setStyle("-fx-text-fill: black;");
+				optionInstructions.setText("You've Chosen: " + groupTitle);
 				bp.getChildren().clear();
 				bp.setLeft(groupsListVBox);
 				bp.setCenter(groupInfoVB);
-				String groupTitle = groupTitles.getSelectionModel().getSelectedItem();
+				
 				createGroupPane(groupTitle, null, null, false, 0);////!
 			}
 		});
@@ -453,13 +490,16 @@ public class Controller {
 				btnSubmit.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {	
-						int filterNumber = Integer.parseInt(filterNumberTF.getText());
-						if (filterNumber > questionsList.size() ) {
-							Label alert = new Label("Input must be an integer <= questionsList.size()!!");
-							groupInfoVB.getChildren().add(alert);
-						} else {
-							createGroupPane(groupTitle, member,  membersEmailList, true, filterNumber );
+						if(!filterNumberTF.getText().isEmpty() && filterNumberTF != null) {
+							int filterNumber = Integer.parseInt(filterNumberTF.getText());
+							if (filterNumber > questionsList.size() ) {
+								Label alert = new Label("Input must be an integer <= questionsList.size()!!");
+								groupInfoVB.getChildren().add(alert);
+							} else {
+								createGroupPane(groupTitle, member,  membersEmailList, true, filterNumber );
+							}
 						}
+						
 					}
 				});
 
@@ -469,6 +509,7 @@ public class Controller {
 		btnFilterAnswers.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {		
+				ListView<String> filteredAnswers = new ListView<String>();
 				Label filterNumber = new Label("Number of Answers to filter: ");
 				TextField filterNumberTF = new TextField();
 				Button btnSubmitAnswerFilter = new Button("Submit");
@@ -477,21 +518,30 @@ public class Controller {
 				groupInfoVB.getChildren().addAll(filterAnswersHBox, btnSubmitAnswerFilter);
 				btnSubmitAnswerFilter.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
-					public void handle(ActionEvent event) {			
-						int filterNumber = Integer.parseInt(filterNumberTF.getText());
-						if (filterNumber > answersList.size() ) {
-							Label alert = new Label("Input must be an integer <= answersList.size()!!");
-							groupInfoVB.getChildren().add(alert);
-						} else {
-							ListView<String> filteredAnswers = new ListView<String>();
-							//System.out.println();
-							for (int i = 1; i <= filterNumber; i++)  {
-								filteredAnswers.getItems().add(clickedQuestion.getAnswers().get(clickedQuestion.getAnswers().size() - i).getText());
+					public void handle(ActionEvent event) {
+						try {
+							if(!filterNumberTF.getText().isEmpty() && filterNumberTF != null) {
+								int filterNumber = Integer.parseInt(filterNumberTF.getText());
+								if (filterNumber > answersList.size() || answersList.size() < 1 ) {
+									Label alert = new Label("Input must be an integer <= answersList.size()!!");
+									groupInfoVB.getChildren().add(alert);
+								} else {
+									
+									//System.out.println();
+									for (int i = 1; i <= filterNumber; i++)  {
+										filteredAnswers.getItems().add(clickedQuestion.getAnswers().get(clickedQuestion.getAnswers().size() - i).getText());
+									}
+									answers.setMaxHeight(100);
+									groupInfoVB.getChildren().clear();
+									groupInfoVB.getChildren().addAll(questionsL, questions,btnFilterQuestions, answersL, filteredAnswers, btnFilterAnswers);
 							}
-							answers.setMaxHeight(100);
-							groupInfoVB.getChildren().clear();
-							groupInfoVB.getChildren().addAll(questionsL, questions,btnFilterQuestions, answersL, filteredAnswers, btnFilterAnswers);
-						}	
+						}
+						
+					}catch(Exception e) {
+						optionInstructions.setStyle("-fx-text-fill: red;");
+						optionInstructions.setText("ERROR - " + "Put a number of recent answers you would like to");
+						
+					}
 					}
 				});
 			}
@@ -511,6 +561,8 @@ public class Controller {
 
 	private void createAddQuestionPane(Member member, Group group) {
 		Label addQuestionL = new Label("Add Question");
+		addQuestionL.setStyle("-fx-font-weight: bold;");
+		addQuestionL.setFont(new Font("Arial", 30));
 		Label questionTitleL = new Label("Title");
 		TextField questionTitleTF = new TextField();
 		Label questionDescriptionL = new Label("Description");
@@ -545,6 +597,7 @@ public class Controller {
 		questionFormVB = new VBox(bp);
 		vb.setSpacing(5);
 		vb.setPadding(new Insets(10,10,10,10));
+		
 		
 	}
 
