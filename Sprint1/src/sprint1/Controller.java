@@ -436,6 +436,8 @@ public class Controller {
 
 	private void createGroupPane(String groupTitle, String member, ListView<String> membersEmailList, boolean filter, int filterNumber) {
 		groupInfoVB.getChildren().clear();
+		groupInfoVB.setPadding(new Insets(10,10,10,10));
+		groupInfoVB.setSpacing(5);
 		String memberEmail = member;
 		Label groupL = new Label(groupTitle);
 		Label questionsL = new Label();
@@ -499,6 +501,9 @@ public class Controller {
 			questions.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
+					if(!questions.getItems().isEmpty()) {
+						
+					
 					ListView<String> answers = new ListView<String>();
 					String questionClicked = questions.getSelectionModel().getSelectedItem();
 					for(Comment comment : clickedQuestion.comments) {
@@ -517,6 +522,7 @@ public class Controller {
 					Label answersL = new Label("Answers");
 					groupInfoVB.getChildren().clear();
 					groupInfoVB.getChildren().addAll(questionsL, questions, answersL, answers,commentL, comments, btnFilterAnswers);
+					}
 				}
 			});
 		}
