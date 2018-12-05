@@ -217,9 +217,34 @@ public class Controller {
 	
 	private void createMembersScene(String member) {
 		mainFunction.getChildren().clear();
+		VBox vb = new VBox();
+		HBox searchMembers = new HBox();
+		Button searchB = new Button("Search Members");
+		TextField searchTF = new TextField();
+		searchMembers.getChildren().addAll(searchB, searchTF);
+		vb.getChildren().addAll(searchMembers,membersEmailList);
+		vb.setVgrow(membersEmailList, Priority.ALWAYS);
 		BorderPane bp = new BorderPane();
-		bp.setLeft(membersEmailList);
+		bp.setLeft(vb);
 		bp.setCenter(createAddMemberScene());
+		searchB.setOnAction(new EventHandler<ActionEvent>() {
+		@Override
+		public void handle(ActionEvent event) {
+			if(!searchTF.getText().isEmpty()) {
+				membersEmailList.getItems().clear();
+				for(Member m: sm.getMembers(searchTF.getText())) {
+					membersEmailList.getItems().add(m.getEmailAddress());
+				}
+			} else {
+				membersEmailList.getItems().clear();
+				for(Member m: sm.getMembers()) {
+					membersEmailList.getItems().add(m.getEmailAddress());
+				}
+			}
+			
+		}
+	});
+		
 		for(Member m : members) {
 			membersEmailList.getItems().add(m.getEmailAddress()); 
 		}

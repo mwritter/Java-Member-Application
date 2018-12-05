@@ -69,10 +69,12 @@ public class SiteManager implements Serializable{
 	// screenName, emailAddress across all Members, sorted by last name, then first
 	// name
 	public List<Member> getMembers(String text) {
+		text = text.toLowerCase();
 		List<Member> match = new ArrayList<>();
 		for (Member Member : memberList) {
-			if (Member.getFirstName().contains(text) || Member.getLastName().contains(text)
-					|| Member.getScreenName().contains(text) || Member.getEmailAddress().contains(text)) {
+			if (Member.getFirstName().toLowerCase().contains(text) 
+					|| Member.getLastName().toLowerCase().contains(text)
+					|| Member.getScreenName().toLowerCase().contains(text) || Member.getEmailAddress().toLowerCase().contains(text)) {
 				match.add(Member);
 			}
 		}
