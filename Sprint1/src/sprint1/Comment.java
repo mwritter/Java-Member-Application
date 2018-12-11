@@ -1,11 +1,12 @@
 package sprint1;
 
-public class Comment {
+import java.io.Serializable;
 
+public class Comment implements Serializable{
 	private String text;
 	private Member commentor;
 	private Post post;
-	
+
 	public Comment(String text, Member commentor, Post post) {
 		this.text = text;
 		this.commentor = commentor;
@@ -19,7 +20,7 @@ public class Comment {
 	public void editText(String text) {
 		this.text = text;
 	}
-	
+
 	public Member getCommentor() {
 		return commentor;
 	}

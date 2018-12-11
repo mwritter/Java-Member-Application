@@ -1,5 +1,6 @@
 package sprint1;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -11,11 +12,11 @@ import java.util.Map;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Member {
+public class Member implements Serializable{
 	private LocalDateTime dateCreated;
 	private String firstName;
 	private String lastName;
-	private String screenName; // emailAddress & screenName must be unique
+	private String screenName;
 	private String emailAddress;
 	private List<Membership> memberships = new ArrayList<>();
 
@@ -60,9 +61,11 @@ public class Member {
 
 	//Joins this member to group and records the dateJoined
 	public void joinGroup(Group group, LocalDateTime date) {
-		Membership membership = new Membership(date, this, group);
-		this.memberships.add(membership);
-		group.addMembership(membership);
+		if(!group.getMembers().contains(this)) {
+			Membership membership = new Membership(date, this, group);
+			this.memberships.add(membership);
+			group.addMembership(membership);
+		}
 	}
 
 	//Returns the number of groups this member is a member of
@@ -103,7 +106,6 @@ public class Member {
 		for (Membership membership: memberships) {
 			if (membership.getGroup().equals(groupName)) {
 				question.setMembership(membership);
-				//membership.getQuestions().add(question);
 				membership.addQuestion(question);
 			}
 		}	
@@ -114,10 +116,9 @@ public class Member {
 		LocalDateTime temp =null;
 		for (Membership membership: memberships) {
 			if (membership.getGroup().equals(groupName)) {
-				temp=membership.getDateJoined();
+				return membership.getDateJoined();
 			}
 		}
-
 		return temp;
 	}
 
@@ -205,11 +206,11 @@ public class Member {
 
 	//Returns the n most recent answers asked by this 
 	//member in this group sorted on the order they were provided, most recent first.
-	List<Question> getAnswers(Group group, int n) {
-		ArrayList<Question> answersList = new ArrayList<Question>();
+	List<Answer> getAnswers(Group group, int n) {
+		ArrayList<Answer> answersList = new ArrayList<Answer>();
 		for (Membership membership: memberships) {
 			if (membership.getGroup().equals(group) ) {
-				answersList.addAll( membership.getQuestions());
+				answersList.addAll( membership.getAnswers());
 			}
 		}
 		for (int i = 0; i < answersList.size() - n; i++) {
@@ -221,16 +222,26 @@ public class Member {
 
 	//Likes the post passed in as an argument and gives 5 points to the poster
 	private void likePost(Post post) {
-		if (this.getGroups().contains(post.getGroup() ) ) {//check if member is in the group in which "post" was posted
-			post.likes.add(new Like(this) );
+		if (this.getGroups().contains(post.getGroup()) && !alreadyLikedPost(post) ) {//check if member is in the group in which "post" was posted
+			post.addLike(new Like(this));
 			post.getMembership().addPoints(5);
 		}
+	}	
+
+	//Checks if this member already likes the post
+	private boolean alreadyLikedPost(Post post) {
+		for (Like like: post.likes) {
+			if (like.getUpVoter() == this) {
+				return true;
+			}
+		}
+		return false;
 	}	
 
 	//Adds a comment to a post and gives 10 points to the poster
 	private void commentOnPost(Post post, Comment comment) {
 		if (this.getGroups().contains(post.getGroup() ) ) {//check if member is in the group in which "post" was posted
-			post.comments.add(comment);
+			post.addComment(comment);
 			post.getMembership().addPoints(10);
 		}
 	}
@@ -239,19 +250,17 @@ public class Member {
 	private void editComment(Comment comment, String newText) {
 		comment.editText(newText);
 	}
-	
+
 	//Deletes comment permanently
 	private void deleteComment(Comment comment) {
 		comment.getPost().removeComment(comment);
 	}
 
-	
-
 	//Adds 40 points to the member who wrote the best answer
 	private void chooseBestAnswer(Answer answer) {
 		answer.getMembership().addPoints(40);
 	}
-	
+
 	//Displays the total number of points this member has earned
 	private String displayPoints() {
 		int points = 0;
@@ -270,24 +279,37 @@ public class Member {
 				"\nScreen Name: " + screenName + 
 				"\nEmail address: " + emailAddress + 
 				"\nDate Joined: " + dateCreated +
-				"\nPoints: " + displayPoints() +
-				"\n------Questions by this member:------\n";
-		for (Membership membership: memberships) {
-			for (Question question: membership.getQuestions()) {
-				data += question + "\n"; 
-			}
-		}
-		data += "\n------Answers by this member------\n";
-		for (Membership membership: memberships) {
-			for (Answer answer: membership.getAnswers()) {
-				data += answer + "\n"; 
-			}
-		}
+				"\nPoints: " + displayPoints();
 		data += "\n------Groups this member is a member of------\n";
-		for (Membership membership: memberships) { 
-			data += membership.getGroup() + "\n"; 
-		}				
+		int size = this.memberships.size();
+		while(size > 0) {
+			data += memberships.get(memberships.size()-1).getGroup().getTitle();
+			size--;
+		}
 		return data;       		
 	}
 
-}//end of Member.java class
+	private int getNumberOfTotalPosts() {
+		int count = 0;
+		for(Membership membership: this.memberships) {
+			count += membership.getAnswers().size() + membership.getQuestions().size();
+		}
+		return count;
+	}
+
+	private int getNumberOfTotalQuestions() {
+		int count = 0;
+		for(Membership membership: this.memberships) {
+			count += membership.getQuestions().size();
+		}
+		return count;
+	}
+
+	private int getNumberOfTotalAnswers() {
+		int count = 0;
+		for(Membership membership: this.memberships) {
+			count += membership.getAnswers().size();
+		}
+		return count;
+	}
+}

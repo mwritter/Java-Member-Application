@@ -1,15 +1,16 @@
 package sprint1;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 
-abstract class Post {
+abstract class Post implements Serializable{
 	protected String text;
 	protected LocalDateTime date;
 	protected Membership membership;
-	private List<Comment> comments = new ArrayList<>();
-	private List<Like> likes = new ArrayList<>();
+	protected List<Comment> comments = new ArrayList<>();
+	protected List<Like> likes = new ArrayList<>();
 
 	// constructor to set initial values
 	public Post(String txt, LocalDateTime date) {
@@ -52,11 +53,24 @@ abstract class Post {
 		return membership;
 	}
 
+	// add like to a post
+	protected void addLike(Like like) {
+		likes.add(like);
+		membership.addPoints(10);
+	}
+
+	// add comment to a post
+	protected void addComment(Comment comment) {
+		comments.add(comment);
+		membership.addPoints(10);
+	}
+
 	//Permanently removes comment from post
 	public void removeComment(Comment deleteComment) {
 		for (Comment comment: comments) {
 			if (deleteComment.equals(comment)) {
 				comments.remove(comment);
+				membership.addPoints(-10);
 			}
 		}
 	} 
