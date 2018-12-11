@@ -1,2 +1,2 @@
 Matthew Ritter
-![](Sprint1\images\java.png)
+![](Sprint1/images/java.png)
