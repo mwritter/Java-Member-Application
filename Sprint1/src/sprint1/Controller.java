@@ -501,14 +501,10 @@ public class Controller {
 			questions.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
-					if(!questions.getItems().isEmpty()) {
-						
-					
 					ListView<String> answers = new ListView<String>();
 					String questionClicked = questions.getSelectionModel().getSelectedItem();
-					for(Comment comment : clickedQuestion.comments) {
-						comments.getItems().add(comment.getText());
-					}
+					
+					
 					for (Question q: questionsList) {
 						if (q.getTitle() == questionClicked) {
 							clickedQuestion = q;
@@ -517,12 +513,19 @@ public class Controller {
 								answersList.add(a);
 							}
 						}
-					}		
+					}	
+					
+					if(!questions.getItems().isEmpty()) {
+						comments.getItems().clear();
+						for(Comment comment : clickedQuestion.comments) {
+							comments.getItems().add(comment.getText());
+						}
+					}
 					Label questionsL = new Label("Questions");
 					Label answersL = new Label("Answers");
 					groupInfoVB.getChildren().clear();
 					groupInfoVB.getChildren().addAll(questionsL, questions, answersL, answers,commentL, comments, btnFilterAnswers);
-					}
+					
 				}
 			});
 		}
